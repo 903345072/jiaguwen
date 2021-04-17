@@ -389,9 +389,7 @@ class Login_ extends State<register> {
   }
   static bool isChinaPhoneLegal(String str) {
 
-    return new RegExp(
-        '^((13[0-9])|(15[^4])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(14[0-9]))\\d{8}\$')
-        .hasMatch(str);
+    return true;
   }
   void ontap() async{
     if(!checkExist(phone)){
