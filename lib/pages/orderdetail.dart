@@ -10,8 +10,9 @@ import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/hangqing/StockRankList.dart';
 import 'package:flutterapp2/pages/myorder.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
+import 'package:flutterapp2/utils/Toast.dart';
 import 'package:flutterapp2/utils/request.dart';
-
+import 'package:flutter/services.dart';
 import 'ChildItemView.dart';
 import 'flowUsers.dart';
 class orderdetail extends StatefulWidget{
@@ -264,6 +265,7 @@ class hangqing_ extends State<orderdetail>{
                            ],
                          ),),
                         Container(
+                          color: Color(0xffebebeb),
                           width: ScreenUtil().setWidth(410),
                           child: Column(
                             children: order["mode"]!="4"? getList():getOptList(),
@@ -279,7 +281,26 @@ class hangqing_ extends State<orderdetail>{
                       direction: Axis.vertical,
                       children: <Widget>[
                         Text("下单时间:"+order["dtime"].toString()),
-                        Text("订单编号:"+order["order_no"].toString()),
+                        Row(
+                          children: <Widget>[
+                            Text("订单编号:"+order["order_no"].toString()),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              height: ScreenUtil().setHeight(40),
+                              child: MaterialButton(
+
+                                minWidth: 5,
+
+                                color: Colors.grey,
+                                onPressed: (){
+                                  Future res = Clipboard.setData(ClipboardData(text: order["order_no"].toString()));
+                                  res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
+                                },
+                                child: Text("复制"),
+                              ),
+                            )
+                          ],
+                        ),
                         order["chuan"]=="1"?Text("过关方式:单关"):order["chuan"].toString() != ""? Text("过关方式:"+order["chuan"].toString()+"串1"):Text("过关方式:单关"),
                         Text("温馨提示:"+"中奖后奖金自动打入您的账户"),
                       ],

@@ -63,7 +63,7 @@ if(res.data["data"] != null){
      }else{
        dashen = [];
      }
-     print(res.data["uids"]);
+    
     uids = res.data["uids"];
      zhongjiang = res1.data["data"];
    });
@@ -215,19 +215,22 @@ if(res.data["data"] != null){
                                       ),
 
                                       Container(
+
                                         height: ScreenUtil().setHeight(35),
                                         width: double.infinity,
                                         child: Row(
                                           children: <Widget>[
                                             Container(
+
                                               child: Image.asset("img/toutiao.png",fit: BoxFit.fill,width: ScreenUtil().setWidth(80),),
                                             ),
                                             Container(
+                                              color: Color(0xffebebeb),
                                               width: ScreenUtil().setWidth(320),
                                               child: MarqueeWidget(
                                                 text: getZhongJiang(),
                                                 textStyle:
-                                                new TextStyle(fontSize: ScreenUtil().setSp(15)),
+                                                new TextStyle(color:Colors.red,fontWeight:FontWeight.bold,fontSize: ScreenUtil().setSp(15)),
                                                 scrollAxis: Axis.horizontal,
                                               ),
                                             ),
@@ -287,7 +290,12 @@ if(res.data["data"] != null){
                             height: ScreenUtil().setWidth(45),
                           )),
                     ),
-                    Text(list[e]["nickname"]),
+                    Text(list[e]["nickname"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                    Container(
+                      padding: EdgeInsets.only(left: 5,right: 5,top: 1,bottom: 1),
+                      decoration: BoxDecoration(color: Color(0xffffc038)),
+                      child: Text(list[e]["lian_hong"].toString()+"连红",style: TextStyle(color: Colors.red,fontSize: 11,fontWeight: FontWeight.bold),),
+                    )
                   ],
                 ),
                 Row(
@@ -300,16 +308,19 @@ if(res.data["data"] != null){
             ),
             Container(
               margin: EdgeInsets.only(top: 5),
-              child: Text(list[e]["plan_title"].toString()),
+              child: Row(
+                children: <Widget>[
+                  Text(list[e]["plan_title"].toString()),
+                ],
+              ),
             ),
              Container(
                margin: EdgeInsets.only(top: 5),
-               decoration: BoxDecoration(border: Border.all(width: 0.4,color: Colors.grey),borderRadius: BorderRadius.all(Radius.circular(10))),
+               decoration: BoxDecoration(color:Color(0xfff0fdff),border: Border.all(width: 0.4,color: Colors.grey),borderRadius: BorderRadius.all(Radius.circular(10))),
                child: Row(
                  children: <Widget>[
                    Container(
                      decoration: BoxDecoration(border: Border(right: BorderSide(width: 0.4,color: Colors.grey))),
-
                      child: Column(
                        children: <Widget>[
                          Container(
@@ -342,9 +353,9 @@ if(res.data["data"] != null){
                            child: Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: <Widget>[
-                               Text(list[e]["type"]=="f"?"竞彩足球":"竞彩篮球"),
-                               Text(list[e]["amount"]),
-                               Text((list[e]["num"]*2).toString()),
+                               Text(list[e]["type"]=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(color: Colors.red),),
+                               Text(list[e]["amount"],style: TextStyle(color: Colors.red),),
+                               Text((list[e]["num"]*2).toString(),style: TextStyle(color: Colors.red)),
                              ],
                            ),
                          ),
@@ -398,7 +409,7 @@ if(res.data["data"] != null){
       }else{
         type = "竞彩篮球";
       }
-      str+= element["nickname"]+"喜中"+type+element["award_money"].toString()+"元";
+      str+= "恭喜 " +element["nickname"]+" "+"喜中"+type+element["award_money"].toString()+"元";
       str += "                      ";
     });
     return str;

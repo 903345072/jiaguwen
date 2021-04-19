@@ -8,7 +8,7 @@ class CommonWiget{
       height: ScreenUtil().setHeight(45),
       decoration: BoxDecoration(
           border: Border(
-              top: BorderSide(width: 6, color: Color(0xffe6e6e6)))),
+              top: BorderSide(width: 6, color: Color(0xffebebeb),))),
       child: Row(
         children: <Widget>[
           Container(

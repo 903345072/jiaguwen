@@ -175,25 +175,43 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                 child: Row(
                   children: <Widget>[
                     Container(
+
                       child: Icon(
                         const IconData(0xe600, fontFamily: "iconfont"),
-                        color: Color(0xffa3a3a3),
+
                         size: ScreenUtil().setSp(32),
                       ),
                     ),
                     Container(
+                      color: Color(0xffebebeb),
+
                       width: ScreenUtil().setWidth(385),
                       child: MarqueeWidget(
                         text: getZhongJiang(),
                         textStyle:
-                            new TextStyle(fontSize: ScreenUtil().setSp(15)),
+                        new TextStyle(color:Colors.red,fontWeight:FontWeight.bold,fontSize: ScreenUtil().setSp(15)),
                         scrollAxis: Axis.horizontal,
                       ),
                     )
                   ],
                 ),
               ),
-              CommonWiget().getTaiTou("热门彩票"),
+              Container(
+                height: ScreenUtil().setHeight(45),
+                margin: EdgeInsets.only(top: 2),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 5, right: 15),
+                      height: ScreenUtil().setHeight(25),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(width: 3, color: Colors.red))),
+                    ),
+                    Text("热门彩票")
+                  ],
+                ),
+              ),
 
               Divider(
                 height: 7,
@@ -338,7 +356,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
       }else{
         type = "竞彩篮球";
       }
-      str+= element["nickname"]+"喜中"+type+element["award_money"].toString()+"元";
+      str+= "恭喜 " +element["nickname"]+" "+"喜中"+type+element["award_money"].toString()+"元";
       str += "                      ";
     });
     return str;
