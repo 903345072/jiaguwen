@@ -48,7 +48,6 @@ class _GZXDropDownMenuTestPageState extends State<football> {
     {"name": "比分|单","least_game":1},
     {"name": "半全场|单","least_game":1},
     {"name": "","least_game":1},
-
   ];
   bool withLoading = false;
   int index = 0;
@@ -80,10 +79,13 @@ class _GZXDropDownMenuTestPageState extends State<football> {
   List getMethods() {
     return methods.asMap().keys.map((e) {
       Border cur_border;
+      Color color;
       if (e == index) {
         cur_border = Border.all(width: 2, color: Colors.red);
+        color= Colors.red;
       } else {
         cur_border = null;
+        color= Colors.white;
       }
       return GestureDetector(
           onTap: () {
@@ -102,10 +104,10 @@ class _GZXDropDownMenuTestPageState extends State<football> {
 
           },
           child: Container(
-            decoration: BoxDecoration(border: cur_border),
+            decoration: BoxDecoration(color: color),
             alignment: Alignment.center,
-            width: ScreenUtil().setWidth(130),
-            height: ScreenUtil().setHeight(70),
+            width: ScreenUtil().setWidth(120),
+            height: ScreenUtil().setHeight(50),
             child: Text(
               methods[e]["name"],
               style: TextStyle(fontSize: ScreenUtil().setSp(16)),
@@ -356,6 +358,7 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_od
                           right: 0,
                           child: Material(
                             child: Container(
+                              color: Colors.white,
                               child: Wrap(
                                 alignment: WrapAlignment.spaceBetween,
                                 children: getMethods(),

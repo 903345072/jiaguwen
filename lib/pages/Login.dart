@@ -103,10 +103,11 @@ class Login_ extends State<Login> {
 
                           //键盘类型，数字键盘
 
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
 
                             contentPadding: EdgeInsets.only(left: 10),
-                            hintText: "用户名",
+                            hintText: "手机号",
                             border: OutlineInputBorder(),
                             prefixIcon: Icon(
                               Icons.person,

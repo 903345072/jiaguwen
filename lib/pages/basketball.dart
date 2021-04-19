@@ -73,10 +73,13 @@ class _GZXDropDownMenuTestPageState extends State<basketball> {
   List getMethods() {
     return methods.asMap().keys.map((e) {
       Border cur_border;
+      Color color;
       if (e == index) {
         cur_border = Border.all(width: 2, color: Colors.red);
+        color= Colors.red;
       } else {
         cur_border = null;
+        color= Colors.white;
       }
       return GestureDetector(
           onTap: () {
@@ -92,7 +95,7 @@ class _GZXDropDownMenuTestPageState extends State<basketball> {
 
           },
           child: Container(
-            decoration: BoxDecoration(border: cur_border),
+            decoration: BoxDecoration(color: color),
             alignment: Alignment.center,
             width: ScreenUtil().setWidth(130),
             height: ScreenUtil().setHeight(70),
@@ -343,6 +346,7 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,mnl_odds,hdc_odds,dxf_od
                           right: 0,
                           child: Material(
                             child: Container(
+                              color: Colors.white,
                               child: Wrap(
                                 alignment: WrapAlignment.spaceBetween,
                                 children: getMethods(),

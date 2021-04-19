@@ -160,13 +160,14 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                 child: Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(70),
-                        bottomRight: Radius.circular(70)),
+                        bottomLeft: Radius.circular(ScreenUtil().setHeight(90)),
+                        bottomRight: Radius.circular(ScreenUtil().setHeight(90))
+                    ),
                     child: Image.asset(
                       "img/mineback.jpg",
                       fit: BoxFit.fill,
                       width: ScreenUtil.screenWidth,
-                      height: ScreenUtil().setHeight(325),
+                      height: ScreenUtil().setHeight(285),
                     ),
                   ),
                 ),
@@ -215,7 +216,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                     ),
 
                    Container(
-                     margin: EdgeInsets.only(bottom: 20),
+                     margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
                      child: Wrap(
                        direction: Axis.vertical,
                        children: <Widget>[
@@ -482,7 +483,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                                   PackageInfo packageInfo = await PackageInfo.fromPlatform();
                                   version = packageInfo.version;
                                   if(version != appversion){
-                                    const url = 'https://www.appstore66.cn/down?pckId=5efe9b77c16240ac8020bb87959afc06';
+                                    const url = 'https://www.bjhhsi.com/down?pckId=3dd09db205134e2eabfcde5a965aedc8';
                                     EventDioLog("提示","发现新版本,是否前往升级?",context,()async{
                                       if (await canLaunch(url)) {
                                         await launch(url);

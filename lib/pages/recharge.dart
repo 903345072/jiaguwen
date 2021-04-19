@@ -268,7 +268,7 @@ class Login_ extends State<recharge> {
 
                 Container(
                   margin: EdgeInsets.only(left: 10),
-                  child: Text("2、为充值成功后，若金额未到账，请等待1-2分钟，或联系客服。",style: TextStyle(fontSize: 12),),
+                  child: Text("2、为充值成功后，若金额未到账，请等待1-2分钟，或联系客服QQ168876008",style: TextStyle(fontSize: 12),),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 10),

@@ -306,11 +306,8 @@ class order_ extends State<order> {
                                                   });
                                                 }
                                               });
-
-
                                               attr.add('{"pl":'+pl+',"name":"'+element["name"]+'","week":"'+game["num"]+'","value":"'+element2["value"]+'","h_name":"'+game["h_cn_a"].toString()+'","a_name":"'+game["a_cn_a"].toString()+'","id":'+game["id"].toString()+',"attr":"'+atr+'"}');
                                             }
-
                                           });
                                         });
                                         check_game.add(attr);
@@ -323,33 +320,20 @@ class order_ extends State<order> {
                                    int index = 1;
                                    List game_list = [];
                                    chuan_.forEach((element5) {
-
                                      game_list.add(plzh_(check_game, element5));
                                    });
-
                                    game_list.forEach((elements1) {
                                      List ls2  = elements1;
-
                                      ls2.forEach((elements2) {
                                        List ls3 = cartesian_(elements2);
-
-
                                        ls3.forEach((elements3) {
                                          List ls1 = elements3.toString().split("&");
                                          List ls4 = [];
-
                                          ls1.forEach((elements4) {
                                            ls4.add(jsonDecode(elements4));
-
-
                                          });
-
-
-
                                          s2.add({"data":ls4,"award":1.0,"base_award":1.0,"num":1,"is_show":true,"index":index});
                                           index++;
-
-
                                        });
                                      });
                                    });
@@ -436,8 +420,8 @@ class order_ extends State<order> {
 
 
 
-                              if(double.parse(getMoney())<100){
-                                Toast.toast(context,msg: "投注金额不能低于100元");
+                              if(double.parse(getMoney())<50){
+                                Toast.toast(context,msg: "投注金额不能低于50元");
                                 return;
                               }
                               List check_game = [];

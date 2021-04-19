@@ -38,6 +38,7 @@ class Login_ extends State<floworder> {
   List list = [];
   List dashen = [];
   List zhongjiang = [];
+  Map uids = {};
   FocusNode _commentFocus;
 
   @override
@@ -46,6 +47,7 @@ class Login_ extends State<floworder> {
     super.initState();
     _commentFocus = FocusNode();
     _future = getList();
+
   }
 
   getList() async {
@@ -61,7 +63,8 @@ if(res.data["data"] != null){
      }else{
        dashen = [];
      }
-
+     print(res.data["uids"]);
+    uids = res.data["uids"];
      zhongjiang = res1.data["data"];
    });
   }
@@ -173,7 +176,31 @@ if(res.data["data"] != null){
                                                   onTap: (){
                                                     JumpAnimation().jump(Sender(uid: dashen[e]["uid"],), context);
                                                   },
-                                                  child: ClipOval(
+                                                  child: uids[dashen[e]["uid"].toString()] != null && uids[dashen[e]["uid"].toString()].length>0? Stack(
+                                                    children: <Widget>[
+                                                      ClipOval(
+                                                          child: Image.network(
+                                                            dashen[e]["avatar"],
+                                                            fit: BoxFit.fill,
+                                                            width: ScreenUtil().setWidth(55),
+                                                            height: ScreenUtil().setWidth(55),
+                                                          )),
+                                                      Positioned(
+                                                        top:0,
+                                                        right:0,
+                                                        child: ClipOval(
+                                                          child: Container(
+                                                           width:17,
+                                                            height: 17,
+                                                            alignment: Alignment.center,
+                                                          
+                                                            color:Colors.red,
+                                                            child: Text(uids[dashen[e]["uid"].toString()].length.toString(),style: TextStyle(color: Colors.white),),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ):ClipOval(
                                                       child: Image.network(
                                                         dashen[e]["avatar"],
                                                         fit: BoxFit.fill,

@@ -17,6 +17,7 @@ import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../main.dart';
+import 'package:flutter/services.dart';
 
 class kefu extends StatefulWidget {
   @override
@@ -76,52 +77,56 @@ getVersion() async {
 
                   direction: Axis.vertical,
                   alignment: WrapAlignment.start,
-                  spacing: 20,
+                  spacing: 23,
                   children: <Widget>[
-                    Wrap(
+                    GestureDetector(
+                      onTap: (){
+                       Future res = Clipboard.setData(ClipboardData(text: '168876008'));
+                       res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
+                      },
+                      child: Container(
 
-                      spacing: 15,
-                      crossAxisAlignment:WrapCrossAlignment.center,
+                        child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 350,),
 
-                      children: <Widget>[
-                        Text("在线客服:"),
-                        Icon(const IconData(0xe611,fontFamily: "iconfont"),color: Colors.red,),
-                        Container(
-                          padding: EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 5),
-                          //decoration: BoxDecoration(color:Color(0xfffa2020),borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Text("客服QQ:168876008",),
-                        )
-                      ],
+                      ),
                     ),
-                    Wrap(
+                    Container(
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        spacing: 25,
+                        children: <Widget>[
+                          Wrap(
+                            spacing: 15,
+                            crossAxisAlignment:WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Text("在线时间:"),
+                              Text("13:00~22:00"),
 
-                      spacing: 15,
-                      crossAxisAlignment:WrapCrossAlignment.center,
-                      children: <Widget>[
-                        Text("在线时间:"),
-                        Text("13:00~22:00"),
+                            ],
+                          ),
+                          Wrap(
 
-                      ],
-                    ),
-                    Wrap(
+                            spacing: 15,
+                            crossAxisAlignment:WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Text("当前版本:"),
+                              Text(version),
 
-                      spacing: 15,
-                      crossAxisAlignment:WrapCrossAlignment.center,
-                      children: <Widget>[
-                        Text("当前版本:"),
-                        Text(version),
+                            ],
+                          ),
+                          Wrap(
 
-                      ],
-                    ),
-                    Wrap(
+                            spacing: 15,
+                            crossAxisAlignment:WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Text("版权所有:"),
+                              Text("甲骨文"),
 
-                      spacing: 15,
-                      crossAxisAlignment:WrapCrossAlignment.center,
-                      children: <Widget>[
-                        Text("版权所有:"),
-                        Text("甲骨文"),
-
-                      ],
+                            ],
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
