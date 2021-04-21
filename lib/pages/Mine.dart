@@ -52,7 +52,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
   };
 
   File _image;
-  String version;
+  String version = "";
   Future _openModalBottomSheet() async {
     final option = await showModalBottomSheet(
         context: context,
