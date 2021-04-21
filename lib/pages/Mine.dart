@@ -52,7 +52,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
   };
 
   File _image;
-
+  String version;
   Future _openModalBottomSheet() async {
     final option = await showModalBottomSheet(
         context: context,
@@ -106,6 +106,14 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
 
     super.initState();
     getUserInfo();
+    getVersion();
+  }
+  getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      version = packageInfo.version;
+    });
+
   }
   getUserInfo() async{
    ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
@@ -167,7 +175,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       "img/mineback.jpg",
                       fit: BoxFit.fill,
                       width: ScreenUtil.screenWidth,
-                      height: ScreenUtil().setHeight(285),
+                      height: ScreenUtil().setHeight(270),
                     ),
                   ),
                 ),
@@ -243,9 +251,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                                        user_info["has_bank"] = res.data["has_bank"];
                                        user_info["img_url"] = res.data["avatar"];
                                        user_info["award_amount"] = res.data["award_amount"];
-
                                      }
-
                                    });
                                  },
                                  icon: Icon(Icons.refresh,color: Colors.white,),
@@ -309,7 +315,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       height: ScreenUtil().setHeight(75),
                       width: ScreenUtil().setWidth(375),
                       padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(40)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(100)),
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
                       child:  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -417,7 +423,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(55)),
                       margin: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
                       child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Wrap(
                             spacing: 6,
@@ -446,90 +452,57 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: <Widget>[
                                 Container(
-                                  child: Icon(const IconData(0xe602,fontFamily: "iconfont"),color: Colors.blue,size: 18,),
+                                  child: Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
                                 ),
-                                Container(
-                                  child: Text("客服",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                                Container(
-                                  child: Text("QQ客服"),
-                                ),
+                                GestureDetector(
+                                  onTap: () async {
+
+                                    ResultData result = await HttpManager.getInstance().get(
+                                        "logout",withLoading: false);
+                                    if(result.code == 200){
+                                      TokenStore().clearToken("token");
+                                      TokenStore().clearToken("is_login");
+                                      JumpAnimation().jump(Login(), context);
+                                    }
+                                  },
+                                  child: Container(
+                                    child: Text("退出登录",style: TextStyle(fontWeight: FontWeight.bold),),
+                                  ),
+                                )
+
                               ],
                             ),
                           )
                         ],
                       ),
                     ),
+
                     Container(
-                      height: ScreenUtil().setHeight(85),
-                      width: ScreenUtil().setWidth(375),
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(75)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(15)),
-                      child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Wrap(
-                            spacing: 6,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                child: Icon(const IconData(0xe6b1,fontFamily: "iconfont"),color: Colors.pinkAccent,size: 18,),
-                              ),
-                              GestureDetector(
-                                onTap: ()async{
-                                  ResultData res = await HttpManager.getInstance().get("appversion",withLoading: true);
-                                  String appversion = res.data["data"];
-                                  String version;
-                                  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-                                  version = packageInfo.version;
-                                  if(version != appversion){
-                                    const url = 'https://www.bjhhsi.com/down?pckId=3dd09db205134e2eabfcde5a965aedc8';
-                                    EventDioLog("提示","发现新版本,是否前往升级?",context,()async{
-                                      if (await canLaunch(url)) {
-                                        await launch(url);
-                                      } else {
-                                        throw 'Could not launch $url';
-                                      }
-                                    }).showDioLog();
-                                  }else{
-                                    Toast.toast(context,msg: "已是最新版本");
-                                  }
-                                },
-                                child: Container(
-                                  child: Text("检查更新",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                              ),
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: GestureDetector(
+                        onTap: (){
+                          Future res = Clipboard.setData(ClipboardData(text: '5392548'));
+                          res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
+                        },
+                        child: Container(
 
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 6,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                child: Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
-                              ),
-                              GestureDetector(
-                                onTap: () async {
+                          child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 320,),
 
-                                  ResultData result = await HttpManager.getInstance().get(
-                                      "logout",withLoading: false);
-                                  if(result.code == 200){
-                                    TokenStore().clearToken("token");
-                                    TokenStore().clearToken("is_login");
-                                    JumpAnimation().jump(Login(), context);
-                                  }
-                                },
-                                child: Container(
-                                  child: Text("退出登录",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                              )
-
-                            ],
-                          )
-                        ],
+                        ),
                       ),
                     ),
+                    Container(
+                      child: Wrap(
+
+                        spacing: 11,
+                        crossAxisAlignment:WrapCrossAlignment.center,
+                        children: <Widget>[
+                          Text("当前版本:",style: TextStyle(color: Colors.grey,fontSize: 12),),
+                          Text("v"+version,style: TextStyle(color: Colors.grey,fontSize: 12)),
+
+                        ],
+                      ),
+                    )
 
 
 
