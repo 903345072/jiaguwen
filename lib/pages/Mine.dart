@@ -487,7 +487,6 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                         child: Container(
 
                           child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 320,),
-
                         ),
                       ),
                     ),
