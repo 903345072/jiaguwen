@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp2/SharedPreferences/TokenStore.dart';
 import 'package:flutterapp2/net/Address.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
@@ -63,7 +64,7 @@ if(res.data["data"] != null){
      }else{
        dashen = [];
      }
-    
+
     uids = res.data["uids"];
      zhongjiang = res1.data["data"];
    });
@@ -222,16 +223,34 @@ if(res.data["data"] != null){
                                           children: <Widget>[
                                             Container(
 
-                                              child: Image.asset("img/toutiao.png",fit: BoxFit.fill,width: ScreenUtil().setWidth(80),),
+                                              child: Image.asset("img/toutiao.png",fit: BoxFit.fill,width: ScreenUtil().setWidth(70),),
                                             ),
                                             Container(
                                               color: Color(0xffebebeb),
-                                              width: ScreenUtil().setWidth(320),
-                                              child: MarqueeWidget(
-                                                text: getZhongJiang(),
-                                                textStyle:
-                                                new TextStyle(color:Colors.red,fontWeight:FontWeight.bold,fontSize: ScreenUtil().setSp(15)),
-                                                scrollAxis: Axis.horizontal,
+                                              width: ScreenUtil().setWidth(335),
+                                              child: Container(
+                                                margin: EdgeInsets.only(left: 5),
+                                                height: ScreenUtil().setHeight(35),
+                                                child: Swiper(
+                                                  itemCount: zhongjiang.length,
+                                                  scrollDirection: Axis.vertical,
+                                                  autoplay: true,
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    return Container(
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Text("恭喜 ",style: TextStyle(color: Color(0xff575757)),),
+                                                          Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
+                                                          Text("喜中",style: TextStyle(color: Color(0xff575757))),
+                                                          zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
+                                                          Text(zhongjiang[index]["award_money"].toString(),style: TextStyle(color: Colors.red),),
+                                                          Text("元",style: TextStyle(color: Color(0xff575757)))
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
 
@@ -264,6 +283,7 @@ if(res.data["data"] != null){
     );
   }
   List getOrder(){
+
     return list.asMap().keys.map((e){
       return Container(
         margin: EdgeInsets.only(left: 5,right: 5,bottom: 5),

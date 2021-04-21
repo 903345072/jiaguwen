@@ -170,29 +170,38 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(50),
-                width: double.infinity,
+
+                padding: EdgeInsets.all(2),
+                margin: EdgeInsets.all(5),
+                decoration: BoxDecoration(color: Color(0xffebebeb)),
                 child: Row(
                   children: <Widget>[
+                    Icon(Icons.notifications,color: Colors.orange,),
                     Container(
-
-                      child: Icon(
-                        const IconData(0xe600, fontFamily: "iconfont"),
-
-                        size: ScreenUtil().setSp(32),
+                      margin: EdgeInsets.only(left: 10),
+                      width: ScreenUtil().setWidth(350),
+                      height: ScreenUtil().setHeight(35),
+                      child: Swiper(
+                        itemCount: zhongjiang.length,
+                        scrollDirection: Axis.vertical,
+                        autoplay: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text("恭喜 ",style: TextStyle(color: Color(0xff575757)),),
+                                Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
+                                Text("喜中",style: TextStyle(color: Color(0xff575757))),
+                                zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
+                                Text(zhongjiang[index]["award_money"].toString(),style: TextStyle(color: Colors.red),),
+                                Text("元",style: TextStyle(color: Color(0xff575757)))
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    Container(
-                      color: Color(0xffebebeb),
-
-                      width: ScreenUtil().setWidth(385),
-                      child: MarqueeWidget(
-                        text: getZhongJiang(),
-                        textStyle:
-                        new TextStyle(color:Colors.red,fontWeight:FontWeight.bold,fontSize: ScreenUtil().setSp(15)),
-                        scrollAxis: Axis.horizontal,
-                      ),
-                    )
                   ],
                 ),
               ),

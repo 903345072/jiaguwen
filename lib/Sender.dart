@@ -36,6 +36,7 @@ class Login_ extends State<Sender> {
  String target = "1";
  String sl = "0";
  List data = [];
+ String order_num = "10";
   @override
   void initState() {
     // TODO: implement initState
@@ -53,6 +54,7 @@ class Login_ extends State<Sender> {
      target = res.data["target"].toString();
      img = res.data["avatar"];
      nickname = res.data["nickname"];
+     order_num = res.data["order_num"].toString();
    });
 
   }
@@ -100,8 +102,8 @@ class Login_ extends State<Sender> {
                                 alignment: WrapAlignment.center,
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: <Widget>[
-                                  Text("近七单",style: TextStyle(fontSize: 10),),
-                                  Text("7投"+target+"中",style: TextStyle(color: Colors.red),)
+                                  Text("近"+order_num+"单",style: TextStyle(fontSize: 10),),
+                                  Text(order_num+"投"+target+"中",style: TextStyle(color: Colors.red),)
                                 ],
                               ),
                             ),
