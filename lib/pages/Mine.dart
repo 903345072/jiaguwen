@@ -182,7 +182,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
               ),
               Container(
                 margin: EdgeInsets.only(
-                    top: ScreenUtil().setHeight(50), left: 10, right: 10),
+                    top: ScreenUtil().setHeight(65), left: 10, right: 10),
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   direction: Axis.vertical,
@@ -315,7 +315,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       height: ScreenUtil().setHeight(75),
                       width: ScreenUtil().setWidth(375),
                       padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(40)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(90)),
                       child:  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -491,6 +491,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       ),
                     ),
                     Container(
+                      margin: EdgeInsets.only(bottom: 2),
                       child: Wrap(
 
                         spacing: 11,
