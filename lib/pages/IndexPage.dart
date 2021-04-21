@@ -128,7 +128,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
               child: Center(
                 child: SafeArea(
                   child: Text(
-                    "老九门",
+                    "甲骨文",
                     style: TextStyle(
                         color: Colors.white, fontSize: ScreenUtil().setSp(20)),
                   ),
