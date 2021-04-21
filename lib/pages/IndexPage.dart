@@ -44,7 +44,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
 
    setState(() {
      news = res.data["news"];
-     zhongjiang = res1.data["data"];
+    zhongjiang = res1.data["data"];
    });
   }
   List getNews(){
@@ -181,7 +181,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                       margin: EdgeInsets.only(left: 10),
                       width: ScreenUtil().setWidth(350),
                       height: ScreenUtil().setHeight(35),
-                      child: Swiper(
+                      child:  zhongjiang.length>0?Swiper(
                         itemCount: zhongjiang.length,
                         scrollDirection: Axis.vertical,
                         autoplay: true,
@@ -200,7 +200,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                             ),
                           );
                         },
-                      ),
+                      ):Container(),
                     ),
                   ],
                 ),
