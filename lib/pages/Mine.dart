@@ -44,7 +44,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
   final SystemUiOverlayStyle _style =
       SystemUiOverlayStyle(statusBarColor: Colors.transparent);
 
-  Map user_info = {"nickname":"","award_amount":"0","has_bank":"0","now_money":"0","img_url":"http://kaifa.crmeb.net/uploads/attach/2019/08/20190807/723adbdd4e49a0f9394dfc700ab5dba3.png","zhongjiang":"0"};
+  Map user_info = {"nickname":"","award_amount":"0","has_bank":"0","now_money":0.0,"img_url":"http://kaifa.crmeb.net/uploads/attach/2019/08/20190807/723adbdd4e49a0f9394dfc700ab5dba3.png","zhongjiang":"0"};
   Map user_message_cate = {
     "account": "1000",
     "validContract": "12",
@@ -233,7 +233,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                              Container(
 
                                child: Text(
-                                 "￥ "+user_info["now_money"].toString()+"元",
+                                 "￥ "+user_info["now_money"].toStringAsFixed(2)+"元",
                                  style: TextStyle(
                                      color: Colors.white, fontSize: ScreenUtil().setSp(20)),
                                ),
