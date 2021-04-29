@@ -75,7 +75,7 @@ class editCard_ extends State<editCard> {
       "tip": "请输入身份证号码",
       "icon": Icon(Icons.credit_card, color: Colors.red),
       "is_edit": false,
-      "type":"number"
+      "type":null
     };
     bankName = {
       "value": "",

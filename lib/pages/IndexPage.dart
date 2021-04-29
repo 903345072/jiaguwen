@@ -11,6 +11,7 @@ import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/applyDaShen.dart';
 import 'package:flutterapp2/pages/article.dart';
 import 'package:flutterapp2/pages/lanqiukaijiang.dart';
+import 'package:flutterapp2/pages/orderdetail.dart';
 import 'package:flutterapp2/pages/zuqiukaijiang.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/wiget/CommonWiget.dart';
@@ -27,15 +28,30 @@ class IndexPage extends StatefulWidget {
 class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
   ScrollController _controller;
   Timer _timer;
+  int page = 0;
+  TextStyle checked_text_style =
+  TextStyle(color: Color(0xfffa2020));
+  TextStyle unchecked_text_style = null;
+  BoxDecoration checked_border_style = BoxDecoration(
+      border: Border(
+          top: BorderSide(
+            // 设置单侧边框的样式
+              color: Color(0xfffa2020),
+              width: 1.5,
+              style: BorderStyle.solid)));
+  BoxDecoration unchecked_border_style = null;
+  PageController controller;
   double _offset = 0.0;
-
+  List<String> containers = ["每日神单","资讯"];
   List newsContainer ;
   List news;
+  List dashen;
   List zhongjiang = [];
   void initState() {
     super.initState();
     news = [];
     newsContainer= [];
+    controller = new PageController(initialPage: this.page);
     loadNews();
   }
   loadNews() async {
@@ -44,8 +60,82 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
 
    setState(() {
      news = res.data["news"];
+     dashen = res.data["dashen"];
     zhongjiang = res1.data["data"];
    });
+  }
+
+  List getDashen(){
+    if(dashen != null){
+      return dashen.asMap().keys.map((e){
+        return GestureDetector(
+          onTap: (){
+            JumpAnimation().jump(orderdetail(int.parse(dashen[e]["id"].toString()),int.parse(dashen[e]["mode"]),dashen[e]["type"]), context);
+          },
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 15,right: 5,  top: 5, bottom: 5),
+
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Wrap(
+
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing:10,
+                          children: <Widget>[
+                            ClipOval(
+                                child: Image.network(
+                                  dashen[e]["avatar"],
+                                  fit: BoxFit.fill,
+                                  width: ScreenUtil().setWidth(55),
+                                  height: ScreenUtil().setWidth(55),
+                                )
+                            ),
+                            Container(
+
+                              child: Text(dashen[e]["real_name"]),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 2),
+                              color: Colors.red,
+                              child: Text(dashen[e]["lian_hong"].toString()+"连红",style: TextStyle(color: Colors.white,fontSize: 10),),
+                            )
+
+                          ],
+                        ),
+                       Container(
+
+                         child:  Wrap(
+                           crossAxisAlignment: WrapCrossAlignment.center,
+                           direction: Axis.vertical,
+                           spacing: 5,
+                           children: <Widget>[
+                             Text(dashen[e]["award_money"].toString(),style: TextStyle(color: Colors.red,fontSize: 17,fontWeight: FontWeight.bold),),
+                             Text("中奖金额",style: TextStyle(color: Colors.grey),)
+                           ],
+                         ),
+                       )
+
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              Divider(),
+            ],
+          ),
+        );
+      }).toList();
+    }else{
+      List<Widget> list = [];
+      list.add(Text("暂无数据"));
+      return list;
+    }
   }
   List getNews(){
     if(news != null){
@@ -194,7 +284,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                                 Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
                                 Text("喜中",style: TextStyle(color: Color(0xff575757))),
                                 zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
-                                Text(zhongjiang[index]["award_money"].toString(),style: TextStyle(color: Colors.red),),
+                                Text(formatNum(zhongjiang[index]["award_money"], 1),style: TextStyle(color: Colors.red),),
                                 Text("元",style: TextStyle(color: Color(0xff575757)))
                               ],
                             ),
@@ -242,7 +332,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                             Card(
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadiusDirectional.circular(16)),
+                                  BorderRadiusDirectional.circular(16)),
                               clipBehavior: Clip.antiAlias,
                               child: Image.asset(
                                 "img/football.png",
@@ -252,14 +342,14 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                               ),
                             ),
 
-                          Container(
-                                height: ScreenUtil().setWidth(55),
-                                child: Wrap(
-                                  direction: Axis.vertical,
-                                  alignment: WrapAlignment.spaceAround,
-                                  children: <Widget>[Text("竞彩足球"), Text("五大联赛",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)))],
-                                ),
+                            Container(
+                              height: ScreenUtil().setWidth(55),
+                              child: Wrap(
+                                direction: Axis.vertical,
+                                alignment: WrapAlignment.spaceAround,
+                                children: <Widget>[Text("竞彩足球"), Text("五大联赛",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)))],
                               ),
+                            ),
 
                           ],
                         ),
@@ -348,26 +438,85 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                   ],
                 ),
               ),
-              CommonWiget().getTaiTou("资讯"),
-              Column(
-                children: getNews(),
-              )
+              Container(
+
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: containers.asMap().keys.map((e) {
+                        TextStyle cur_ts;
+                        BoxDecoration cur_bd;
+                        if(e == page){
+                          cur_ts = checked_text_style;
+                          cur_bd = checked_border_style;
+                        }else{
+                          cur_ts = unchecked_text_style;
+                          cur_bd = unchecked_border_style;
+                        }
+                        return GestureDetector(
+                          onTap: (){
+
+                            setState(() {
+                              this.page = e;
+
+                            });
+
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(top: 7),
+                            child: Column(
+                              children: <Widget>[
+                                Container(child: Text(containers[e],style: cur_ts,),),
+                                Container(
+                                  margin: EdgeInsets.only(top: 7),
+                                  decoration: cur_bd,width: 160,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                   Visibility(
+
+                     visible: this.page==1,
+                     child: Container(
+                       margin: EdgeInsets.only(top: 15),
+                       child: Column(
+                         children:  getNews(),
+                       ),
+                     ),
+                   ),
+                Visibility(
+
+                  visible: this.page==0,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15),
+                    child: Column(
+                      children:  getDashen(),
+                    ),
+                  ),
+                ),
+                  ],
+                ),
+              ),
+
+
             ],
           ),
         ));
   }
-  getZhongJiang(){
-    String str = "";
-    String type = "";
-    zhongjiang.forEach((element) {
-      if(element["type"] == "f"){
-        type = "竞彩足球";
-      }else{
-        type = "竞彩篮球";
-      }
-      str+= "恭喜 " +element["nickname"]+" "+"喜中"+type+element["award_money"].toString()+"元";
-      str += "                      ";
-    });
-    return str;
+  String formatNum(num num,int postion){
+    if(num ==0){
+      return "0";
+    }
+    if((num.toString().length-num.toString().lastIndexOf(".")-1)<postion){
+      return num.toString().substring(0,num.toString().lastIndexOf(".")+postion+1).toString();
+    }else{
+      return num.toString().substring(0,num.toString().lastIndexOf(".")+postion+1).toString();
+    }
   }
+
 }

@@ -41,10 +41,8 @@ class Login_ extends State<flowUsers> {
       ResultData res = await HttpManager.getInstance().get("getFlowUser",params: {"order_id":widget.order_id},withLoading: false);
       setState(() {
         if(res.data["data"] != null && res.data["data"] != {}){
-          Map ss = res.data["data"];
-          ss.forEach((key, value) {
-            data.add(value);
-          });
+          data = res.data["data"];
+
         }
 
       });
