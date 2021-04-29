@@ -32,8 +32,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
 class Mine extends StatefulWidget {
   String _title;
-
-
   @override
   _Mine createState() => _Mine();
 }
@@ -42,7 +40,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
   @override
   bool get wantKeepAlive => true;
   final SystemUiOverlayStyle _style =
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle(statusBarColor: Colors.transparent);
 
   Map user_info = {"nickname":"","award_amount":"0","has_bank":"0","now_money":0.0,"img_url":"http://kaifa.crmeb.net/uploads/attach/2019/08/20190807/723adbdd4e49a0f9394dfc700ab5dba3.png","zhongjiang":"0"};
   Map user_message_cate = {
@@ -69,9 +67,9 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                     Navigator.pop(context);
                     var image = await ImagePicker.pickImage(source: ImageSource.camera);
                     var ss = await ImageCompressUtil().imageCompressAndGetFile(image);
-                     setState(() {
-                       _image = ss;
-                     });
+                    setState(() {
+                      _image = ss;
+                    });
                     _upLoadImage(_image);
                   },
                 ),
@@ -103,7 +101,6 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
   }
   @override
   void initState() {
-
     super.initState();
     getUserInfo();
     getVersion();
@@ -113,21 +110,20 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
     setState(() {
       version = packageInfo.version;
     });
-
   }
   getUserInfo() async{
-   ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
-   setState(() {
-     if(res.data != null){
-       user_info["nickname"] = res.data["nickname"];
-       user_info["now_money"] = res.data["can_use_money"];
-       user_info["has_bank"] = res.data["has_bank"];
-       user_info["img_url"] = res.data["avatar"];
-       user_info["zhongjiang"] = res.data["zhongjiang"];
-       user_info["award_amount"] = res.data["award_amount"];
-     }
+    ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
+    setState(() {
+      if(res.data != null){
+        user_info["nickname"] = res.data["nickname"];
+        user_info["now_money"] = res.data["can_use_money"];
+        user_info["has_bank"] = res.data["has_bank"];
+        user_info["img_url"] = res.data["avatar"];
+        user_info["zhongjiang"] = res.data["zhongjiang"];
+        user_info["award_amount"] = res.data["award_amount"];
+      }
 
-   });
+    });
   }
   _upLoadImage(File image) async {
 
@@ -144,15 +140,15 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
       "filename":name,
       "file":  base64Encode(image.readAsBytesSync())
     });
-   ResultData res = await HttpManager.getInstance().post("user/edit_avatar",params: formdata,withLoading: false);
-   if(res.code == 200){
-     Toast.toast(context,msg:"上传成功");
-     setState(() {
-       user_info["img_url"] = res.data["url"];
-     });
-   }else{
-     Toast.toast(context,msg:"上传失败");
-   }
+    ResultData res = await HttpManager.getInstance().post("user/edit_avatar",params: formdata,withLoading: false);
+    if(res.code == 200){
+      Toast.toast(context,msg:"上传成功");
+      setState(() {
+        user_info["img_url"] = res.data["url"];
+      });
+    }else{
+      Toast.toast(context,msg:"上传失败");
+    }
 
   }
   @override
@@ -167,22 +163,22 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
               Positioned(
                 child: Container(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(ScreenUtil().setHeight(90)),
-                        bottomRight: Radius.circular(ScreenUtil().setHeight(90))
-                    ),
+
                     child: Image.asset(
                       "img/mineback.jpg",
                       fit: BoxFit.fill,
                       width: ScreenUtil.screenWidth,
-                      height: ScreenUtil().setHeight(270),
+                      height: 130,
                     ),
                   ),
                 ),
               ),
+
+
               Container(
+                width: double.infinity,
                 margin: EdgeInsets.only(
-                    top: ScreenUtil().setHeight(65), left: 10, right: 10),
+                    top: 40, left: 10, right: 10),
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   direction: Axis.vertical,
@@ -223,101 +219,90 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                       ),
                     ),
 
-                   Container(
-                     margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
-                     child: Wrap(
-                       direction: Axis.vertical,
-                       children: <Widget>[
-                         Row(
-                           children: <Widget>[
-                             Container(
-
-                               child: Text(
-                                 "￥ "+user_info["now_money"].toStringAsFixed(2)+"元",
-                                 style: TextStyle(
-                                     color: Colors.white, fontSize: ScreenUtil().setSp(20)),
-                               ),
-                             ),
-                             Container(
-                               margin: EdgeInsets.only(left: 10),
-                               child: IconButton(
-                                 onPressed: () async {
-                                   Toast.toast(context,msg: "正在请求...");
-                                   ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
-                                   setState(() {
-                                     if(res.data != null){
-                                       user_info["nickname"] = res.data["nickname"];
-                                       user_info["now_money"] = res.data["now_money"];
-                                       user_info["has_bank"] = res.data["has_bank"];
-                                       user_info["img_url"] = res.data["avatar"];
-                                       user_info["award_amount"] = res.data["award_amount"];
-                                     }
-                                   });
-                                 },
-                                 icon: Icon(Icons.refresh,color: Colors.white,),
-                               ),
-                             )
-                           ],
-                         ),
-
-                       ],
-                     ),
-                   ),
-
-                    Wrap(
-                      spacing: 25,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            JumpAnimation().jump(recharge(), context);
-                          },
-                          child: Container(
-                            child: Text("充值",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(16))
-                            ),
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                    Container(
+                      margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Image.asset("img/qianbao.png",width: 23,),
+                              Container(
+                                child: Text(
+                                  user_info["now_money"].toStringAsFixed(2)+"元",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: ScreenUtil().setSp(20)),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
+                        ],
+                      ),
+                    ),
 
-                            if(res.data["has_bank"] == 0){
-                              Toast.toast(context,msg: "请先绑定银行卡信息");
-                              JumpAnimation().jump(editCard(), context);
-                              return;
-                            }
-                            JumpAnimation().jump(cash(), context);
-                          },
-                          child: Container(
-                            child: Text("提现",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(16))
+                    Container(
+                      color: Colors.white,
+                      margin: EdgeInsets.only(
+                          top: 15),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 140,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              JumpAnimation().jump(recharge(), context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(left: 50,top: 3,bottom: 3),
+
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                direction: Axis.vertical,
+                                children: <Widget>[
+                                  Image.asset("img/chongzhi.png",width: 50,),
+                                  Text("充值")
+                                ],
+                              ),
                             ),
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
                           ),
-                        )
-                      ],
+                          GestureDetector(
+                            onTap: () async {
+                              ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
+
+                              if(res.data["has_bank"] == 0){
+                                Toast.toast(context,msg: "请先绑定银行卡信息");
+                                JumpAnimation().jump(editCard(), context);
+                                return;
+                              }
+                              JumpAnimation().jump(cash(), context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(right: 50,top: 3,bottom: 3),
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                direction: Axis.vertical,
+                                children: <Widget>[
+                                  Image.asset("img/tixian.png",width: 50,),
+                                  Text("提现")
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
-                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))),
-                      height: ScreenUtil().setHeight(75),
-                      width: ScreenUtil().setWidth(375),
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(40)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(90)),
-                      child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      decoration: BoxDecoration(color: Colors.white),
+
+                      width: ScreenUtil().setWidth(390),
+                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(40),top: 20,bottom: 10),
+                      margin: EdgeInsets.only(top: 10),
+                      child:  Wrap(
+                        spacing: 20,
+                        direction: Axis.vertical,
                         children: <Widget>[
                           GestureDetector(
                             onTap: (){
@@ -325,71 +310,23 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
 //                                ModalRoute.withName("/"));
                               JumpAnimation().jump(editCard(), context);
                             },
-                            child: Container(
-                              child: Wrap(
-                                spacing: 6,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    child: Icon(const IconData(0xe603,fontFamily: "iconfont"),size: 17,),
-                                  ),
-                                  Container(
-                                    child: Text("资料",style: TextStyle(fontWeight: FontWeight.bold),),
-                                  ),
-                                  Container(
-                                    child: Text("账户信息"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
                             child: Wrap(
-                              spacing: 6,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 15,
                               children: <Widget>[
-                                Container(
-                                  child: Icon(const IconData(0xe671,fontFamily: "iconfont"),color: Colors.blue,size: 30,),
-                                ),
-                                Container(
-                                  child: Text("中奖",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                                Container(
-                                  child: Text(user_info["zhongjiang"].toString()+"元"),
-                                ),
+                                Icon(const IconData(0xe603,fontFamily: "iconfont"),size: 17,),
+                                Text("账户信息"),
                               ],
                             ),
-                          )
-
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: ScreenUtil().setHeight(75),
-                      width: ScreenUtil().setWidth(375),
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(50)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(15)),
-                      child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
+                          ),
                           GestureDetector(
                             onTap: (){
                               JumpAnimation().jump(orderlist(), context);
                             },
                             child: Wrap(
-                              spacing: 6,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 15,
                               children: <Widget>[
-                                Container(
-                                  child: Icon(const IconData(0xe60a,fontFamily: "iconfont"),color: Colors.red,size: 17,),
-                                ),
-                                Container(
-                                  child: Text("订单",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                                Container(
-                                  child: Text("全部订单"),
-                                ),
+                                Icon(const IconData(0xe60a,fontFamily: "iconfont"),color: Colors.red,size: 17,),
+                                Text("我的订单"),
                               ],
                             ),
                           ),
@@ -398,95 +335,59 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               JumpAnimation().jump(cashlist(), context);
                             },
                             child: Wrap(
-                              spacing: 6,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 15,
                               children: <Widget>[
-                                Container(
-                                  child: Icon(const IconData(0xe607,fontFamily: "iconfont"),color: Colors.deepOrange,size: 15,),
-                                ),
-                                Container(
-                                  child: Text("账单",style: TextStyle(fontWeight: FontWeight.bold),),
-                                ),
-                                Container(
-                                  child: Text("资金流向"),
-                                ),
+                                Icon(const IconData(0xe607,fontFamily: "iconfont"),color: Colors.deepOrange,size: 15,),
+                                Text("资金流向"),
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))),
-                      height: ScreenUtil().setHeight(85),
-                      width: ScreenUtil().setWidth(375),
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(55)),
-                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
-                      child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Wrap(
-                            spacing: 6,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                child: Icon(const IconData(0xe605,fontFamily: "iconfont"),size: 17,),
-                              ),
-
-                              GestureDetector(
-                                onTap: (){
-                                  JumpAnimation().jump(editPassword(), context);
-                                },
-                                child: Container(
-                                  child: Text("修改密码"),
-                                ),
-                              )
-                            ],
                           ),
                           GestureDetector(
                             onTap: (){
-                              JumpAnimation().jump(kefu(), context);
+                              JumpAnimation().jump(editPassword(), context);
                             },
                             child: Wrap(
-                              spacing: 6,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 15,
                               children: <Widget>[
-                                Container(
-                                  child: Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
-                                ),
-                                GestureDetector(
-                                  onTap: () async {
-
-                                    ResultData result = await HttpManager.getInstance().get(
-                                        "logout",withLoading: false);
-                                    if(result.code == 200){
-                                      TokenStore().clearToken("token");
-                                      TokenStore().clearToken("is_login");
-                                      JumpAnimation().jump(Login(), context);
-                                    }
-                                  },
-                                  child: Container(
-                                    child: Text("退出登录",style: TextStyle(fontWeight: FontWeight.bold),),
-                                  ),
-                                )
-
+                                Icon(const IconData(0xe605,fontFamily: "iconfont"),size: 17,),
+                                Text("修改密码"),
                               ],
                             ),
-                          )
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+
+                              ResultData result = await HttpManager.getInstance().get(
+                                  "logout",withLoading: false);
+                              if(result.code == 200){
+                                TokenStore().clearToken("token");
+                                TokenStore().clearToken("is_login");
+                                JumpAnimation().jump(Login(), context);
+                              }
+                            },
+                            child: Wrap(
+                              spacing: 15,
+                              children: <Widget>[
+                                Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
+                                Text("退出登录"),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-
                     Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: GestureDetector(
-                        onTap: (){
-                          Future res = Clipboard.setData(ClipboardData(text: '168876008'));
-                          res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
-                        },
-                        child: Container(
+                      child: Container(
 
-                          child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 320,),
+                        child: GestureDetector(
+                          onTap: (){
+                            Future res = Clipboard.setData(ClipboardData(text: '5392548'));
+                            res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
+                          },
+                          child: Container(
+
+                            child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 320,),
+                          ),
                         ),
                       ),
                     ),
@@ -508,7 +409,9 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
 
                   ],
                 ),
-              )
+              ),
+
+
             ],
           ),
         ),

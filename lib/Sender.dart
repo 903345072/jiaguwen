@@ -15,6 +15,7 @@ import 'package:flutterapp2/pages/orderdetail.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/Rute.dart';
 import 'package:flutterapp2/utils/Toast.dart';
+import 'package:flutterapp2/wiget/flowlist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,6 +31,8 @@ class Sender extends StatefulWidget {
 }
 
 class Login_ extends State<Sender> {
+  List<String> containers = ["近期关注","历史红单"];
+  int page = 0;
 
  String img = "http://kaifa.crmeb.net/uploads/attach/2019/08/20190807/723adbdd4e49a0f9394dfc700ab5dba3.png";
  String nickname = "--";
@@ -37,11 +40,29 @@ class Login_ extends State<Sender> {
  String sl = "0";
  List data = [];
  String order_num = "10";
+ int fans_count;
+ int win_rate;
+  List data1 = [];
+  int fans_award;
+  List near_five;
+ bool is_flow = false;
+  PageController controller;
+  TextStyle checked_text_style =
+  TextStyle(color: Color(0xfffa2020));
+  TextStyle unchecked_text_style = null;
+  BoxDecoration checked_border_style = BoxDecoration(
+      border: Border(
+          top: BorderSide(
+            // 设置单侧边框的样式
+              color: Color(0xfffa2020),
+              width: 1.5,
+              style: BorderStyle.solid)));
+  BoxDecoration unchecked_border_style = null;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    controller = new PageController(initialPage: this.page);
     getSender();
   }
 
@@ -55,6 +76,12 @@ class Login_ extends State<Sender> {
      img = res.data["avatar"];
      nickname = res.data["nickname"];
      order_num = res.data["order_num"].toString();
+     is_flow = res.data["is_flow"];
+      fans_count = res.data["fans_count"];
+      win_rate = res.data["win_rate"];
+      data1  = res.data["data1"];
+     fans_award = res.data["fans_award"];
+     near_five =res.data["near_five"].length>0? res.data["near_five"]:[];
    });
 
   }
@@ -74,14 +101,14 @@ class Login_ extends State<Sender> {
               height: 200,
               child: Stack(
                 children: <Widget>[
-                  Image.asset("img/senderbg.jpg",fit: BoxFit.fill,width: double.infinity,),
+                  Image.asset("img/money.jpg",fit: BoxFit.fill,width: double.infinity,),
 
                   Container(
                     alignment: Alignment.center,
                     child: Wrap(
-                       spacing: 8,
-                       crossAxisAlignment: WrapCrossAlignment.center,
-                      direction: Axis.vertical,
+                      spacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+
                       children: <Widget>[
                         ClipOval(
                             child: Image.network(
@@ -90,169 +117,221 @@ class Login_ extends State<Sender> {
                               width: ScreenUtil().setWidth(75),
                               height: ScreenUtil().setWidth(75),
                             )),
-                        Text(nickname),
-                        Row(
+                        Wrap(
+                          direction: Axis.vertical,
+                          spacing: 5,
                           children: <Widget>[
-                            Container(
-                              width: ScreenUtil().setWidth(120),
-                              padding: EdgeInsets.only(top: 3,bottom: 3),
-                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
-                              child: Wrap(
-                                spacing: 5,
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: <Widget>[
-                                  Text("近"+order_num+"单",style: TextStyle(fontSize: 10),),
-                                  Text(order_num+"投"+target+"中",style: TextStyle(color: Colors.red),)
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: ScreenUtil().setWidth(120),
-                              padding: EdgeInsets.only(top: 5,bottom: 5),
-                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
-                              margin: EdgeInsets.only(left: 10),
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                spacing: 5,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: <Widget>[
-                                  Text("胜率",style: TextStyle(fontSize: 10),),
-                                  Text(sl.toString()+"%",style: TextStyle(color: Colors.red),)
-                                ],
-                              ),
-                            )
+                            Text(nickname),
+                            Text("粉丝:"+fans_count.toString())
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(top: 30,left: 15),
-                      child: const Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,),
-                    ),
-                  )
+
                 ],
               ),
             ),
           ),
+
+
           Container(
-            margin: EdgeInsets.only(top: 200),
-            child: ListView(
-              children: getList(),
+            margin: EdgeInsets.only(top: 190,left: 10,right: 10),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      width: 5,
+                      height: 15,
+                      color: Colors.red,
+                    ),
+                    Text("近10日战绩")
+                  ],
+                ),
+                Divider(),
+                Container(
+                  child: Row(
+
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+
+
+                      Column(
+                        children: <Widget>[
+                          Text(win_rate.toString()+"%",style: TextStyle(color: Colors.red),),
+                          Text("盈利率")
+                        ],
+                      ),
+                      SizedBox(
+                        width: 0.5,
+                        height: 20,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.grey),
+                        ),
+                      ),
+
+                      Column(
+                        children: <Widget>[
+                          Text(order_num+"中"+target,style: TextStyle(color: Colors.red),),
+                          Text("命中率")
+                        ],
+                      ),
+                      SizedBox(
+                        width: 0.5,
+                        height: 20,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.grey),
+                        ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Text(fans_award.toString(),style: TextStyle(color: Colors.red),),
+                          Text("推荐中奖(元)")
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      width: 5,
+                      height: 15,
+                      color: Colors.red,
+                    ),
+                    Text("近五期走势"),
+                    near_five != null? Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Wrap(
+                        spacing: 20,
+                        children: near_five.asMap().keys.map((e){
+                          return Container(
+                            alignment:Alignment.center,
+                            padding:EdgeInsets.only(top: 1,bottom: 2,left: 3,right: 3),
+                            decoration:BoxDecoration(color: near_five[e]["state"]==2?Colors.red:Colors.grey,borderRadius: BorderRadius.all(Radius.circular(3))),
+                            child: Text(near_five[e]["state"]==2?"红":"未",style: TextStyle(color: Colors.white),),
+                          );
+                        }).toList(),
+                      ),
+                    ):Container(),
+
+                  ],
+                ),
+              ],
             ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: PageView(
+                    physics: new NeverScrollableScrollPhysics(),
+                    controller: controller,
+                    onPageChanged: onPageChanged,
+                    children: <Widget>[
+                      flowlist().get(data, context),
+                      flowlist().get(data1, context),
+
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Container(
+              padding: EdgeInsets.only(top: 30,left: 15),
+              child: const Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: 136,
+            child: GestureDetector(
+              onTap: () async {
+                ResultData res = await HttpManager.getInstance().get("flow",params: {"uid":widget.uid},withLoading: false);
+                setState(() {
+                  is_flow = is_flow?false:true;
+                  fans_count = is_flow?fans_count+1:fans_count-1;
+                });
+              },
+              child: !is_flow? Container(
+                padding: EdgeInsets.only(left: 6,right: 5,top: 3,bottom: 3),
+                decoration: BoxDecoration(color: Colors.white,borderRadius:BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)) ),
+                child: Text("+ 关注",style: TextStyle(color: Colors.red),),
+              ):Container(
+                padding: EdgeInsets.only(left: 6,right: 5,top: 3,bottom: 3),
+                decoration: BoxDecoration(borderRadius:BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),border: Border.all(width: 0.4,color: Colors.white) ),
+                child: Text("已关注",style: TextStyle(color: Colors.white),),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 310),
+            child: Column(
+              children: <Widget>[
+                Container(
+
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: containers.asMap().keys.map((e) {
+                      TextStyle cur_ts;
+                      BoxDecoration cur_bd;
+                      if(e == page){
+                        cur_ts = checked_text_style;
+                        cur_bd = checked_border_style;
+                      }else{
+                        cur_ts = unchecked_text_style;
+                        cur_bd = unchecked_border_style;
+                      }
+                      return GestureDetector(
+                        onTap: (){
+
+                          setState(() {
+                            this.page = e;
+
+                          });
+                          controller.jumpToPage(this.page);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 7),
+                          child: Column(
+                            children: <Widget>[
+                              Container(child: Text(containers[e],style: cur_ts,),),
+                              Container(
+                                margin: EdgeInsets.only(top: 7),
+                                decoration: cur_bd,width: 160,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+
+
+
         ],
       ),
     ),);
   }
-  List<Container> getList(){
-    return data.asMap().keys.map((e){
-      return Container(
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 10,color: Color(0xfff5f5f5)))),
-
-        padding: EdgeInsets.only(bottom: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(data[e]["date"].toString()+"   发起方案"),
-                  Text(data[e]["plan_title"].toString()!=""?data[e]["plan_title"].toString():"跟我一起中大奖"),
-                ],
-              ),
-            ),
-            Container(
-
-              margin: EdgeInsets.only(top: 5,left: 5,right: 5),
-              decoration: BoxDecoration(border: Border.all(width: 0.4,color: Colors.grey),borderRadius: BorderRadius.all(Radius.circular(10))),
-              child:  Row(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(border: Border(right: BorderSide(width: 0.4,color: Colors.grey))),
-
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(bottom: 5,top: 5,right: 5),
-                          margin: EdgeInsets.only(bottom: 5),
-                          decoration: BoxDecoration(border:Border(bottom: BorderSide(width: 0.4,color: Colors.grey)) ),
-
-                          width: ScreenUtil().setWidth(310),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(left: ScreenUtil().setWidth(30),),
-                                child: Text("类型"),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(left: ScreenUtil().setWidth(70),),
-                                child: Text("自购金额"),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),),
-                                child: Text("单倍金额"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 5),
-                          width: ScreenUtil().setWidth(280),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(data[e]["type"]=="f"?"竞彩足球":"竞彩篮球"),
-                              Text(data[e]["amount"]),
-                              Text((data[e]["num"]*2).toString()),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 5),
-                    alignment: Alignment.center,
-                    width: ScreenUtil().setWidth(80),
-                    child: data[e]["state"] == 0? RaisedButton(
-                      color: Colors.deepOrange,
-                      onPressed: () {
-                        JumpAnimation().jump(flowdetail(data[e]), context);
-                      },
-                      child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
-                      ///圆角
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(15))
-                      ),
-                    ):data[e]["state"] == 2?GestureDetector(
-                      onTap: (){
-                        JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
-                      },
-                      child: Text(data[e]["money"].toString()+"元",style: TextStyle(color: Colors.red),),
-                    ):GestureDetector(
-                      onTap: (){
-                        JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
-                      },
-                      child: Text("0.00元"),
-                    )
-                    ,
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      );
-    }).toList();
+  void onPageChanged(int page) {
+    setState(() {
+      this.page = page;
+    });
   }
 }
