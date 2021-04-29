@@ -340,11 +340,7 @@ class Login_ extends State<awardOptimize> {
                                 color: Colors.orange,
                                 onPressed: (){
 //
-                        if(order_money<=widget.money){
-                          Toast.toast(context,
-                              msg: "必须1倍以上金额优化");
-                          return;
-                        }
+
                         if(order_money<10){
                           Toast.toast(context,
                               msg: "投注金额不能小于10");

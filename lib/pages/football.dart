@@ -67,12 +67,15 @@ class _GZXDropDownMenuTestPageState extends State<football> {
   Future getGames() async {
    ResultData res = await HttpManager.getInstance().get("football_game",params: {"type":index+1},withLoading: withLoading);
    setState(() {
-     if(res.data["count"] > 0){
-       games = res.data["games"];
-     }else{
-       games = {};
-       Toast.toast(context,msg: "暂无对阵信息");
-     }
+
+       if(res.data["count"] > 0){
+         games = res.data["games"];
+       }else{
+         games = {};
+         Toast.toast(context,msg: "暂无对阵信息");
+       }
+
+
 
    });
   }
