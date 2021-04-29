@@ -115,13 +115,25 @@ class editCard_ extends State<editCard> {
         phoneData["tag_value"] = result.data["bank_info"]["phone"];
         realName["value"] = result.data["bank_info"]["real_name"];
         realName["tag_value"] = result.data["bank_info"]["real_name"];
-        idCard["value"] = result.data["bank_info"]["id_card"];
+        if(result.data["bank_info"]["id_card"] != null){
+          idCard["value"] = result.data["bank_info"]["id_card"].toString().replaceRange(6, result.data["bank_info"]["id_card"].toString().length-4, "*"*(result.data["bank_info"]["id_card"].toString().length-10));
+
+        }else{
+          idCard["value"] = "";
+        }
+
+        if(result.data["bank_info"]["bank_card"] != null){
+          bankCard["value"] = result.data["bank_info"]["bank_card"].toString().replaceRange(6, result.data["bank_info"]["bank_card"].toString().length-4, "*"*(result.data["bank_info"]["bank_card"].toString().length-10));
+
+        }else{
+          bankCard["value"] = "";
+        }
         idCard["tag_value"] = result.data["bank_info"]["id_card"];
         bankName["value"] = result.data["bank_info"]["bank_name"];
         bankName["tag_value"] = result.data["bank_info"]["bank_name"];
         branchName["value"] = result.data["bank_info"]["bank_branch"];
         branchName["tag_value"] = result.data["bank_info"]["bank_branch"];
-        bankCard["value"] = result.data["bank_info"]["bank_card"];
+
         bankCard["tag_value"] = result.data["bank_info"]["bank_card"];
       });
     }
@@ -232,35 +244,7 @@ class editCard_ extends State<editCard> {
                     ],
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(50),
-                  margin: EdgeInsets.only(left: 5, top: 15, right: 5),
-
-                  child: Row(
-                    children: <Widget>[
-
-                      Expanded(
-                        child: TextField(
-                          onChanged: (e) {
-                            setState(() {
-                              branchName["value"] = e;
-                            });
-
-                          },
-                          controller: _controller2,
-                          decoration: InputDecoration(
-                            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.only(left: 10),
-                            hintText:branchName["tip"],
-                            prefixIcon: branchName["icon"],
-
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+               
                 IconInput(
                   data: bankCard,
                   callBack: (value) {
