@@ -255,14 +255,14 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               JumpAnimation().jump(recharge(), context);
                             },
                             child: Container(
-                              padding: EdgeInsets.only(left: 50,top: 3,bottom: 3),
+                              padding: EdgeInsets.only(left: 63,bottom: 2),
 
                               child: Wrap(
                                 alignment: WrapAlignment.center,
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 direction: Axis.vertical,
                                 children: <Widget>[
-                                  Image.asset("img/chongzhi.png",width: 50,),
+                                  Image.asset("img/chongzhi.png",width: 35,),
                                   Text("充值")
                                 ],
                               ),
@@ -280,12 +280,12 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               JumpAnimation().jump(cash(), context);
                             },
                             child: Container(
-                              padding: EdgeInsets.only(right: 50,top: 3,bottom: 3),
+                              padding: EdgeInsets.only(right: 63,bottom: 2),
                               child: Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 direction: Axis.vertical,
                                 children: <Widget>[
-                                  Image.asset("img/tixian.png",width: 50,),
+                                  Image.asset("img/tixian.png",width: 35,),
                                   Text("提现")
                                 ],
                               ),
@@ -299,100 +299,114 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
 
                       width: ScreenUtil().setWidth(390),
                       padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(40),top: 20,bottom: 10),
-                      margin: EdgeInsets.only(top: 10),
+                      margin: EdgeInsets.only(top: 5),
                       child:  Wrap(
                         spacing: 20,
                         direction: Axis.vertical,
                         children: <Widget>[
-                          GestureDetector(
-                            onTap: (){
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            child:  GestureDetector(
+                              onTap: (){
 //                            Router.navigatorKey.currentState.pushNamedAndRemoveUntil("/editCard",
 //                                ModalRoute.withName("/"));
-                              JumpAnimation().jump(editCard(), context);
-                            },
-                            child: Wrap(
-                              spacing: 15,
-                              children: <Widget>[
-                                Icon(const IconData(0xe603,fontFamily: "iconfont"),size: 17,),
-                                Text("账户信息"),
-                              ],
+                                JumpAnimation().jump(editCard(), context);
+                              },
+                              child: Wrap(
+                                spacing: 15,
+                                children: <Widget>[
+                                  Icon(const IconData(0xe603,fontFamily: "iconfont"),size: 17,),
+                                  Text("账户信息"),
+                                ],
+                              ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: (){
-                              JumpAnimation().jump(orderlist(), context);
-                            },
-                            child: Wrap(
-                              spacing: 15,
-                              children: <Widget>[
-                                Icon(const IconData(0xe60a,fontFamily: "iconfont"),color: Colors.red,size: 17,),
-                                Text("我的订单"),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              JumpAnimation().jump(cashlist(), context);
-                            },
-                            child: Wrap(
-                              spacing: 15,
-                              children: <Widget>[
-                                Icon(const IconData(0xe607,fontFamily: "iconfont"),color: Colors.deepOrange,size: 15,),
-                                Text("资金流向"),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              JumpAnimation().jump(editPassword(), context);
-                            },
-                            child: Wrap(
-                              spacing: 15,
-                              children: <Widget>[
-                                Icon(const IconData(0xe605,fontFamily: "iconfont"),size: 17,),
-                                Text("修改密码"),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
 
-                              ResultData result = await HttpManager.getInstance().get(
-                                  "logout",withLoading: false);
-                              if(result.code == 200){
-                                TokenStore().clearToken("token");
-                                TokenStore().clearToken("is_login");
-                                JumpAnimation().jump(Login(), context);
-                              }
-                            },
-                            child: Wrap(
-                              spacing: 15,
-                              children: <Widget>[
-                                Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
-                                Text("退出登录"),
-                              ],
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            child: GestureDetector(
+                              onTap: (){
+                                JumpAnimation().jump(orderlist(), context);
+                              },
+                              child: Wrap(
+                                spacing: 15,
+                                children: <Widget>[
+                                  Icon(const IconData(0xe60a,fontFamily: "iconfont"),color: Colors.red,size: 17,),
+                                  Text("我的订单"),
+                                ],
+                              ),
                             ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            child: GestureDetector(
+                              onTap: (){
+                                JumpAnimation().jump(cashlist(), context);
+                              },
+                              child: Wrap(
+                                spacing: 15,
+                                children: <Widget>[
+                                  Icon(const IconData(0xe607,fontFamily: "iconfont"),color: Colors.deepOrange,size: 15,),
+                                  Text("资金流向"),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5,),
+                            child: GestureDetector(
+                              onTap: (){
+                                JumpAnimation().jump(editPassword(), context);
+                              },
+                              child: Wrap(
+                                spacing: 15,
+                                children: <Widget>[
+                                  Icon(const IconData(0xe605,fontFamily: "iconfont"),size: 17,),
+                                  Text("修改密码"),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            child: GestureDetector(
+                              onTap: () async {
+
+                                ResultData result = await HttpManager.getInstance().get(
+                                    "logout",withLoading: false);
+                                if(result.code == 200){
+                                  TokenStore().clearToken("token");
+                                  TokenStore().clearToken("is_login");
+                                  JumpAnimation().jump(Login(), context);
+                                }
+                              },
+                              child: Wrap(
+                                spacing: 15,
+                                children: <Widget>[
+                                  Icon(const IconData(0xe604,fontFamily: "iconfont"),size: 18,),
+                                  Text("退出登录"),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                     Container(
                       child: Container(
-
                         child: GestureDetector(
                           onTap: (){
                             Future res = Clipboard.setData(ClipboardData(text: '5392548'));
                             res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
                           },
                           child: Container(
-
-                            child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 320,),
+                            child:Image.asset("img/kefu.jpg",fit: BoxFit.fill,width: 310,height: 75,),
                           ),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 2),
+
                       child: Wrap(
 
                         spacing: 11,
