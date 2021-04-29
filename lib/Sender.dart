@@ -43,7 +43,7 @@ class Login_ extends State<Sender> {
  int fans_count;
  int win_rate;
   List data1 = [];
-  int fans_award;
+  double fans_award;
   List near_five;
  bool is_flow = false;
   PageController controller;
@@ -80,7 +80,7 @@ class Login_ extends State<Sender> {
       fans_count = res.data["fans_count"];
       win_rate = res.data["win_rate"];
       data1  = res.data["data1"];
-     fans_award = res.data["fans_award"];
+     fans_award = res.data["fans_award"]>0?res.data["fans_award"]:0.0;
      near_five =res.data["near_five"].length>0? res.data["near_five"]:[];
    });
 
@@ -187,7 +187,7 @@ class Login_ extends State<Sender> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(fans_award.toString(),style: TextStyle(color: Colors.red),),
+                          Text(formatNum(fans_award, 1),style: TextStyle(color: Colors.red),),
                           Text("推荐中奖(元)")
                         ],
                       ),
@@ -333,5 +333,15 @@ class Login_ extends State<Sender> {
     setState(() {
       this.page = page;
     });
+  }
+  String formatNum(num num,int postion){
+    if(num ==0){
+      return "0";
+    }
+    if((num.toString().length-num.toString().lastIndexOf(".")-1)<postion){
+      return num.toString().substring(0,num.toString().lastIndexOf(".")+postion+1).toString();
+    }else{
+      return num.toString().substring(0,num.toString().lastIndexOf(".")+postion+1).toString();
+    }
   }
 }
