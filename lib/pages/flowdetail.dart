@@ -259,7 +259,7 @@ class Login_ extends State<flowdetail> {
                                  ),
                                  Container(
                                    padding:EdgeInsets.only(top: 5,bottom: 5),
-                                   child: Text(widget.data["all_amount"].toString()+"元",textAlign: TextAlign.center,),
+                                   child: Text(widget.data["amount"].toString()+"元",textAlign: TextAlign.center,),
                                  ),
                                 Container(
                                   padding:EdgeInsets.only(top: 5,bottom: 5),

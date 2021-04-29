@@ -71,7 +71,7 @@ class hangqing_ extends State<orderdetail>{
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(widget.type==1?"普通投注详情":"跟单投注详情",style: TextStyle(fontSize: ScreenUtil().setSp(18)),),
+        title: Text(widget.type==1?"普通投注详情":widget.type==2?"发单投注详情":widget.type==3?"跟买投注详情":"优化投注详情",style: TextStyle(fontSize: ScreenUtil().setSp(18)),),
         backgroundColor: Color(0xfffa2020),
 
       ),
@@ -132,7 +132,7 @@ class hangqing_ extends State<orderdetail>{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(order["plan_title"].toString()!=""?order["plan_title"].toString():"跟我一起中大奖"),
+                        order["mode"] =="2"? Text(order["plan_title"].toString()!=""?order["plan_title"].toString():"跟我一起中大奖"):Container(child: Text("暂无描述",style: TextStyle(color: Colors.grey),),),
                         order["state"] == 2?Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -140,13 +140,19 @@ class hangqing_ extends State<orderdetail>{
                             Image.asset("img/zhongjiang.png",fit: BoxFit.fill,width: 70,),
                             Text(order["award_money"].toString()+"元",style: TextStyle(color: Colors.red,fontSize: 11),)
                           ],
-                        ):Column(
+                        ):order["state"] == 1?Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image.asset("img/weizhongjiang.png",fit: BoxFit.fill,width: 70,),
+                            Image.asset("img/weizhongjiang.png",fit: BoxFit.fill,width: 70),
                           ],
-                        )
+                        ):order["state"] == 0?Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 70,color: Colors.yellow,),
+                          ],
+                        ):Container()
                       ],
                     ),
                   ),
@@ -162,7 +168,7 @@ class hangqing_ extends State<orderdetail>{
                           children: <Widget>[
                             Text(order["chuan"]!=""?order["chuan"].toString()+"串1":"单关",style: TextStyle(color: Colors.black),),
 
-                            Text("佣金: "+order['win_yj'].toString()+"%",style: TextStyle(color: Colors.grey),),
+                            order["mode"] =="2"?Text("佣金: "+order['win_yj'].toString()+"%",style: TextStyle(color: Colors.grey),):Container(),
 
 
                           ],
@@ -195,7 +201,6 @@ class hangqing_ extends State<orderdetail>{
                                 padding:EdgeInsets.only(top: 5,bottom: 5),
                                 child:  Text('订单金额',textAlign: TextAlign.center,),
                               ),
-
                               Container(
                                 padding:EdgeInsets.only(top: 5,bottom: 5),
                                 child:  Text('奖金',textAlign: TextAlign.center,),
@@ -216,13 +221,9 @@ class hangqing_ extends State<orderdetail>{
                               Container(
                                 padding:EdgeInsets.only(top: 5,bottom: 5),
                                 child: Text(order["award_money"]!=null?order["award_money"].toString()+"元":"--",textAlign: TextAlign.center,style: TextStyle(color: Colors.red),),
-
                               )
-
                             ]
                         ),
-
-
                       ],
                     ),
                   ),
@@ -233,7 +234,7 @@ class hangqing_ extends State<orderdetail>{
 
                     child: Column(
                       children: <Widget>[
-                        Container(
+                        order["mode"] =="2" ? Container(
 
                           child: Column(
                             children: <Widget>[
@@ -264,14 +265,13 @@ class hangqing_ extends State<orderdetail>{
 
                             ],
                           ),
-                        ),
-                        Divider(),
-                        Container(
-
+                        ):Container(),
+                        order["mode"] =="2"  ?Divider():Container(),
+                        order["mode"] =="2" ?  Container(
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
-                              Row(
+                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: containers.asMap().keys.map((e) {
                                   TextStyle cur_ts;
@@ -315,6 +315,111 @@ class hangqing_ extends State<orderdetail>{
 
                                   child: Container(
 
+                                    child: ExpansionTile(
+
+                                      backgroundColor:Colors.white,
+                                      initiallyExpanded:true,
+                                      title: Text("选号详情",style: TextStyle(fontSize: 12),),
+                                      children: <Widget>[
+                                        order["mode"]!="4"?Container(
+                                          padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
+                                          decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                          width: ScreenUtil().setWidth(410),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                width: ScreenUtil().setWidth(60),
+                                                child: Text("场次"),
+                                              ),
+                                              Container(
+                                                width: ScreenUtil().setWidth(95),
+                                                child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                              ),
+                                              Container(
+                                                width: ScreenUtil().setWidth(75),
+                                                child: Text("玩法"),
+                                              ),
+                                              Container(
+                                                width: ScreenUtil().setWidth(95),
+                                                child: Text("投注"),
+                                              ),
+                                              Container(
+                                                width: ScreenUtil().setWidth(60),
+                                                child: Text("彩果"),
+                                              )
+                                            ],
+                                          ),):Container(
+                                          padding: EdgeInsets.only(top: 5,bottom: 5),
+                                          decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                          width: ScreenUtil().setWidth(410),
+                                          child: Row(
+
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: ScreenUtil().setWidth(60),
+                                                child: Text("串法"),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: ScreenUtil().setWidth(60),
+                                                child: Text("注数"),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: ScreenUtil().setWidth(60),
+                                                child: Text("玩法"),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: ScreenUtil().setWidth(150),
+                                                child: Text("投注"),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: ScreenUtil().setWidth(80),
+                                                child: Text("赛果"),
+                                              ),
+
+                                            ],
+                                          ),),
+                                        Container(
+                                          color: Color(0xffebebeb),
+                                          width: ScreenUtil().setWidth(410),
+                                          child: Column(
+                                            children: order["mode"]!="4"? getList():getOptList(),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+
+                                visible: this.page==1,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 15),
+                                  child: Table(
+                                    border: TableBorder.all(
+                                        color: Colors.grey,
+                                        width: 0.08
+                                    ),
+                                    children: getTableRows(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ):Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: <Widget>[
+                              Visibility(
+                                visible: this.page==0,
+                                child: Container(
+                                  child: Container(
                                     child: ExpansionTile(
 
                                       backgroundColor:Colors.white,

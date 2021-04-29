@@ -94,47 +94,6 @@ class Login_ extends State<Sender> {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-
-          Positioned(
-            child: Container(
-              width: double.infinity,
-              height: 200,
-              child: Stack(
-                children: <Widget>[
-                  Image.asset("img/money.jpg",fit: BoxFit.fill,width: double.infinity,),
-
-                  Container(
-                    alignment: Alignment.center,
-                    child: Wrap(
-                      spacing: 8,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-
-                      children: <Widget>[
-                        ClipOval(
-                            child: Image.network(
-                              img,
-                              fit: BoxFit.fill,
-                              width: ScreenUtil().setWidth(75),
-                              height: ScreenUtil().setWidth(75),
-                            )),
-                        Wrap(
-                          direction: Axis.vertical,
-                          spacing: 5,
-                          children: <Widget>[
-                            Text(nickname),
-                            Text("粉丝:"+fans_count.toString())
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
-          ),
-
-
           Container(
             margin: EdgeInsets.only(top: 190,left: 10,right: 10),
             child: Column(
@@ -224,6 +183,49 @@ class Login_ extends State<Sender> {
               ],
             ),
           ),
+          Container(
+
+            width: double.infinity,
+
+            child: Stack(
+              children: <Widget>[
+                Image.asset("img/money.jpg",fit: BoxFit.fill,width: double.infinity,height: 170,),
+               Positioned(
+
+                 bottom: 20,
+                left: 15,
+                child:   Container(
+                  alignment: Alignment.center,
+                  child: Wrap(
+                    spacing: 8,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+
+                    children: <Widget>[
+                      ClipOval(
+                          child: Image.network(
+                            img,
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(75),
+                            height: ScreenUtil().setWidth(75),
+                          )),
+                      Wrap(
+                        direction: Axis.vertical,
+                        spacing: 5,
+                        children: <Widget>[
+                          Text(nickname),
+                          Text("粉丝:"+fans_count.toString())
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              ],
+            ),
+          ),
+
+
+
           Container(
             margin: EdgeInsets.only(top: 20),
             child: Column(
