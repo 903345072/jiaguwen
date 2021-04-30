@@ -345,7 +345,9 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,mnl_odds,hdc_odds,dxf_od
                           left: 0,
                           right: 0,
                           child: Material(
+
                             child: Container(
+                              margin: EdgeInsets.only(top: 25),
                               color: Colors.white,
                               child: Wrap(
                                 alignment: WrapAlignment.spaceBetween,
