@@ -457,7 +457,7 @@ if(res.data["data"] != null){
                             height: ScreenUtil().setWidth(45),
                           )),
                     ),
-                    Text(list[e]["nickname"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                    Text(list[e]["nickname"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),),
                     Row(
                       children: <Widget>[
                         Container(

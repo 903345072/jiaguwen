@@ -18,6 +18,8 @@ class search extends StatefulWidget{
 
 class search_ extends State<search> {
   List hot = [];
+  List data = [];
+
   Map<String, Object> idCard =  {
     "value": "",
     "title": "请输入用户名1",
@@ -35,12 +37,14 @@ class search_ extends State<search> {
   loadinfo() async{
     ResultData result = await HttpManager.getInstance()
         .get("hot_search",params: {"name":idCard["value"]}, withLoading: false);
-    if(result.data["data"] != null){
+    if(result.data["hot"] != null){
       setState(() {
-        hot = result.data["data"];
+        hot = result.data["hot"];
+
       });
     }
   }
+  static TextEditingController _controller3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 417, height: 867)..init(context);
@@ -53,50 +57,74 @@ class search_ extends State<search> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-             Container(
+              Container(
 
-               padding: EdgeInsets.only(bottom: 10),
-               child:  Row(
-                 crossAxisAlignment: CrossAxisAlignment.center,
 
-                 children: <Widget>[
-                   GestureDetector(
-                     onTap: (){
-                       Navigator.pop(context);
-                     },
-                     child: Container(
-                       margin: EdgeInsets.only(top: 15),
-                       child: Icon(Icons.arrow_back_ios),
-                     ),
-                   ),
-                   Expanded(
-                     child: IconInput(
-                       data: idCard,
-                       callBack: (value) {
-                         setState(() {
-                           idCard["value"] = value;
-                           loadinfo();
-                         });
-                       },
-                     ),
-                   ),
-                   GestureDetector(
-                     onTap: (){
-                       setState(() {
-                         idCard["value"] = "";
-                         loadinfo();
-                       });
-                     },
-                     child: Container(
-                       margin: EdgeInsets.only(top: 15),
-                       child: GestureDetector(
-                         child: Icon(Icons.close),
-                       ),
-                     ),
-                   )
-                 ],
-               ),
-             ),
+                padding: EdgeInsets.only(bottom: 10,top: 10),
+                child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+
+                        child: Icon(Icons.arrow_back_ios),
+                      ),
+                    ),
+
+                    Expanded(
+                      child: Container(
+                        height: 35,
+                        child: TextField(
+                          onChanged: (e) async {
+                            if(e == ""){
+                              loadinfo();
+                              return;
+                            }
+
+                            idCard["value"] = e;
+                            ResultData result = await HttpManager.getInstance()
+                                .get("hot_search",params: {"name":idCard["value"]}, withLoading: false);
+                            if(result.data["data"] != null){
+                              setState(() {
+                                hot = result.data["data"];
+                              });
+                            }
+                          },
+                          controller: _controller3,
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(left: 10),
+                            hintText:idCard["tip"],
+                            prefixIcon: idCard["icon"],
+
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+
+                        setState(() {
+                          _controller3.text = "";
+                          idCard["value"] = "";
+                          loadinfo();
+                        });
+                      },
+                      child: Container(
+
+                        child: GestureDetector(
+                          child: Icon(Icons.close),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Container(
                 padding: EdgeInsets.only(top: 15,left: 15),
                 width: double.infinity,
@@ -155,6 +183,6 @@ class search_ extends State<search> {
       ),
     );
   }
-  
+
 }
 

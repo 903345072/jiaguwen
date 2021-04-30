@@ -110,7 +110,7 @@ class editCard_ extends State<editCard> {
       setState(() {
         _controller.text = result.data["bank_info"]["real_name"];
         _controller2.text = result.data["bank_info"]["bank_name"];
-        _controller3.text = result.data["bank_info"]["bank_branch"];
+        _controller3.text = result.data["bank_info"]["bank_name"];
         phoneData["value"] = result.data["bank_info"]["phone"];
         phoneData["tag_value"] = result.data["bank_info"]["phone"];
         realName["value"] = result.data["bank_info"]["real_name"];
@@ -136,6 +136,10 @@ class editCard_ extends State<editCard> {
 
         bankCard["tag_value"] = result.data["bank_info"]["bank_card"];
       });
+    }else{
+      _controller.text = "";
+      _controller2.text = "";
+      _controller3.text = "";
     }
   }
   static TextEditingController _controller = TextEditingController();
@@ -271,7 +275,6 @@ class editCard_ extends State<editCard> {
                         !checkExist(real_name) ||
                         !checkExist(id_card) ||
                         !checkExist(bank_name) ||
-                        !checkExist(bank_branch) ||
                         !checkExist(bank_card)) {
                       Toast.toast(context, msg: "请输入完整信息");
                       return;
