@@ -163,7 +163,6 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
               Positioned(
                 child: Container(
                   child: ClipRRect(
-
                     child: Image.asset(
                       "img/mineback.jpg",
                       fit: BoxFit.fill,
@@ -242,6 +241,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                    ),
 
                     Container(
+                      width: ScreenUtil().setWidth(390),
                       color: Colors.white,
                       margin: EdgeInsets.only(
                           top: 15),
@@ -255,7 +255,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               JumpAnimation().jump(recharge(), context);
                             },
                             child: Container(
-                              padding: EdgeInsets.only(left: 63,bottom: 2),
+                              padding: EdgeInsets.only(bottom: 2),
 
                               child: Wrap(
                                 alignment: WrapAlignment.center,
@@ -280,7 +280,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                               JumpAnimation().jump(cash(), context);
                             },
                             child: Container(
-                              padding: EdgeInsets.only(right: 63,bottom: 2),
+                              padding: EdgeInsets.only(bottom: 2),
                               child: Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 direction: Axis.vertical,

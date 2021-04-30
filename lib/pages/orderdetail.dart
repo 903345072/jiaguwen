@@ -150,7 +150,7 @@ class hangqing_ extends State<orderdetail>{
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 70,color: Colors.yellow,),
+                            Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 70),
                           ],
                         ):Container()
                       ],

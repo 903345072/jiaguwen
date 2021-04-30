@@ -340,7 +340,6 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_od
       child: Scaffold(
 
         appBar: AppBar(
-
           centerTitle: true,
           elevation: 0,
           iconTheme: IconThemeData(
@@ -361,6 +360,7 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_od
                           right: 0,
                           child: Material(
                             child: Container(
+                              margin: EdgeInsets.only(top: 25),
                               color: Colors.white,
                               child: Wrap(
                                 alignment: WrapAlignment.spaceBetween,
