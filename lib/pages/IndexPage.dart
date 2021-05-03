@@ -512,6 +512,14 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
     if(num ==0){
       return "0";
     }
+    List l = num.toString().split(".");
+    if(l != null){
+      if(l.length>1){
+        if(l[1].toString().length==1){
+          return num.toString();
+        }
+      }
+    }
     if((num.toString().length-num.toString().lastIndexOf(".")-1)<postion){
       return num.toString().substring(0,num.toString().lastIndexOf(".")+postion+1).toString();
     }else{
