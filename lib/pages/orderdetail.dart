@@ -416,7 +416,7 @@ class hangqing_ extends State<orderdetail>{
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
-                              Visibility(
+                             order["mode"] ==4?  getOptList().length>0 ? Visibility(
                                 visible: this.page==0,
                                 child: Container(
                                   child: Container(
@@ -500,9 +500,114 @@ class hangqing_ extends State<orderdetail>{
                                     ),
                                   ),
                                 ),
-                              ),
-                              Visibility(
+                              ):Container(
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 50,bottom: 70),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(Icons.lock),
+                                      Text("开赛后可见")
+                                    ],
+                                  ),
+                                ),
+                              ):getList().length>0 ? Visibility(
+                               visible: this.page==0,
+                               child: Container(
+                                 child: Container(
+                                   child: ExpansionTile(
 
+                                     backgroundColor:Colors.white,
+                                     initiallyExpanded:true,
+                                     title: Text("选号详情",style: TextStyle(fontSize: 12),),
+                                     children: <Widget>[
+                                       order["mode"]!="4"?Container(
+                                         padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
+                                         decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                         width: ScreenUtil().setWidth(410),
+                                         child: Row(
+                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: <Widget>[
+                                             Container(
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("场次"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(95),
+                                               child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(75),
+                                               child: Text("玩法"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(95),
+                                               child: Text("投注"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("彩果"),
+                                             )
+                                           ],
+                                         ),):Container(
+                                         padding: EdgeInsets.only(top: 5,bottom: 5),
+                                         decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                         width: ScreenUtil().setWidth(410),
+                                         child: Row(
+
+                                           children: <Widget>[
+                                             Container(
+                                               alignment: Alignment.center,
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("串法"),
+                                             ),
+                                             Container(
+                                               alignment: Alignment.center,
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("注数"),
+                                             ),
+                                             Container(
+                                               alignment: Alignment.center,
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("玩法"),
+                                             ),
+                                             Container(
+                                               alignment: Alignment.center,
+                                               width: ScreenUtil().setWidth(150),
+                                               child: Text("投注"),
+                                             ),
+                                             Container(
+                                               alignment: Alignment.center,
+                                               width: ScreenUtil().setWidth(80),
+                                               child: Text("赛果"),
+                                             ),
+
+                                           ],
+                                         ),),
+                                       Container(
+                                         color: Color(0xffebebeb),
+                                         width: ScreenUtil().setWidth(410),
+                                         child: Column(
+                                           children: order["mode"]!="4"? getList():getOptList(),
+                                         ),
+                                       )
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                             ):Container(
+                               child: Container(
+                                 margin: EdgeInsets.only(top: 50,bottom: 70),
+                                 child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: <Widget>[
+                                     Icon(Icons.lock),
+                                     Text("开赛后可见")
+                                   ],
+                                 ),
+                               ),
+                             ),
+                              Visibility(
                                 visible: this.page==1,
                                 child: Container(
                                   margin: EdgeInsets.only(top: 15),

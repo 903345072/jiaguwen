@@ -658,6 +658,7 @@ class order_ extends State<order> {
     setState(() {
       min_max.removeWhere((key, value) => !chuan_.contains(key));
     });
+
     min_max.forEach((key, value) {
       List l1 = value;
       l1.forEach((element) {
@@ -666,15 +667,17 @@ class order_ extends State<order> {
           l2.forEach((elementz) {
             lg.add(elementz);
           });
-          sm.add(l2[0]);
+
         }
       });
     });
 
-    sm.sort((left, right) => left.compareTo(right));
+
     double min = s.length > 0 ? s[0] : 0;
     double max = 0;
+
     lg.forEach((element2) {
+
       max += element2;
     });
     min = min * num * 2;
@@ -707,15 +710,19 @@ class order_ extends State<order> {
   List getNum() {
 
     List zz = [];
+    List zz1 = [];
     List zmax = [];
     List zsm = [];
     widget.games.forEach((key, value) {
       value.forEach((game) {
         if (widget.game_ids.contains(game["id"])) {
           List ls = [];
-          List ls2 = [];
+          Map ls2 = {} ;
+          List ls3 = [];
           Map maps = jsonDecode(game["checks"]);
+
           maps.forEach((key1, value1) {
+
             List ls1 = value1;
 
             ls1.sort((left, right){
@@ -723,26 +730,425 @@ class order_ extends State<order> {
               double l1 = double.parse(s1[1]);
               List s2 = right.toString().split("-");
               double l2 = double.parse(s2[1]);
-              return l1.compareTo(l2);
+              return l2.compareTo(l1);
             });
+
             if (ls1.length > 0) {
               List zs = ls1[ls1.length - 1].toString().split("-");
-              ls2.add(double.parse(zs[1]));
+
+              for(Object item in ls1){
+                List zs = item.toString().split("-");
+                ls2[key1.toString()+"-"+zs[0].toString()] = double.parse(zs[1]);
+              }
+              //ls2.add([1:{key1.toString()+"-"+zs[0].toString():double.parse(zs[1])}]);
+            //  ls2[key1.toString()+"-"+zs[0].toString()] =double.parse(zs[1]);
+//              ls2[key1.toString()+"-"+zs[0].toString()] = double.parse(zs[1]);
+              //1s2.add(zs[0].toString());
             }
-           // print(ls1);
+
             ls1.forEach((element) {
+
               List zs2 = element.toString().split("-");
+
               ls.add(double.parse(zs2[1]));
+
+              ls3.add({key1.toString()+"-"+zs2[0].toString():double.parse(zs2[1])});
             });
           });
-          zz.add(ls);
-          zmax.add(ls2);
+
+
+        zz.add(ls);
+
+        Map ls4 = new Map.from(ls2);
+        List p_g = game["p_goal"].toString().split(",");
+        String pg = p_g[1];
+        List key_list = ls2.keys.toList();
+
+
+        //所有的胜，和平、负比较
+          if(2>1){
+            double win1 = ls2["1-1"] == null?0:ls2["1-1"];
+            double win2 = ls2["2-1"] == null?0:ls2["2-1"];
+            double win3 = 0;
+            double win4 = 0;
+            double win5 = 0;
+
+            double ping1 = ls2["1-2"] == null?0:ls2["1-2"];
+            double ping2 = ls2["2-2"] == null?0:ls2["2-2"];
+            double ping3 = 0;
+            double ping4 = 0;
+
+            double ping5 = 0;
+
+            double lose1 = ls2["1-3"] == null?0:ls2["1-3"];
+            double lose2 = ls2["2-3"] == null?0:ls2["2-3"];
+            double lose3 = 0;
+            double lose4 =0;
+            double lose5 = 0;
+
+
+
+            List dd9 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "4" && ss[1] != "1" ){
+                return key_list[e];
+              }
+            }).toList();
+            dd9.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+
+            if(dd9.length>0){
+              win4 =  ls2[dd9[0]];
+              lose4 =  ls2[dd9[0]];
+            }
+
+            List dd10 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "4" &&  (ss[1] == "1" || ss[1] == "3" || ss[1] == "5" || ss[1] == "7" || ss[1]== "8") ){
+                return key_list[e];
+              }
+            }).toList();
+            dd10.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+
+            if(dd10.length>0){
+              ping4 =  ls2[dd10[0]];
+            }
+
+            List dd5 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "3" && double.parse(ss[1]) >= 19){
+                return key_list[e];
+              }
+            }).toList();
+            dd5.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd5.length>0){
+              lose3 = ls2[dd5[0]];
+            }
+
+            List dd6 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "5" && (ss[1].toString().contains("3") || ss[1].toString().contains("6") || ss[1].toString().contains("9"))){
+
+                return key_list[e];
+              }
+            }).toList();
+            dd6.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd6.length>0){
+              lose5 = ls2[dd6[0]];
+            }
+
+            List dd4 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "5" && (ss[1].toString().contains("2") || ss[1].toString().contains("5") || ss[1].toString().contains("8"))){
+
+                return key_list[e];
+              }
+            }).toList();
+            dd4.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd4.length>0){
+              ping5 = ls2[dd4[0]];
+            }
+
+            List dd3 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "3" && (double.parse(ss[1]) >= 14 && double.parse(ss[1]) <= 18)){
+                return key_list[e];
+              }
+            }).toList();
+            dd3.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd3.length>0){
+              ping3 = ls2[dd3[0]];
+            }
+
+            List dd2 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+              if(ss[0] == "3" && double.parse(ss[1]) <= 13){
+                return key_list[e];
+              }
+            }).toList();
+            dd2.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd2.length>0){
+              win3 = ls2[dd2[0]];
+            }
+
+            List dd1 = key_list.asMap().keys.map((e){
+              List ss = key_list[e].toString().split("-");
+
+              if(ss[0] == "5" && (ss[1].toString().contains("1") || ss[1].toString().contains("4") || ss[1].toString().contains("7"))){
+
+                return key_list[e];
+              }
+            }).toList();
+            dd1.removeWhere((element){
+              if(element == null){
+                return true;
+              }
+              return false;
+            });
+            if(dd1.length>0){
+              win5 = ls2[dd1[0]];
+            }
+
+
+
+           double win_total = win1+win2+win3+win4+win5;
+           double lose_total = lose1+lose2+lose3+lose4+lose5;
+           double ping_total = ping1+ping3+ping4+ping5;
+
+
+
+            if(double.parse(pg) <= -1){
+             if( win1>0 && win2==0){
+               win_total = win_total+ping2;
+             }
+             if(ping1>0 && ping2==0){
+               ping_total = ping_total+lose2;
+             }
+            }
+            if(double.parse(pg) >= 1){
+              if(lose1>0 && lose2 == 0){
+                lose_total = win_total+ping2;
+              }
+              if(ping1>0 && ping2 == 0){
+                ping_total = ping_total+win2;
+              }
+
+            }
+
+
+            //胜负比较
+
+            if(win_total >= lose_total){
+              //干掉负
+
+              ls4.remove("1-3");
+
+              if(lose3 >0){ls4.remove(dd5[0]);};
+              if(lose5 >0){ls4.remove(dd6[0]);};
+            }else{
+              //干掉胜
+              ls4.remove("1-1");
+
+              if(win3 >0){ls4.remove(dd2[0]);};
+              if(win5 >0){ls4.remove(dd1[0]);};
+            }
+
+            //胜平比较
+            if(win_total >= ping_total){
+              //干掉平
+
+              ls4.remove("1-2");
+
+
+              if(ping3 >0){ls4.remove(dd3[0]);};
+              if(ping4 >0){ls4.remove("4-1");};
+              if(ping5 >0){ls4.remove(dd4[0]);};
+            }else{
+              //干掉胜
+              ls4.remove("1-1");
+              if(win3 >0){ls4.remove(dd2[0]);};
+              if(win5 >0){ls4.remove(dd1[0]);};
+            }
+
+            //平负比较
+
+            if(ping_total >= lose_total){
+
+              //干掉负
+              ls4.remove("1-3");
+              if(lose3 >0){ls4.remove(dd5[0]);};
+              if(lose5 >0){ls4.remove(dd6[0]);};
+            }else{
+
+              //干掉平
+              ls4.remove("1-2");
+              if(ping3 >0){ls4.remove(dd3[0]);};
+              if(ping4 >0){ls4.remove("4-1");};
+              if(ping5 >0){ls4.remove(dd4[0]);};
+            }
+
+            if(win_total>ping_total && win_total>lose_total){
+              ls4.remove("2-3");
+              if(double.parse(pg) > -1){
+                ls4.remove("2-2");
+              }
+              if(ls4["2-1"] != null && ls4["2-2"] !=null ){
+                if(ls4["2-1"] >= ls4["2-2"]){
+                  ls4.remove("2-2");
+                }else{
+                  ls4.remove("2-1");
+                }
+              }
+            }
+
+            if(ping_total>win_total && ping_total>lose_total){
+
+             if(ping2> ping1+ping3+ping4+ping5){
+               ls4.remove("1-2");
+               if(ping3>0){
+                 ls4.remove(dd3[0]);
+               }
+               if(ping4>0){
+                 ls4.remove(dd10[0]);
+               }
+               if(ping5>0){
+                 ls4.remove(dd4[0]);
+               }
+             }else{
+               ls4.remove("2-2");
+             }
+
+              if(double.parse(pg) > -1){
+                ls4.remove("2-3");
+              }else{
+                ls4.remove("2-1");
+              }
+
+             if(ls4["2-1"] != null && ls4["2-2"] !=null ){
+               if(ls4["2-1"] >= ls4["2-2"]){
+                 ls4.remove("2-2");
+               }else{
+                 ls4.remove("2-1");
+               }
+             }
+
+            }
+
+            if(lose_total>ping_total && lose_total>win_total){
+              ls4.remove("2-1");
+              if(double.parse(pg)<=-1){
+                ls4.remove("2-2");
+              }
+              if(ls4["2-2"] != null && ls4["2-3"] !=null){
+
+                if(ls4["2-2"] > ls4["2-3"]){
+                  ls4.remove("2-3");
+                }else{
+                  ls4.remove("2-2");
+                }
+              }
+            }
+            if(dd10.length>0){
+
+              for(Object i in dd10){
+                if(i != dd10[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+            if(dd9.length>0){
+
+              for(Object i in dd9){
+                if(i != dd9[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+            //比分胜取最大一个
+            if(win3>0){
+              //3-2留着 dd2[0]
+              for(Object i in dd2){
+                if(i != dd2[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+
+
+            if(ping3>0){
+              for(Object i in dd3){
+                if(i != dd3[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+
+
+
+
+
+
+            if(lose3>0){
+              for(Object i in dd5){
+                if(i != dd5[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+
+            if(win5>0){
+              for(Object i in dd1){
+                if(i != dd1[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+            if(ping5>0){
+              for(Object i in dd4){
+                if(i != dd4[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+            if(lose5>0){
+              for(Object i in dd6){
+                if(i != dd6[0]){
+                  ls4.remove(i);
+                }
+              }
+            }
+
+
+
+
+
+            //总进球取最大一个
+
+            //混合胜平负取最大一个
+          }
+
+List sk = ls4.keys.map((e){return ls4[e];}).toList();
+zmax.add(sk);
         }
       });
     });
 
     List ar = [];
-    //print(zz);
+
     if (widget.least_game == 1) {
       zz.forEach((z) {
         List z1 = z;
@@ -769,9 +1175,8 @@ class order_ extends State<order> {
     List ars = [];
 
     chuan_.forEach((element4) {
-      plzh(zz, element4, type: "m");
-      List lss = plzh(zz, element4);
-
+      List lss =   plzh(zz, element4, type: "a");
+      plzh(zmax, element4, type: "m");
       lss.forEach((element5) {
         List lss2 = element5;
         lss2.forEach((element6) {
@@ -810,16 +1215,18 @@ class order_ extends State<order> {
     }
 
     List arr_ = [];
+    List arr_1 = [];
 
     r_arr.forEach((element) {
+//      arr_.add(cartesian(element, r_arr.length)[0]);
+//      arr_1.add(cartesian(element, r_arr.length)[1]);
       arr_.add(cartesian(element, r_arr.length));
     });
     if (type == "m") {
       setState(() {
         min_max[size] = arr_;
       });
-    }
-    ;
+    };
 
     return arr_;
   }
@@ -849,6 +1256,7 @@ class order_ extends State<order> {
   }
 
   cartesian_(List sets) {
+
     List arr = [];
     String str = "";
     for (int i = 0; i < sets.length - 1; i++) {
@@ -869,31 +1277,41 @@ class order_ extends State<order> {
       });
       arr = tmp;
     }
+
     return arr;
   }
 
   cartesian(List sets, int len) {
     List arr = [];
+    List arr1 = [];
 
     for (int i = 0; i < sets.length - 1; i++) {
       if (i == 0) {
         arr = sets[i];
+
+        arr1 = sets[i];
       }
+
       List tmp = [];
+      List tmp1 = [];
 
       arr.forEach((element) {
         List ls = sets[i + 1];
 
         ls.forEach((element2) {
-          tmp.add(element * element2);
+
+         tmp.add(element * element2);
+        // tmp.add({element.keys.elementAt(0).toString()+"-"+element2.keys.elementAt(0).toString():element.values.elementAt(0) * element2.values.elementAt(0)});
         });
       });
       arr = tmp;
-    }
-    ;
-    arr.sort((left, right) => left.compareTo(right));
+      arr1 = tmp1;
+    };
 
-    return arr;
+
+
+   // return [arr,arr1];
+   return arr;
   }
 
   getChuan() {

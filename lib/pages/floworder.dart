@@ -247,13 +247,13 @@ if(res.data["data"] != null){
                                       ),
                                     ),
                                     Positioned(
-                                     right: 15,
-                                    top: 30,
+                                     right: 25,
+                                    top: 40,
                                       child: GestureDetector(
                                         onTap: (){
                                           JumpAnimation().jump(flow(), context);
                                         },
-                                        child: Text("关注",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                        child: Text("关注",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
                                       ),
                                     ),
                                   ],
@@ -297,7 +297,7 @@ if(res.data["data"] != null){
                                               onTap: (){
                                                 JumpAnimation().jump(search(), context);
                                               },
-                                              child: Icon(Icons.search,color: Colors.grey,size: 20,),
+                                              child: Icon(Icons.search,color: Colors.grey,size: 25,),
                                             )
                                           ],
                                         ),

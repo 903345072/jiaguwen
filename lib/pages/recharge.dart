@@ -37,7 +37,7 @@ class Login_ extends State<recharge> {
   FocusNode _commentFocus;
   bool is_show = true;
   int yj ;
-  int pay_type = 2;
+  int pay_type = 1;
   @override
   void initState() {
     // TODO: implement initState
@@ -101,7 +101,7 @@ class Login_ extends State<recharge> {
                                     ],
                                   ),
                                   Radio(
-                                    value:2,
+                                    value:1,
                                     groupValue:this.pay_type,
                                     onChanged:(v){
                                       setState(() {

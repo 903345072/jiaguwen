@@ -106,7 +106,7 @@ class Login_ extends State<Sender> {
                       height: 15,
                       color: Colors.red,
                     ),
-                    Text("近10日战绩")
+                    Text("近10单战绩")
                   ],
                 ),
                 Divider(),
