@@ -83,7 +83,7 @@ class flowlist{
 
                    alignment: Alignment.center,
                    width: ScreenUtil().setWidth(80),
-                   child: data[e]["state"] == 0? RaisedButton(
+                   child: data[e]["state"] == 0 ? data[e]["is_flow"] == 1 ?RaisedButton(
                      color: Colors.red,
                      onPressed: () {
                        JumpAnimation().jump(flowdetail(data[e]), context);
@@ -93,6 +93,17 @@ class flowlist{
                      shape: RoundedRectangleBorder(
                          side: BorderSide.none,
                          borderRadius: BorderRadius.all(Radius.circular(5))
+                     ),
+                   ):GestureDetector(
+                     onTap: (){
+                       JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
+                     },
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: <Widget>[
+                         Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 60,),
+                       ],
                      ),
                    ):data[e]["state"] == 2?GestureDetector(
                      onTap: (){
