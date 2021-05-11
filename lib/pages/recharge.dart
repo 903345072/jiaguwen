@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
+import 'package:tobias/tobias.dart' as tobias;
+
 
 class recharge extends StatefulWidget {
   @override
@@ -234,12 +236,8 @@ class Login_ extends State<recharge> {
 
                       if(data["code"] == 200){
                         if(pay_type == 1){
-                        String url = data["url"];
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          } else {
-                            throw 'Could not launch $url';
-                          }
+                          String payInfo = jsonEncode(data['url']);
+                          tobias.pay(payInfo);
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);
                         }
