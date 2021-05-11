@@ -46,7 +46,7 @@ dependencies:
   package_info: ^0.4.3
   flutter_image_compress: ^0.7.0
   path_provider: ^1.6.22
-  tobias: ^0.0.2
+  tobias: ^1.7.1+3
 
 dev_dependencies:
   flutter_test:
