@@ -416,7 +416,7 @@ class hangqing_ extends State<orderdetail>{
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
-                             order["mode"] ==4?  getOptList().length>0 ? Visibility(
+                             order["mode"] =="4"?  getOptList().length>0 ? Visibility(
                                 visible: this.page==0,
                                 child: Container(
                                   child: Container(
@@ -658,6 +658,7 @@ class hangqing_ extends State<orderdetail>{
     }
   }
   List<Container> getOptList(){
+    print(123);
     List ls = game["data"];
    return ls.asMap().keys.map((e) {
      List lst = ls[e]["bet_content"];
