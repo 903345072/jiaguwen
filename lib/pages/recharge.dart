@@ -236,8 +236,7 @@ class Login_ extends State<recharge> {
 
                       if(data["code"] == 200){
                         if(pay_type == 1){
-                          String payInfo = jsonEncode(data['url']);
-                          tobias.pay(payInfo);
+                          Future s=   tobias.aliPay(data['url']) ;
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);
                         }
