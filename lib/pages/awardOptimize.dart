@@ -71,7 +71,7 @@ class Login_ extends State<awardOptimize> {
 
 
     zhu = (widget.money/2).toInt();
-     zhu_ = lst.length;
+    zhu_ = lst.length;
     diff_zhu = zhu-zhu_;
 
     if(diff_zhu>0){
@@ -400,10 +400,23 @@ class Login_ extends State<awardOptimize> {
   String getAwardRange(){
     List ls = [];
     double m = 0;
+
     lst.forEach((element) {
+      ls.add(element["award"]);
+      m+=element["award"];
+    });
+    List sz = [];
+    lst.forEach((element) {
+
+    List data = element["data"];
+
+
+    sz.add({"attr":data[0]["attr"],"award":element["award"]});
+
     ls.add(element["award"]);
     m+=element["award"];
     });
+    print(sz);
     ls.sort((left, right) => left.compareTo(right));
     double s1 = ls.first;
     return s1.toStringAsFixed(2)+"~"+m.toStringAsFixed(2);

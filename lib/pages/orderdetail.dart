@@ -30,6 +30,7 @@ class orderdetail extends StatefulWidget{
 class hangqing_ extends State<orderdetail>{
   Map game ={};
   Map order= {};
+  Map es = {};
   int chang;
   List<String> containers = ["方案详情","跟单列表"];
   int page = 0;
@@ -267,6 +268,59 @@ class hangqing_ extends State<orderdetail>{
                           ),
                         ):Container(),
                         order["mode"] =="2"  ?Divider():Container(),
+                        order["mode"] == "4"?Container(
+                          color: Colors.white,
+                          child: Container(
+                            child: Container(
+
+                              child: ExpansionTile(
+
+                                backgroundColor:Colors.white,
+                                key: PageStorageKey(2),
+                                initiallyExpanded:true,
+                                title: Text("选号详情",style: TextStyle(fontSize: 12),),
+                                children: <Widget>[
+                                Container(
+                                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
+                                    decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                    width: ScreenUtil().setWidth(410),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          width: ScreenUtil().setWidth(60),
+                                          child: Text("场次"),
+                                        ),
+                                        Container(
+                                          width: ScreenUtil().setWidth(95),
+                                          child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                        ),
+                                        Container(
+                                          width: ScreenUtil().setWidth(75),
+                                          child: Text("玩法"),
+                                        ),
+                                        Container(
+                                          width: ScreenUtil().setWidth(95),
+                                          child: Text("投注"),
+                                        ),
+                                        Container(
+                                          width: ScreenUtil().setWidth(60),
+                                          child: Text("彩果"),
+                                        )
+                                      ],
+                                    ),),
+                                  Container(
+                                    color: Color(0xffebebeb),
+                                    width: ScreenUtil().setWidth(410),
+                                    child: Column(
+                                      children: getList(),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ):Container(),
                         order["mode"] =="2" ?  Container(
                           color: Colors.white,
                           child: Column(
@@ -307,6 +361,7 @@ class hangqing_ extends State<orderdetail>{
                                   );
                                 }).toList(),
                               ),
+
                               Visibility(
 
                                 visible: this.page==0,
@@ -321,7 +376,7 @@ class hangqing_ extends State<orderdetail>{
                                       initiallyExpanded:true,
                                       title: Text("选号详情",style: TextStyle(fontSize: 12),),
                                       children: <Widget>[
-                                        order["mode"]!="4"?Container(
+                                     Container(
                                           padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
                                           decoration: BoxDecoration(color: Color(0xfffff5f8)),
                                           width: ScreenUtil().setWidth(410),
@@ -349,46 +404,12 @@ class hangqing_ extends State<orderdetail>{
                                                 child: Text("彩果"),
                                               )
                                             ],
-                                          ),):Container(
-                                          padding: EdgeInsets.only(top: 5,bottom: 5),
-                                          decoration: BoxDecoration(color: Color(0xfffff5f8)),
-                                          width: ScreenUtil().setWidth(410),
-                                          child: Row(
-
-                                            children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("串法"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("注数"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("玩法"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(150),
-                                                child: Text("投注"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(80),
-                                                child: Text("赛果"),
-                                              ),
-
-                                            ],
                                           ),),
                                         Container(
                                           color: Color(0xffebebeb),
                                           width: ScreenUtil().setWidth(410),
                                           child: Column(
-                                            children: order["mode"]!="4"? getList():getOptList(),
+                                            children: getList(),
                                           ),
                                         )
                                       ],
@@ -416,17 +437,17 @@ class hangqing_ extends State<orderdetail>{
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
-                             order["mode"] =="4"?  getOptList().length>0 ? Visibility(
+                             order["mode"] =="3"?  getList().length>0 ? Visibility(
                                 visible: this.page==0,
                                 child: Container(
                                   child: Container(
                                     child: ExpansionTile(
 
                                       backgroundColor:Colors.white,
-                                      initiallyExpanded:true,
+                                      initiallyExpanded:order["mode"] == "4"?true:false,
                                       title: Text("选号详情",style: TextStyle(fontSize: 12),),
                                       children: <Widget>[
-                                        order["mode"]!="4"?Container(
+                                      Container(
                                           padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
                                           decoration: BoxDecoration(color: Color(0xfffff5f8)),
                                           width: ScreenUtil().setWidth(410),
@@ -454,46 +475,12 @@ class hangqing_ extends State<orderdetail>{
                                                 child: Text("彩果"),
                                               )
                                             ],
-                                          ),):Container(
-                                          padding: EdgeInsets.only(top: 5,bottom: 5),
-                                          decoration: BoxDecoration(color: Color(0xfffff5f8)),
-                                          width: ScreenUtil().setWidth(410),
-                                          child: Row(
-
-                                            children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("串法"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("注数"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(60),
-                                                child: Text("玩法"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(150),
-                                                child: Text("投注"),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: ScreenUtil().setWidth(80),
-                                                child: Text("赛果"),
-                                              ),
-
-                                            ],
                                           ),),
                                         Container(
                                           color: Color(0xffebebeb),
                                           width: ScreenUtil().setWidth(410),
                                           child: Column(
-                                            children: order["mode"]!="4"? getList():getOptList(),
+                                            children: getList(),
                                           ),
                                         )
                                       ],
@@ -511,45 +498,18 @@ class hangqing_ extends State<orderdetail>{
                                     ],
                                   ),
                                 ),
-                              ):getList().length>0 ? Visibility(
+                              ):Visibility(
+
                                visible: this.page==0,
                                child: Container(
                                  child: Container(
-                                   child: ExpansionTile(
-
+                                   child: order["mode"] == "4"? ExpansionTile(
+                                     initiallyExpanded: true,
                                      backgroundColor:Colors.white,
-                                     initiallyExpanded:true,
-                                     title: Text("选号详情",style: TextStyle(fontSize: 12),),
+
+                                     title: Text("优化详情",style: TextStyle(fontSize: 12),),
                                      children: <Widget>[
-                                       order["mode"]!="4"?Container(
-                                         padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
-                                         decoration: BoxDecoration(color: Color(0xfffff5f8)),
-                                         width: ScreenUtil().setWidth(410),
-                                         child: Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: <Widget>[
-                                             Container(
-                                               width: ScreenUtil().setWidth(60),
-                                               child: Text("场次"),
-                                             ),
-                                             Container(
-                                               width: ScreenUtil().setWidth(95),
-                                               child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
-                                             ),
-                                             Container(
-                                               width: ScreenUtil().setWidth(75),
-                                               child: Text("玩法"),
-                                             ),
-                                             Container(
-                                               width: ScreenUtil().setWidth(95),
-                                               child: Text("投注"),
-                                             ),
-                                             Container(
-                                               width: ScreenUtil().setWidth(60),
-                                               child: Text("彩果"),
-                                             )
-                                           ],
-                                         ),):Container(
+                                       Container(
                                          padding: EdgeInsets.only(top: 5,bottom: 5),
                                          decoration: BoxDecoration(color: Color(0xfffff5f8)),
                                          width: ScreenUtil().setWidth(410),
@@ -588,22 +548,56 @@ class hangqing_ extends State<orderdetail>{
                                          color: Color(0xffebebeb),
                                          width: ScreenUtil().setWidth(410),
                                          child: Column(
-                                           children: order["mode"]!="4"? getList():getOptList(),
+                                           children: getOptList(),
+                                         ),
+                                       )
+                                     ],
+                                   ):ExpansionTile(
+
+
+                                     backgroundColor:Colors.white,
+
+                                     initiallyExpanded: true,
+                                     title: Text("选号详情",style: TextStyle(fontSize: 12),),
+                                     children: <Widget>[
+                                      Container(
+                                         padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: 5,bottom: 5),
+                                         decoration: BoxDecoration(color: Color(0xfffff5f8)),
+                                         width: ScreenUtil().setWidth(410),
+                                         child: Row(
+                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: <Widget>[
+                                             Container(
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("场次"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(95),
+                                               child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(75),
+                                               child: Text("玩法"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(95),
+                                               child: Text("投注"),
+                                             ),
+                                             Container(
+                                               width: ScreenUtil().setWidth(60),
+                                               child: Text("彩果"),
+                                             )
+                                           ],
+                                         ),),
+                                       Container(
+                                         color: Color(0xffebebeb),
+                                         width: ScreenUtil().setWidth(410),
+                                         child: Column(
+                                           children: getList(),
                                          ),
                                        )
                                      ],
                                    ),
-                                 ),
-                               ),
-                             ):Container(
-                               child: Container(
-                                 margin: EdgeInsets.only(top: 50,bottom: 70),
-                                 child: Row(
-                                   mainAxisAlignment: MainAxisAlignment.center,
-                                   children: <Widget>[
-                                     Icon(Icons.lock),
-                                     Text("开赛后可见")
-                                   ],
                                  ),
                                ),
                              ),
@@ -639,6 +633,14 @@ class hangqing_ extends State<orderdetail>{
       ),
     );
   }
+  getbool(){
+
+    if(order["mode"] == "4"){
+
+      return false;
+    }
+    return true;
+  }
   getChang(){
     if(order["mode"] != "4"){
       return game.length.toString()+"场";
@@ -658,73 +660,76 @@ class hangqing_ extends State<orderdetail>{
     }
   }
   List<Container> getOptList(){
-    print(123);
+
     List ls = game["data"];
-   return ls.asMap().keys.map((e) {
-     List lst = ls[e]["bet_content"];
-     return Container(
 
-       alignment: Alignment.center,
-       decoration: BoxDecoration(border:Border(top: BorderSide(width: 0.1),right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom:BorderSide(width: 0.1))),
 
-       child: Row(
+    return ls.asMap().keys.map((e) {
+      List lst = ls[e]["bet_content"];
+      return Container(
 
-         crossAxisAlignment: CrossAxisAlignment.center,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(border:Border(top: BorderSide(width: 0.1),right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom:BorderSide(width: 0.1))),
 
-         children: <Widget>[
+        child: Row(
 
-           Container(
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-             alignment: Alignment.center,
-             width: ScreenUtil().setWidth(60),
-             child: lst.length==1?Text("单关"):Text(lst.length.toString()+"串1"),
-           ),
+          children: <Widget>[
 
-           Container(
-             decoration: BoxDecoration(border:Border(left: BorderSide(width: 0.1))),
-             child: Row(
-               children: <Widget>[
-                 Container(
-                   decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1))),
-                   alignment: Alignment.center,
-                   width: ScreenUtil().setWidth(60),
-                   child: Text(ls[e]["num"].toString()+"注"),
-                 ),
-                 Column(
-                   children: lst.asMap().keys.map((e1){
-                     return Row(
-                       children: <Widget>[
-                         Container(
-                           decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
-                           alignment: Alignment.center,
-                           width: ScreenUtil().setWidth(60),
-                           child: Text(lst[e1]["name"].toString()),
-                         ),
-                         Container(
-                           decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
-                           alignment: Alignment.center,
-                           width: ScreenUtil().setWidth(150),
-                           child: Text(lst[e1]["h_name"].toString()+"("+lst[e1]["value"].toString()+")"),
-                         ),
-                         Container(
-                           decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
-                           alignment: Alignment.center,
-                           width: ScreenUtil().setWidth(79),
-                           child: Text(lst[e1]["caiguo"].toString(),style: TextStyle(color: lst[e1]["ret"]==0?Colors.black:Colors.red),),
-                         )
-                       ],
-                     );
-                   }).toList(),
-                 ),
-               ],
-             ),
-           ),
-         ],
-       ),
-     );
-   }).toList();
+            Container(
 
-    return [];
+              alignment: Alignment.center,
+              width: ScreenUtil().setWidth(60),
+              child: lst.length==1?Text("单关"):Text(lst.length.toString()+"串1"),
+            ),
+
+            Container(
+              decoration: BoxDecoration(border:Border(left: BorderSide(width: 0.1))),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1))),
+                    alignment: Alignment.center,
+                    width: ScreenUtil().setWidth(60),
+                    child: Text(ls[e]["num"].toString()+"注"),
+                  ),
+                  Column(
+                    children: lst.asMap().keys.map((e1){
+                      return Row(
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
+                            alignment: Alignment.center,
+                            width: ScreenUtil().setWidth(60),
+                            child: Text(lst[e1]["name"].toString()),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
+                            alignment: Alignment.center,
+                            width: ScreenUtil().setWidth(150),
+                            child: Text(lst[e1]["h_name"].toString()+"("+lst[e1]["value"].toString()+")"),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1),bottom: BorderSide(width: 0.1))),
+                            alignment: Alignment.center,
+                            width: ScreenUtil().setWidth(79),
+                            child: Text(lst[e1]["caiguo"].toString(),style: TextStyle(color: lst[e1]["ret"]==0?Colors.black:Colors.red),),
+                          )
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
+
+
+
   }
  List getList(){
     String keys;
@@ -734,8 +739,15 @@ class hangqing_ extends State<orderdetail>{
     String a_name ;
     String bifen ;
     int num;
-    return game.keys.map((e){
-      Map s = game[e];
+Map data;
+if(order["mode"] == "4"){
+  data = es;
+}else{
+  data = game;
+}
+
+    return data.keys.map((e){
+      Map s = data[e];
       num = 0;
       s.forEach((key, value) {
          week = s[key][0]["time"].toString().substring(0,1);
@@ -828,14 +840,12 @@ class hangqing_ extends State<orderdetail>{
        List pg = p_goal.toString().split(",");
        List meth_id = ls[0]["method_id"].toString().split("-");
 
-
        if(order["type"] == "f"){
          if(meth_id[0] == "2"){
            if(pg.length == 1){
               rf = pg[0];
            }else{
              rf = pg[1];
-
            }
          }else{
            rf = "-500";
@@ -911,8 +921,16 @@ class hangqing_ extends State<orderdetail>{
       order = res.data["order"];
       if(res.data["detail"].length>0){
         game = res.data["detail"];
+        if(res.data["es"] != null && res.data["es"].length>0){
+          es = res.data["es"];
+        }else{
+          es = {};
+        }
+
+
       }else{
         game = {};
+        es = {};
       }
 
 

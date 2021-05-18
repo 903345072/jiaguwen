@@ -11,19 +11,16 @@ import 'dart:io';
 class HttpManager {
   static HttpManager _instance = HttpManager._internal();
   Dio _dio;
-
   static const CODE_SUCCESS = 200;
   static const CODE_TIME_OUT = -1;
-
   factory HttpManager() => _instance;
-
   ///通用全局单例，第一次使用时初始化
   HttpManager._internal({String baseUrl}) {
     if (null == _dio) {
       _dio = new Dio(
           new BaseOptions(baseUrl: Address.BASE_URL, connectTimeout: 35000));
-     // _dio.interceptors.add(new DioLogInterceptor());
-   //  _dio.interceptors.add(new PrettyDioLogger());
+      //_dio.interceptors.add(new DioLogInterceptor());
+    // _dio.interceptors.add(new PrettyDioLogger());
       _dio.interceptors.add(new ResponseInterceptors());
     }
   }
