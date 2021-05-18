@@ -927,6 +927,7 @@ class order_ extends State<order> {
 
            double win_total = win1+win2+win3+win4+win5;
            double lose_total = lose1+lose2+lose3+lose4+lose5;
+
            double ping_total = ping1+ping3+ping4+ping5;
 
 
@@ -940,13 +941,15 @@ class order_ extends State<order> {
              }
             }
             if(double.parse(pg) >= 1){
+
               if(lose1>0 && lose2 == 0){
-                lose_total = win_total+ping2;
+                lose_total = lose_total+ping2;
               }
+
+
               if(ping1>0 && ping2 == 0){
                 ping_total = ping_total+win2;
               }
-
             }
 
 

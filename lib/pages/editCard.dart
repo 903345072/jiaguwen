@@ -45,6 +45,8 @@ class editCard_ extends State<editCard> {
   String re_pwd;
   bool check = false;
   String phone = "1";
+  String real_id;
+  String real_bank;
   FocusNode _commentFocus;
 
   @override
@@ -101,6 +103,7 @@ class editCard_ extends State<editCard> {
       "is_edit": true,
       "type":"number"
     };
+
   }
 
   loadBankInfo() async {
@@ -116,15 +119,18 @@ class editCard_ extends State<editCard> {
         realName["value"] = result.data["bank_info"]["real_name"];
         realName["tag_value"] = result.data["bank_info"]["real_name"];
         if(result.data["bank_info"]["id_card"] != null){
-          idCard["value"] = result.data["bank_info"]["id_card"].toString().replaceRange(6, result.data["bank_info"]["id_card"].toString().length-4, "*"*(result.data["bank_info"]["id_card"].toString().length-10));
-
+          idCard["value"] = result.data["bank_info"]["id_card"].toString();
+          _controller4.text = result.data["bank_info"]["id_card"].toString().replaceRange(6, result.data["bank_info"]["id_card"].toString().length-4, "*"*(result.data["bank_info"]["id_card"].toString().length-10));
+       real_id = result.data["bank_info"]["id_card"].toString();
         }else{
           idCard["value"] = "";
         }
 
         if(result.data["bank_info"]["bank_card"] != null){
-          bankCard["value"] = result.data["bank_info"]["bank_card"].toString().replaceRange(6, result.data["bank_info"]["bank_card"].toString().length-4, "*"*(result.data["bank_info"]["bank_card"].toString().length-10));
+          _controller5.text = result.data["bank_info"]["bank_card"].toString().replaceRange(6, result.data["bank_info"]["bank_card"].toString().length-4, "*"*(result.data["bank_info"]["bank_card"].toString().length-10));
+          real_bank = result.data["bank_info"]["bank_card"].toString();
 
+          bankCard["value"] =  result.data["bank_info"]["bank_card"].toString();
         }else{
           bankCard["value"] = "";
         }
@@ -140,11 +146,17 @@ class editCard_ extends State<editCard> {
       _controller.text = "";
       _controller2.text = "";
       _controller3.text = "";
+      _controller4.text = "";
+      _controller5.text = "";
     }
   }
+
   static TextEditingController _controller = TextEditingController();
   static TextEditingController _controller2 = TextEditingController();
   static TextEditingController _controller3 = TextEditingController();
+  static TextEditingController _controller4 = TextEditingController();
+  static TextEditingController _controller5 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 417, height: 867)..init(context);
@@ -211,13 +223,43 @@ class editCard_ extends State<editCard> {
                     ],
                   ),
                 ),
-                IconInput(
-                  data: idCard,
-                  callBack: (value) {
-                    setState(() {
-                      idCard["value"] = value;
-                    });
-                  },
+                Container(
+                  height: ScreenUtil().setHeight(50),
+                  margin: EdgeInsets.only(left: 5, top: 15, right: 5),
+
+                  child: Row(
+                    children: <Widget>[
+
+                      Expanded(
+                        child: TextField(
+
+                          onTap: (){
+                            _controller4.text = real_id;
+                          },
+                          onChanged: (e) {
+
+                            setState(() {
+                             idCard["value"] = _controller4.text;
+                             real_id = e;
+
+
+                            });
+
+                          },
+
+                          controller: _controller4,
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(left: 10),
+                            hintText:idCard["tip"],
+                            prefixIcon: idCard["icon"],
+
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(50),
@@ -248,14 +290,42 @@ class editCard_ extends State<editCard> {
                     ],
                   ),
                 ),
-               
-                IconInput(
-                  data: bankCard,
-                  callBack: (value) {
-                    setState(() {
-                      bankCard["value"] = value;
-                    });
-                  },
+
+                Container(
+                  height: ScreenUtil().setHeight(50),
+                  margin: EdgeInsets.only(left: 5, top: 15, right: 5),
+
+                  child: Row(
+                    children: <Widget>[
+
+                      Expanded(
+                        child: TextField(
+
+                          onTap: (){
+                            _controller5.text = real_bank;
+                          },
+                          onChanged: (e) {
+
+                            setState(() {
+                              bankCard["value"] = _controller5.text;
+                              real_bank = e;
+                            });
+
+                          },
+
+                          controller: _controller5,
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.only(left: 10),
+                            hintText:bankCard["tip"],
+                            prefixIcon: bankCard["icon"],
+
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
