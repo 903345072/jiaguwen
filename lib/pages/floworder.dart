@@ -68,6 +68,7 @@ if(res.data["data"] != null){
      }
 
     uids = res.data["uids"];
+
      zhongjiang = res1.data["data"];
    });
   }
@@ -266,7 +267,7 @@ if(res.data["data"] != null){
                                     children: <Widget>[
                                       Container(
                                         alignment: Alignment.center,
-                                        margin: EdgeInsets.only(bottom: 15),
+                                        margin: EdgeInsets.only(bottom: 5),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -303,27 +304,32 @@ if(res.data["data"] != null){
                                         ),
                                       ),
                                       Container(
+
                                         alignment: Alignment.center,
                                         width: double.infinity,
                                         child: GridView.count(
+
+                                          padding: EdgeInsets.only(left: 5),
+                                          mainAxisSpacing: 5,
+                                          crossAxisSpacing: 5,
+
+
+
                                           shrinkWrap: true,
                                           crossAxisCount: 4,
                                           children: dashen.asMap().keys.map((e) {
-                                            return Wrap(
-
-                                              spacing: 5,
-                                              crossAxisAlignment: WrapCrossAlignment.center,
-                                              runAlignment: WrapAlignment.center,
-                                              direction: Axis.vertical,
+                                            return Column(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: <Widget>[
                                                 GestureDetector(
-
                                                   onTap: (){
                                                     JumpAnimation().jump(Sender(uid: dashen[e]["uid"],), context);
                                                   },
                                                   child: uids[dashen[e]["uid"].toString()] != null && uids[dashen[e]["uid"].toString()].length>0? Stack(
                                                     children: <Widget>[
                                                       Container(
+
+                                                        margin:EdgeInsets.only(left: 10),
                                                         decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
                                                         child: ClipOval(
                                                             child: Image.network(
@@ -333,9 +339,9 @@ if(res.data["data"] != null){
                                                               height: ScreenUtil().setWidth(55),
                                                             )),
                                                       ),
-                                                      Positioned(
-                                                        top:0,
-                                                        right:0,
+                                                      Container(
+                                                        margin: EdgeInsets.only(left: 45),
+
                                                         child: ClipOval(
                                                           child: Container(
                                                            width:17,
@@ -346,17 +352,86 @@ if(res.data["data"] != null){
                                                             child: Text(uids[dashen[e]["uid"].toString()].length.toString(),style: TextStyle(color: Colors.white),),
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
+                                                      dashen[e]["lian_hong"]>0? Container(
+                                                        margin: EdgeInsets.only(top: 45,left: 20),
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            Container(
+                                                              padding: EdgeInsets.only(left: 3,right: 3),
+                                                              alignment: Alignment.center,
+                                                              height:17,
+                                                              decoration:BoxDecoration(
+                                                                  color: Colors.red,
+                                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
+                                                              ),
+                                                              child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
+                                                            ),
+                                                            Container(
+                                                              padding: EdgeInsets.only(left: 2,right: 2),
+                                                              alignment: Alignment.center,
+                                                              height:17,
+                                                              decoration:BoxDecoration(
+                                                                  border: Border.all(color: Colors.red,width: 0.1),
+                                                                  color: Colors.white,
+                                                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
+                                                              ),
+                                                              child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ):Container(),
+
                                                     ],
-                                                  ):ClipOval(
-                                                      child: Image.network(
-                                                        dashen[e]["avatar"],
-                                                        fit: BoxFit.fill,
-                                                        width: ScreenUtil().setWidth(55),
-                                                        height: ScreenUtil().setWidth(55),
-                                                      )),
+                                                  ):Stack(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        margin:EdgeInsets.only(left: 10),
+                                                        decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
+                                                        child: ClipOval(
+                                                            child: Image.network(
+                                                              dashen[e]["avatar"],
+                                                              fit: BoxFit.fill,
+                                                              width: ScreenUtil().setWidth(55),
+                                                              height: ScreenUtil().setWidth(55),
+                                                            )),
+                                                      ),
+
+                                                      dashen[e]["lian_hong"]>0? Container(
+                                                        margin: EdgeInsets.only(top: 45,left: 20),
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            Container(
+                                                              padding: EdgeInsets.only(left: 3,right: 3),
+                                                              alignment: Alignment.center,
+                                                              height:17,
+                                                              decoration:BoxDecoration(
+                                                                  color: Colors.red,
+                                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
+                                                              ),
+                                                              child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
+                                                            ),
+                                                            Container(
+                                                              padding: EdgeInsets.only(left: 2,right: 2),
+                                                              alignment: Alignment.center,
+                                                              height:17,
+                                                              decoration:BoxDecoration(
+                                                                border: Border.all(color: Colors.red,width: 0.1),
+                                                                  color: Colors.white,
+                                                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
+                                                              ),
+                                                              child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ):Container(),
+
+
+
+                                                    ],
+                                                  ),
                                                 ),
-                                                Text(dashen[e]["nickname"].toString().length>8?dashen[e]["nickname"].toString().substring(0,8):dashen[e]["nickname"].toString())
+                                                Text(dashen[e]["nickname"].toString().length>4?dashen[e]["nickname"].toString().substring(0,4):dashen[e]["nickname"].toString())
                                               ],
                                             );
                                           }).toList(),),
@@ -364,6 +439,7 @@ if(res.data["data"] != null){
 
                                       Container(
 
+                                        margin: EdgeInsets.only(top: 10),
                                         height: ScreenUtil().setHeight(35),
                                         width: double.infinity,
                                         child: Row(
