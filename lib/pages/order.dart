@@ -537,6 +537,7 @@ class order_ extends State<order> {
                                         }
                                       });
                                     });
+
                                     ResultData res =
                                         await HttpManager.getInstance()
                                             .post("doorder", params: {
@@ -646,6 +647,7 @@ class order_ extends State<order> {
   }
 
   getExpectAward() {
+
     String text = "预计奖金0";
     List s = getNum();
 

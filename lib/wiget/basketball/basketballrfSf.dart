@@ -113,11 +113,11 @@ getsfList(){
   return [GestureDetector(
     onTap: () {
       Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
-      String mid = widget.games[widget.e2][widget.e]["check_info"][0]["id"].toString();
-      String id = widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][0]["id"].toString();
+      String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
+      String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["id"].toString();
       if(checks[mid] != null){
         List attr = checks[mid];
-        if(widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][0]["color"] == "co"){
+        if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["color"] == "co"){
 
             attr.add(id+"-"+widget.rfsf[0]);
 
@@ -133,8 +133,8 @@ getsfList(){
       }
       widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
       setState(() {
-        widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][0]
-        ["color"] = widget.games[widget.e2][widget.e]["check_info"][0]
+        widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]
+        ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
         ["bet_way"][0]["color"] ==
             "co"
             ? "red"
@@ -148,7 +148,7 @@ getsfList(){
       width: ScreenUtil().setWidth(160),
       height: ScreenUtil().setHeight(40),
       decoration: BoxDecoration(
-          color: widget.games[widget.e2][widget.e]["check_info"][0]
+          color: widget.games[widget.e2][widget.e]["check_info"][1]
           ["bet_way"][0]["color"] ==
               "co"
               ? Colors.white
@@ -163,7 +163,7 @@ getsfList(){
           Text(
             "主负",
             style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][0]
+                color: widget.games[widget.e2][widget.e]["check_info"][1]
                 ["bet_way"][0]["color"] ==
                     "co"
                     ? Colors.grey
@@ -172,7 +172,7 @@ getsfList(){
           Text(
             widget.rfsf[0],
             style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][0]
+                color: widget.games[widget.e2][widget.e]["check_info"][1]
                 ["bet_way"][0]["color"] ==
                     "co"
                     ? Colors.grey
@@ -184,11 +184,11 @@ getsfList(){
   ),GestureDetector(
     onTap: () {
       Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
-      String mid = widget.games[widget.e2][widget.e]["check_info"][0]["id"].toString();
-      String id = widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][1]["id"].toString();
+      String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
+      String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["id"].toString();
       if(checks[mid] != null){
         List attr = checks[mid];
-        if(widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][1]["color"] == "co"){
+        if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["color"] == "co"){
 
             attr.add(id+"-"+widget.rfsf[1]);
 
@@ -204,8 +204,8 @@ getsfList(){
       }
       widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
       setState(() {
-        widget.games[widget.e2][widget.e]["check_info"][0]["bet_way"][1]
-        ["color"] = widget.games[widget.e2][widget.e]["check_info"][0]
+        widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]
+        ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
         ["bet_way"][1]["color"] ==
             "co"
             ? "red"
@@ -219,7 +219,7 @@ getsfList(){
       width: ScreenUtil().setWidth(160),
       height: ScreenUtil().setHeight(40),
       decoration: BoxDecoration(
-          color: widget.games[widget.e2][widget.e]["check_info"][0]
+          color: widget.games[widget.e2][widget.e]["check_info"][1]
           ["bet_way"][1]["color"] ==
               "co"
               ? Colors.white
@@ -234,7 +234,7 @@ getsfList(){
           Text(
             "主胜",
             style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][0]
+                color: widget.games[widget.e2][widget.e]["check_info"][1]
                 ["bet_way"][1]["color"] ==
                     "co"
                     ? Colors.grey
@@ -243,7 +243,7 @@ getsfList(){
           Text(
             widget.rfsf[1],
             style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][0]
+                color: widget.games[widget.e2][widget.e]["check_info"][1]
                 ["bet_way"][1]["color"] ==
                     "co"
                     ? Colors.grey
