@@ -115,37 +115,37 @@ class Login_ extends State<recharge> {
                                 ],
                               ),
                             ),
-//                            Container(
-//                              margin: EdgeInsets.only(top: 10),
-//                              width: ScreenUtil().setWidth(399),
-//                              child: Row(
-//                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                                children: <Widget>[
-//                                  Row(
-//                                    children: <Widget>[
-//                                      Image.asset("img/wxpay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
-//                                      Column(
-//                                        crossAxisAlignment: CrossAxisAlignment.start,
-//                                        children: <Widget>[
-//                                          Text("微信快捷支付"),
-//                                          Text("微信推荐,安全快捷",style: TextStyle(color: Colors.grey),),
-//                                        ],
-//                                      )
-//                                    ],
-//                                  ),
-//                                  Radio(
-//                                    value:1,
-//                                    groupValue:this.pay_type,
-//                                    onChanged:(v){
-//                                      setState(() {
-//                                        this.pay_type = v;
-//                                      });
-//                                    },
-//                                  ),
-//
-//                                ],
-//                              ),
-//                            )
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              width: ScreenUtil().setWidth(399),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Image.asset("img/wxpay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text("微信快捷支付"),
+                                          Text("微信推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Radio(
+                                    value:2,
+                                    groupValue:this.pay_type,
+                                    onChanged:(v){
+                                      setState(() {
+                                        this.pay_type = v;
+                                      });
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -236,8 +236,13 @@ class Login_ extends State<recharge> {
                       int type_ = res.data["type"];
                       print(type_);
                       if(data["code"] == 200){
-                        if(type_ == 1){
-                          Future s=   tobias.aliPay(data['url']) ;
+                        if(type_ == 2){
+                          String url = data["url"];
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);
                         }
