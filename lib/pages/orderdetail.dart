@@ -663,6 +663,7 @@ class hangqing_ extends State<orderdetail>{
 
     List ls = game["data"];
 
+    print(ls);
 
     return ls.asMap().keys.map((e) {
       List lst = ls[e]["bet_content"];
