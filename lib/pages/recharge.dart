@@ -220,7 +220,6 @@ class Login_ extends State<recharge> {
                           Toast.toast(context,msg: "请输入正确金额");
                           return;
                         }
-
                       }else{
                         Toast.toast(context,msg: "请输入正确金额");
                         return;
