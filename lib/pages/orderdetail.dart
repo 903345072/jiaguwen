@@ -230,7 +230,8 @@ class hangqing_ extends State<orderdetail>{
                   ),
                   Container(
 
-                    margin: EdgeInsets.only(bottom: 100),
+
+             
                     decoration: BoxDecoration(color:Colors.white,border: Border(bottom: BorderSide(width: 5,color: Color(0xfff5f5f5)))),
 
                     child: Column(
@@ -622,9 +623,25 @@ class hangqing_ extends State<orderdetail>{
                       ],
                     ),
                   ),
+                  order["is_self"] == 1?Container(
+                    child: Column(
 
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(child: Text("实体票照片"),),
+                        order["order_pic"] != null && order["order_pic"] != ""?Container(
+                          margin: EdgeInsets.only(top: 10,bottom: 20),
+                          child: Image.network(order["order_pic"]),
+                        ):Container(
+                          margin: EdgeInsets.only(top: 10,bottom: 20),
+                          child: Text("等待店主上传实体票",style: TextStyle(color: Colors.grey),),
+                        )
+                      ],
+                    ),
+                  ):Container(),
 
-
+                  
                 ],
               ),
             ),
