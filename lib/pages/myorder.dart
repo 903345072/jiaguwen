@@ -199,7 +199,7 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
                                        ls[e2]["state"] == 2?Icon(Icons.monetization_on,color: Colors.orange,size: 18,):Container()
                                      ],
                                    ),
-                                   Text("金额消费"+ls[e2]["amount"].toString()+".00元"),
+                                   Text("金额消费"+ls[e2]["amount"].toString()),
                                  ],
                                ),
                                Container(

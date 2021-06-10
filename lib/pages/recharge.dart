@@ -39,7 +39,7 @@ class Login_ extends State<recharge> {
   FocusNode _commentFocus;
   bool is_show = true;
   int yj ;
-  int pay_type = 1;
+  int pay_type = 2;
   @override
   void initState() {
     // TODO: implement initState
@@ -85,36 +85,36 @@ class Login_ extends State<recharge> {
                         child: Wrap(
                           direction: Axis.vertical,
                           children: <Widget>[
-                            Container(
-                              width: ScreenUtil().setWidth(399),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Image.asset("img/alipay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text("支付宝快捷支付"),
-                                          Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value:1,
-                                    groupValue:this.pay_type,
-                                    onChanged:(v){
-                                      setState(() {
-                                        this.pay_type = v;
-                                      });
-                                    },
-                                  ),
-
-                                ],
-                              ),
-                            ),
+//                            Container(
+//                              width: ScreenUtil().setWidth(399),
+//                              child: Row(
+//                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                children: <Widget>[
+//                                  Row(
+//                                    children: <Widget>[
+//                                      Image.asset("img/alipay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+//                                      Column(
+//                                        crossAxisAlignment: CrossAxisAlignment.start,
+//                                        children: <Widget>[
+//                                          Text("支付宝快捷支付"),
+//                                          Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+//                                        ],
+//                                      )
+//                                    ],
+//                                  ),
+//                                  Radio(
+//                                    value:1,
+//                                    groupValue:this.pay_type,
+//                                    onChanged:(v){
+//                                      setState(() {
+//                                        this.pay_type = v;
+//                                      });
+//                                    },
+//                                  ),
+//
+//                                ],
+//                              ),
+//                            ),
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               width: ScreenUtil().setWidth(399),

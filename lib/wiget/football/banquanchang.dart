@@ -350,7 +350,7 @@ getScore(){
     );
   }
   getHalfList(state) {
-    String status = widget.p_status[0];
+    String status = widget.p_status[4];
     if(status == "0"){
       return [Container(
         decoration: BoxDecoration(
