@@ -27,7 +27,7 @@ class freshStyle{
       loadedText: '加载完成',
       noMoreText: '加载完成',
       moreInfo: '更新于 %T',
-      bgColor: Colors.black26,
+      bgColor: Colors.lightBlueAccent,
       textColor: Colors.black87,
       moreInfoColor: Colors.black54,
       showMore: true,

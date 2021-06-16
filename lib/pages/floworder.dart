@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp2/SharedPreferences/TokenStore.dart';
 import 'package:flutterapp2/net/Address.dart';
@@ -23,7 +24,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Sender.dart';
 import '../main.dart';
 import 'flow.dart';
-
+import 'package:flutterapp2/utils/freshStyle.dart';
 class floworder extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -42,6 +43,7 @@ class Login_ extends State<floworder> {
   List dashen = [];
   List zhongjiang = [];
   Map uids = {};
+  int page = 1;
   FocusNode _commentFocus;
 
   @override
@@ -52,7 +54,20 @@ class Login_ extends State<floworder> {
     _future = getList();
 
   }
+  GlobalKey<RefreshHeaderState> _headerKey = GlobalKey<RefreshHeaderState>();
+  GlobalKey<RefreshFooterState> _footerKey = GlobalKey<RefreshFooterState>();
+  getMore() async {
+    ResultData res = await HttpManager.getInstance().get("getMore",params:{"page":page},withLoading: false);
+    setState(() {
+      if(res.data != null){
+        if(res.data["data"] != null){
+          List list2 = res.data["data"];
+          list.addAll(list2);
+        }
+      }
 
+    });
+  }
   getList() async {
    ResultData res = await HttpManager.getInstance().get("getFlowOrder",withLoading: false);
    ResultData res1 = await HttpManager.getInstance().get("zhongjiang",withLoading: false);
@@ -105,396 +120,405 @@ if(res.data["data"] != null){
                           child: Text('网络请求出错'),
                         );
                       }
-                      return Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: ListView(
-                              children: <Widget>[
-                                Stack(
-                                  children: <Widget>[
 
-                                    Container(
-                                      height: 250,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffFFC0CB),
+                      return Center(
+                        child: EasyRefresh(
+                        
+                          refreshFooter: freshStyle.getFooter(_footerKey),
+                          child:  ListView(
+                            children: <Widget>[
+                              Column(
+
+                                children: <Widget>[
+                                  Stack(
+                                    children: <Widget>[
+
+                                      Container(
+                                        height: 250,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFFC0CB),
+                                        ),
                                       ),
-                                    ),
 
 
-                                    Positioned(
+                                      Positioned(
 
-                                      child: Container(
-
-                                      margin: EdgeInsets.only(top: 20),
-                                        child: Image.asset("img/banjiang.png",fit: BoxFit.fill,),
-                                      ),
-                                    ),
-                                    Container(
-
-                                      child: GestureDetector(
                                         child: Container(
 
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: (){
-                                                  JumpAnimation().jump(Sender(uid: dashen[1]["uid"],), context);
-                                                },
-                                                child: Container(
-
-                                                  margin: EdgeInsets.only(top: 30),
-                                                  child: Column(
-                                                    children: <Widget>[
-
-                                                      Stack(
-                                                        children: <Widget>[
-                                                          Image.asset("img/number2.png",width: 80,height: 80,),
-                                                          Positioned(
-                                                            bottom: 16,
-                                                            left: 16,
-                                                            child: ClipOval(
-
-                                                                child: Image.network(
-
-                                                                  dashen[1]["avatar"],
-                                                                  fit: BoxFit.fill,
-                                                                  width: ScreenUtil().setWidth(55),
-                                                                  height: ScreenUtil().setWidth(55),
-                                                                )),
-                                                          )
-
-                                                        ],
-                                                      ),
-                                                      Container(
-                                                        child: Text(dashen[1]["nickname"].toString().length>4?dashen[1]["nickname"].toString().substring(0,4):dashen[1]["nickname"].toString(),),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: (){
-                                                  JumpAnimation().jump(Sender(uid: dashen[0]["uid"],), context);
-                                                },
-                                                child: Container(
-
-                                                  margin: EdgeInsets.only(left: 10,right: 10),
-                                                  child: Column(
-                                                    children: <Widget>[
-
-                                                      Stack(
-                                                        children: <Widget>[
-                                                          Image.asset("img/number1.png",width: 80,height: 80,),
-                                                          Positioned(
-                                                            bottom: 16,
-                                                            left: 16,
-                                                            child: ClipOval(
-
-                                                                child: Image.network(
-
-                                                                  dashen[0]["avatar"],
-                                                                  fit: BoxFit.fill,
-                                                                  width: ScreenUtil().setWidth(55),
-                                                                  height: ScreenUtil().setWidth(55),
-                                                                )),
-                                                          )
-
-                                                        ],
-                                                      ),
-                                                      Container(
-                                                        child: Text(dashen[0]["nickname"].toString().length>4?dashen[0]["nickname"].toString().substring(0,4):dashen[0]["nickname"].toString(),),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                             GestureDetector(
-                                               onTap: (){
-                                                 JumpAnimation().jump(Sender(uid: dashen[2]["uid"],), context);
-                                               },
-                                               child:  Container(
-                                                 margin: EdgeInsets.only(top: 40,right: 5),
-                                                 child: Column(
-                                                   children: <Widget>[
-
-                                                     Stack(
-                                                       children: <Widget>[
-                                                         Image.asset("img/number3.png",width: 80,height: 80,),
-                                                         Positioned(
-                                                           bottom: 16,
-                                                           left: 16,
-                                                           child: ClipOval(
-                                                               child: Image.network(
-                                                                 dashen[2]["avatar"],
-                                                                 fit: BoxFit.fill,
-                                                                 width: ScreenUtil().setWidth(55),
-                                                                 height: ScreenUtil().setWidth(55),
-                                                               )),
-                                                         )
-
-                                                       ],
-                                                     ),
-                                                     Container(
-                                                       child: Text(dashen[2]["nickname"].toString().length>4?dashen[2]["nickname"].toString().substring(0,4):dashen[2]["nickname"].toString(),),
-                                                     )
-                                                   ],
-                                                 ),
-                                               ),
-                                             )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                     right: 25,
-                                    top: 40,
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          JumpAnimation().jump(flow(), context);
-                                        },
-                                        child: Text("关注",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  margin: EdgeInsets.all(5),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.center,
-                                        margin: EdgeInsets.only(bottom: 5),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  margin: EdgeInsets.only(right: ScreenUtil().setWidth(5)),
-                                                  child: Image.asset("img/dashen.png",color:Colors.deepOrange,width: ScreenUtil().setWidth(70),fit: BoxFit.fill,),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(top: ScreenUtil().setWidth(3),right:ScreenUtil().setWidth(3), ),
-                                                  child: Image.asset("img/tuijian.jpg",width: ScreenUtil().setWidth(20),fit: BoxFit.fill,),
-                                                ),
-                                                Row(
-                                                  children: <Widget>[
-                                                    Icon(Icons.star,color: Colors.yellow,size: 10,),
-                                                    Icon(Icons.star,color: Colors.yellow,size: 10,),
-                                                    Icon(Icons.star,color: Colors.yellow,size: 10,),
-                                                    Icon(Icons.star,color: Colors.yellow,size: 10,),
-                                                    Icon(Icons.star,color: Colors.yellow,size: 10,),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-
-                                            GestureDetector(
-                                              onTap: (){
-                                                JumpAnimation().jump(search(), context);
-                                              },
-                                              child: Icon(Icons.search,color: Colors.grey,size: 25,),
-                                            )
-                                          ],
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: Image.asset("img/banjiang.png",fit: BoxFit.fill,),
                                         ),
                                       ),
                                       Container(
 
-                                        alignment: Alignment.center,
-                                        width: double.infinity,
-                                        child: GridView.count(
+                                        child: GestureDetector(
+                                          child: Container(
 
-                                          padding: EdgeInsets.only(left: 5),
-                                          mainAxisSpacing: 5,
-                                          crossAxisSpacing: 5,
-
-
-
-                                          shrinkWrap: true,
-                                          crossAxisCount: 4,
-                                          children: dashen.asMap().keys.map((e) {
-                                            return Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
                                                 GestureDetector(
                                                   onTap: (){
-                                                    JumpAnimation().jump(Sender(uid: dashen[e]["uid"],), context);
+                                                    JumpAnimation().jump(Sender(uid: dashen[1]["uid"],), context);
                                                   },
-                                                  child: uids[dashen[e]["uid"].toString()] != null && uids[dashen[e]["uid"].toString()].length>0? Stack(
-                                                    children: <Widget>[
-                                                      Container(
+                                                  child: Container(
 
-                                                        margin:EdgeInsets.only(left: 10),
-                                                        decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
-                                                        child: ClipOval(
-                                                            child: Image.network(
-                                                              dashen[e]["avatar"],
-                                                              fit: BoxFit.fill,
-                                                              width: ScreenUtil().setWidth(55),
-                                                              height: ScreenUtil().setWidth(55),
-                                                            )),
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.only(left: 45),
+                                                    margin: EdgeInsets.only(top: 30),
+                                                    child: Column(
+                                                      children: <Widget>[
 
-                                                        child: ClipOval(
-                                                          child: Container(
-                                                           width:17,
-                                                            height: 17,
-                                                            alignment: Alignment.center,
-
-                                                            color:Colors.red,
-                                                            child: Text(uids[dashen[e]["uid"].toString()].length.toString(),style: TextStyle(color: Colors.white),),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      dashen[e]["lian_hong"]>0? Container(
-                                                        margin: EdgeInsets.only(top: 45,left: 20),
-                                                        child: Row(
+                                                        Stack(
                                                           children: <Widget>[
-                                                            Container(
-                                                              padding: EdgeInsets.only(left: 3,right: 3),
-                                                              alignment: Alignment.center,
-                                                              height:17,
-                                                              decoration:BoxDecoration(
-                                                                  color: Colors.red,
-                                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
-                                                              ),
-                                                              child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
-                                                            ),
-                                                            Container(
-                                                              padding: EdgeInsets.only(left: 2,right: 2),
-                                                              alignment: Alignment.center,
-                                                              height:17,
-                                                              decoration:BoxDecoration(
-                                                                  border: Border.all(color: Colors.red,width: 0.1),
-                                                                  color: Colors.white,
-                                                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
-                                                              ),
-                                                              child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
+                                                            Image.asset("img/number2.png",width: 80,height: 80,),
+                                                            Positioned(
+                                                              bottom: 16,
+                                                              left: 16,
+                                                              child: ClipOval(
+
+                                                                  child: Image.network(
+
+                                                                    dashen[1]["avatar"],
+                                                                    fit: BoxFit.fill,
+                                                                    width: ScreenUtil().setWidth(55),
+                                                                    height: ScreenUtil().setWidth(55),
+                                                                  )),
                                                             )
+
                                                           ],
                                                         ),
-                                                      ):Container(),
-
-                                                    ],
-                                                  ):Stack(
-                                                    children: <Widget>[
-                                                      Container(
-                                                        margin:EdgeInsets.only(left: 10),
-                                                        decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
-                                                        child: ClipOval(
-                                                            child: Image.network(
-                                                              dashen[e]["avatar"],
-                                                              fit: BoxFit.fill,
-                                                              width: ScreenUtil().setWidth(55),
-                                                              height: ScreenUtil().setWidth(55),
-                                                            )),
-                                                      ),
-
-                                                      dashen[e]["lian_hong"]>0? Container(
-                                                        margin: EdgeInsets.only(top: 45,left: 20),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Container(
-                                                              padding: EdgeInsets.only(left: 3,right: 3),
-                                                              alignment: Alignment.center,
-                                                              height:17,
-                                                              decoration:BoxDecoration(
-                                                                  color: Colors.red,
-                                                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
-                                                              ),
-                                                              child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
-                                                            ),
-                                                            Container(
-                                                              padding: EdgeInsets.only(left: 2,right: 2),
-                                                              alignment: Alignment.center,
-                                                              height:17,
-                                                              decoration:BoxDecoration(
-                                                                border: Border.all(color: Colors.red,width: 0.1),
-                                                                  color: Colors.white,
-                                                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
-                                                              ),
-                                                              child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ):Container(),
-
-
-
-                                                    ],
+                                                        Container(
+                                                          child: Text(dashen[1]["nickname"].toString().length>4?dashen[1]["nickname"].toString().substring(0,4):dashen[1]["nickname"].toString(),),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                                Text(dashen[e]["nickname"].toString().length>4?dashen[e]["nickname"].toString().substring(0,4):dashen[e]["nickname"].toString())
-                                              ],
-                                            );
-                                          }).toList(),),
-                                      ),
-
-                                      Container(
-
-                                        margin: EdgeInsets.only(top: 10),
-                                        height: ScreenUtil().setHeight(35),
-                                        width: double.infinity,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-
-                                              child: Image.asset("img/toutiao.png",fit: BoxFit.fill,width: ScreenUtil().setWidth(70),),
-                                            ),
-                                            Container(
-                                              color: Color(0xffebebeb),
-                                              width: ScreenUtil().setWidth(335),
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5),
-                                                height: ScreenUtil().setHeight(35),
-                                                child: Swiper(
-                                                  itemCount: zhongjiang.length,
-                                                  scrollDirection: Axis.vertical,
-                                                  autoplay: true,
-                                                  itemBuilder: (BuildContext context, int index) {
-                                                    return Container(
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: <Widget>[
-                                                          Text("恭喜 ",style: TextStyle(color: Color(0xff575757)),),
-                                                          Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
-                                                          Text("喜中",style: TextStyle(color: Color(0xff575757))),
-                                                          zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
-                                                          Text(formatNum(zhongjiang[index]["award_money"], 1).toString(),style: TextStyle(color: Colors.red),),
-                                                          Text("元",style: TextStyle(color: Color(0xff575757)))
-                                                        ],
-                                                      ),
-                                                    );
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    JumpAnimation().jump(Sender(uid: dashen[0]["uid"],), context);
                                                   },
-                                                ),
-                                              ),
-                                            ),
+                                                  child: Container(
 
-                                          ],
+                                                    margin: EdgeInsets.only(left: 10,right: 10),
+                                                    child: Column(
+                                                      children: <Widget>[
+
+                                                        Stack(
+                                                          children: <Widget>[
+                                                            Image.asset("img/number1.png",width: 80,height: 80,),
+                                                            Positioned(
+                                                              bottom: 16,
+                                                              left: 16,
+                                                              child: ClipOval(
+
+                                                                  child: Image.network(
+
+                                                                    dashen[0]["avatar"],
+                                                                    fit: BoxFit.fill,
+                                                                    width: ScreenUtil().setWidth(55),
+                                                                    height: ScreenUtil().setWidth(55),
+                                                                  )),
+                                                            )
+
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          child: Text(dashen[0]["nickname"].toString().length>4?dashen[0]["nickname"].toString().substring(0,4):dashen[0]["nickname"].toString(),),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    JumpAnimation().jump(Sender(uid: dashen[2]["uid"],), context);
+                                                  },
+                                                  child:  Container(
+                                                    margin: EdgeInsets.only(top: 40,right: 5),
+                                                    child: Column(
+                                                      children: <Widget>[
+
+                                                        Stack(
+                                                          children: <Widget>[
+                                                            Image.asset("img/number3.png",width: 80,height: 80,),
+                                                            Positioned(
+                                                              bottom: 16,
+                                                              left: 16,
+                                                              child: ClipOval(
+                                                                  child: Image.network(
+                                                                    dashen[2]["avatar"],
+                                                                    fit: BoxFit.fill,
+                                                                    width: ScreenUtil().setWidth(55),
+                                                                    height: ScreenUtil().setWidth(55),
+                                                                  )),
+                                                            )
+
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          child: Text(dashen[2]["nickname"].toString().length>4?dashen[2]["nickname"].toString().substring(0,4):dashen[2]["nickname"].toString(),),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                      Divider(),
+                                      Positioned(
+                                        right: 25,
+                                        top: 40,
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            JumpAnimation().jump(flow(), context);
+                                          },
+                                          child: Text("关注",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                ),
+                                  Container(
+                                    margin: EdgeInsets.all(5),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.center,
+                                          margin: EdgeInsets.only(bottom: 5),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.only(right: ScreenUtil().setWidth(5)),
+                                                    child: Image.asset("img/dashen.png",color:Colors.deepOrange,width: ScreenUtil().setWidth(70),fit: BoxFit.fill,),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(top: ScreenUtil().setWidth(3),right:ScreenUtil().setWidth(3), ),
+                                                    child: Image.asset("img/tuijian.jpg",width: ScreenUtil().setWidth(20),fit: BoxFit.fill,),
+                                                  ),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Icon(Icons.star,color: Colors.yellow,size: 10,),
+                                                      Icon(Icons.star,color: Colors.yellow,size: 10,),
+                                                      Icon(Icons.star,color: Colors.yellow,size: 10,),
+                                                      Icon(Icons.star,color: Colors.yellow,size: 10,),
+                                                      Icon(Icons.star,color: Colors.yellow,size: 10,),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
 
-                               Column(
-                                 children: getOrder(),
-                               )
+                                              GestureDetector(
+                                                onTap: (){
+                                                  JumpAnimation().jump(search(), context);
+                                                },
+                                                child: Icon(Icons.search,color: Colors.grey,size: 25,),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+
+                                          alignment: Alignment.center,
+                                          width: double.infinity,
+                                          child: GridView.count(
+
+                                            padding: EdgeInsets.only(left: 5),
+                                            mainAxisSpacing: 5,
+                                            crossAxisSpacing: 5,
 
 
-                              ],
-                            ),
-                          )
-                        ],
-                      );
+
+                                            shrinkWrap: true,
+                                            crossAxisCount: 4,
+                                            children: dashen.asMap().keys.map((e) {
+                                              return Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  GestureDetector(
+                                                    onTap: (){
+                                                      JumpAnimation().jump(Sender(uid: dashen[e]["uid"],), context);
+                                                    },
+                                                    child: uids[dashen[e]["uid"].toString()] != null && uids[dashen[e]["uid"].toString()].length>0? Stack(
+                                                      children: <Widget>[
+                                                        Container(
+
+                                                          margin:EdgeInsets.only(left: 10),
+                                                          decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
+                                                          child: ClipOval(
+                                                              child: Image.network(
+                                                                dashen[e]["avatar"],
+                                                                fit: BoxFit.fill,
+                                                                width: ScreenUtil().setWidth(55),
+                                                                height: ScreenUtil().setWidth(55),
+                                                              )),
+                                                        ),
+                                                        Container(
+                                                          margin: EdgeInsets.only(left: 45),
+
+                                                          child: ClipOval(
+                                                            child: Container(
+                                                              width:17,
+                                                              height: 17,
+                                                              alignment: Alignment.center,
+
+                                                              color:Colors.red,
+                                                              child: Text(uids[dashen[e]["uid"].toString()].length.toString(),style: TextStyle(color: Colors.white),),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        dashen[e]["lian_hong"]>0? Container(
+                                                          margin: EdgeInsets.only(top: 45,left: 20),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Container(
+                                                                padding: EdgeInsets.only(left: 3,right: 3),
+                                                                alignment: Alignment.center,
+                                                                height:17,
+                                                                decoration:BoxDecoration(
+                                                                    color: Colors.red,
+                                                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
+                                                                ),
+                                                                child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
+                                                              ),
+                                                              Container(
+                                                                padding: EdgeInsets.only(left: 2,right: 2),
+                                                                alignment: Alignment.center,
+                                                                height:17,
+                                                                decoration:BoxDecoration(
+                                                                    border: Border.all(color: Colors.red,width: 0.1),
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
+                                                                ),
+                                                                child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ):Container(),
+
+                                                      ],
+                                                    ):Stack(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          margin:EdgeInsets.only(left: 10),
+                                                          decoration: BoxDecoration(border: Border.all(width: 3,color: Colors.yellow),borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(55)))),
+                                                          child: ClipOval(
+                                                              child: Image.network(
+                                                                dashen[e]["avatar"],
+                                                                fit: BoxFit.fill,
+                                                                width: ScreenUtil().setWidth(55),
+                                                                height: ScreenUtil().setWidth(55),
+                                                              )),
+                                                        ),
+
+                                                        dashen[e]["lian_hong"]>0? Container(
+                                                          margin: EdgeInsets.only(top: 45,left: 20),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Container(
+                                                                padding: EdgeInsets.only(left: 3,right: 3),
+                                                                alignment: Alignment.center,
+                                                                height:17,
+                                                                decoration:BoxDecoration(
+                                                                    color: Colors.red,
+                                                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),topLeft: Radius.circular(12))
+                                                                ),
+                                                                child: Text(dashen[e]["lian_hong"].toString(),style: TextStyle(color: Colors.white,fontSize: 11),),
+                                                              ),
+                                                              Container(
+                                                                padding: EdgeInsets.only(left: 2,right: 2),
+                                                                alignment: Alignment.center,
+                                                                height:17,
+                                                                decoration:BoxDecoration(
+                                                                    border: Border.all(color: Colors.red,width: 0.1),
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),topRight: Radius.circular(15))
+                                                                ),
+                                                                child: Text("连红",style: TextStyle(color: Colors.red,fontSize: 11),),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ):Container(),
+
+
+
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text(dashen[e]["nickname"].toString().length>4?dashen[e]["nickname"].toString().substring(0,4):dashen[e]["nickname"].toString())
+                                                ],
+                                              );
+                                            }).toList(),),
+                                        ),
+
+                                        Container(
+
+                                          margin: EdgeInsets.only(top: 10),
+                                          height: ScreenUtil().setHeight(35),
+                                          width: double.infinity,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+
+                                                child: Image.asset("img/toutiao.png",fit: BoxFit.fill,width: ScreenUtil().setWidth(70),),
+                                              ),
+                                              Container(
+                                                color: Color(0xffebebeb),
+                                                width: ScreenUtil().setWidth(335),
+                                                child: Container(
+                                                  margin: EdgeInsets.only(left: 5),
+                                                  height: ScreenUtil().setHeight(35),
+                                                  child: Swiper(
+                                                    itemCount: zhongjiang.length,
+                                                    scrollDirection: Axis.vertical,
+                                                    autoplay: true,
+                                                    itemBuilder: (BuildContext context, int index) {
+                                                      return Container(
+                                                        child: Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: <Widget>[
+                                                            Text("恭喜 ",style: TextStyle(color: Color(0xff575757)),),
+                                                            Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
+                                                            Text("喜中",style: TextStyle(color: Color(0xff575757))),
+                                                            zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
+                                                            Text(formatNum(zhongjiang[index]["award_money"], 1).toString(),style: TextStyle(color: Colors.red),),
+                                                            Text("元",style: TextStyle(color: Color(0xff575757)))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: getOrder(),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          loadMore: ()async{
+                            setState(() {
+                              page++;
+                            });
+                            getMore();
+                          },
+                        ),
+                      ) ;
                   }
                   return null;
                 }
