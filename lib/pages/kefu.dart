@@ -81,7 +81,7 @@ getVersion() async {
                   children: <Widget>[
                     GestureDetector(
                       onTap: (){
-                       Future res = Clipboard.setData(ClipboardData(text: '168876008'));
+                       Future res = Clipboard.setData(ClipboardData(text: '1195268199'));
                        res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
                       },
                       child: Container(
