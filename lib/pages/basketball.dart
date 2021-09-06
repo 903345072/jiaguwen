@@ -494,12 +494,16 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,mnl_odds,hdc_odds,dxf_od
                                   GestureDetector(
                                     onTap: (){
                                       if(index == 0){
-                                        if(getGameNum() == "1"){
+                                        List p_single = games.values.toList()[0][0]["p_single"].toString().split(",");
+                                        String is_single = "0";
+                                        if(p_single[1] == "1" && p_single[3] == "1"){
+                                          is_single = "1";
+                                        }
+                                        if(getGameNum() == "1" && is_single == "1"){
                                           int flag1=0;
                                           int flag2=0;
                                           int flag3=0;
                                           int flag4=0;
-
                                           List s1 = games.values.toList()[0][0]["check_info"][0]["bet_way"];
                                           List s2 = games.values.toList()[0][0]["check_info"][1]["bet_way"];
                                           List s3 = games.values.toList()[0][0]["check_info"][2]["bet_way"];
@@ -533,7 +537,7 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,mnl_odds,hdc_odds,dxf_od
                                             Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
                                             return;
                                           }else{
-                                            if(flag1 ==0 && flag3 == 0){
+                                            if((flag1 ==0 && flag3 ==0 ) && (flag2 == 1 || flag4 == 1)){
                                               JumpAnimation().jump(order(games,game_ids,(value){
                                                 setState(() {
                                                   games = value;
