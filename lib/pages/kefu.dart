@@ -121,7 +121,7 @@ getVersion() async {
                             crossAxisAlignment:WrapCrossAlignment.center,
                             children: <Widget>[
                               Text("版权所有:"),
-                              Text("甲骨文"),
+                              Text("比分助手"),
 
                             ],
                           )

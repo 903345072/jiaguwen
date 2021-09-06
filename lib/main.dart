@@ -6,8 +6,6 @@ import 'package:flutterapp2/pages/IndexPage.dart';
 import 'package:flutterapp2/pages/Login.dart';
 import 'package:flutterapp2/pages/Mine.dart';
 import 'package:flutterapp2/pages/editCard.dart';
-import 'package:flutterapp2/pages/hangqing.dart';
-import 'package:flutterapp2/pages/heyue.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/Rute.dart';
 import 'package:flutterapp2/utils/Toast.dart';
@@ -103,8 +101,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> with SingleTickerProvi
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             IndexBack(),
-            hangqing(),
-            heyue(),
             Mine()
           ],
           controller: controller,

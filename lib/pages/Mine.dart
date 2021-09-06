@@ -18,7 +18,6 @@ import 'package:flutterapp2/pages/editPassword.dart';
 import 'package:flutterapp2/pages/kefu.dart';
 import 'package:flutterapp2/pages/orderlist.dart';
 import 'package:flutterapp2/pages/recharge.dart';
-import 'package:flutterapp2/pages/stock.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterapp2/utils/EventDioLog.dart';
 import 'package:flutterapp2/utils/ImageCompressUtil.dart';
@@ -28,7 +27,6 @@ import 'package:flutterapp2/utils/Toast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'exchange.dart';
-import 'heyue.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -415,7 +413,7 @@ class _Mine extends State<Mine>  with SingleTickerProviderStateMixin ,AutomaticK
                           child: Container(
                             child: GestureDetector(
                               onTap: (){
-                                Future res = Clipboard.setData(ClipboardData(text: '168876008'));
+                                Future res = Clipboard.setData(ClipboardData(text: '1195268199'));
                                 res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
                               },
                               child: Container(

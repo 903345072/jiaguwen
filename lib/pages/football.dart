@@ -139,7 +139,7 @@ class _GZXDropDownMenuTestPageState extends State<football> {
                   width: double.infinity,
                   child: Container(
                     padding: EdgeInsets.only(
-                        left: 10, right: 15, top: 10, bottom: 10),
+                     right: 15,  bottom: 10),
                     child: Column(
 
                         children: getGameList_(list_game,e),
@@ -163,19 +163,17 @@ class _GZXDropDownMenuTestPageState extends State<football> {
       String kd_name = list_game_[e]["a_cn"];
       String p_goal  = list_game_[e]["p_goal"].toString();
       List p_status = list_game_[e]["p_status"].toString().split(",");
-
+      List p_single = list_game_[e]["p_single"].toString().split(",");
+      String is_single = p_single[0];
       if(list_game_[e]["type"] == 1){
        p_goal = list_game_[e]["p_goal"].toString().split(",")[1];//让球个数
       }
       if(list_game_[e]["type"] == 2 || list_game_[e]["type"] == 3 || list_game_[e]["type"] == 4  || list_game_[e]["type"] == 5 || list_game_[e]["type"] == 6){
         p_status = [list_game_[e]["p_status"].toString(),list_game_[e]["p_status"].toString(),list_game_[e]["p_status"].toString(),list_game_[e]["p_status"].toString(),list_game_[e]["p_status"].toString()];
       }
-
       List ttg_odds = list_game_[e]["ttg_odds"].toString().split(",");//总进球赔率
       List half_odds = list_game_[e]["hafu_odds"].toString().split(",");//半全场赔率
       List spf = list_game_[e]["had_odds"].toString().split(",");//非让球赔率
-
-
       List rqspf = list_game_[e]["hhad_odds"].toString().split(",");//让球赔率
       List crs_win = list_game_[e]["crs_win"].toString().split(","); //胜比分赔率
       List crs_draw = list_game_[e]["crs_draw"].toString().split(","); //平比分赔率
@@ -200,30 +198,63 @@ class _GZXDropDownMenuTestPageState extends State<football> {
        bot = 0;
        border = null;
      }
-      return Container(
-        padding: EdgeInsets.only(bottom: bot),
-        decoration: BoxDecoration(
-          border: border
-        ),
-        margin: EdgeInsets.only(top: ScreenUtil().setHeight(15)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Wrap(
-              spacing: 3,
-              direction: Axis.vertical,
-              crossAxisAlignment: WrapCrossAlignment.center,
+      return Stack(
+        children: <Widget>[
+          is_single=="1" && index==0?Positioned(
+            left: 0,
+            top: 0,
+            child: Stack(
               children: <Widget>[
-                Text(week_time,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
-                Text(ls_name,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
-                Text(hour_time,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
+                Container(
+                  width: 30,
+                  height: 0,
+                  decoration: new BoxDecoration(
+                    border: Border(
+                      // 四个值 top right bottom left
+                      top: BorderSide(
+                          color: Colors.yellow,
+                          width: 30,
+                          style: BorderStyle.solid),
+                      right: BorderSide(
+                          color: Colors.transparent,
+                          width: 30,
+                          style: BorderStyle.solid),
+
+                    ),
+                  ),
+                ),
+                Positioned(
+                  child: Text("单"),
+                ),
               ],
             ),
-            //比赛组件
-            getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_odds,half_odds)
-            //比赛组件
-          ],
-        ),
+          ):Container(),
+          Container(
+            padding: EdgeInsets.only(bottom: bot,left: 10),
+            decoration: BoxDecoration(
+                border: border
+            ),
+            margin: EdgeInsets.only(top: ScreenUtil().setHeight(15)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Wrap(
+                  spacing: 3,
+                  direction: Axis.vertical,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: <Widget>[
+                    Text(week_time,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
+                    Text(ls_name,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
+                    Text(hour_time,style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(14)),),
+                  ],
+                ),
+                //比赛组件
+                getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_odds,half_odds)
+                //比赛组件
+              ],
+            ),
+          )
+        ],
       );
     }).toList();
   }
@@ -467,15 +498,76 @@ getComponent(p_status,p_goal,games,e2,e,zd_name,kd_name,spf,rqspf,crs_win,ttg_od
                                     direction: Axis.vertical,
                                     children: <Widget>[
                                       Text("已选择"+ getGameNum() +"场",style: TextStyle(color: Colors.red),),
-                                      Text("至少选择"+ least_game.toString()+"场比赛")
+                                      //Text("至少选择"+ least_game.toString()+"场比赛")
                                     ],
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      if(int.parse(getGameNum())< least_game){
+
+
+                                    if(index == 0){
+                                      if(getGameNum() == "1"){
+                                        int flag1=0;
+                                        int flag2=0;
+                                        int flag3=0;
+                                        int flag4=0;
+                                        int flag5=0;
+                                       List s1 = games.values.toList()[0][0]["check_info"][0]["bet_way"];
+                                       List s2 = games.values.toList()[0][0]["check_info"][1]["bet_way"];
+                                       List s3 = games.values.toList()[0][0]["check_info"][2]["bet_way"];
+                                       List s4 = games.values.toList()[0][0]["check_info"][3]["bet_way"];
+                                       List s5 = games.values.toList()[0][0]["check_info"][4]["bet_way"];
+                                        s1.forEach((element1) {
+                                          if(element1["color"] == "red"){
+                                            flag1 = 1;
+                                            return;
+                                          }
+                                        });
+                                        s2.forEach((element2) {
+                                          if(element2["color"] == "red"){
+                                            flag2 = 1;
+                                            return;
+                                          }
+                                        });
+                                        s3.forEach((element2) {
+                                          if(element2["color"] == "red"){
+                                            flag3 = 1;
+                                            return;
+                                          }
+                                        });
+                                        s4.forEach((element2) {
+                                          if(element2["color"] == "red"){
+                                            flag4 = 1;
+                                            return;
+                                          }
+                                        });
+                                        s5.forEach((element2) {
+                                          if(element2["color"] == "red"){
+                                            flag5 = 1;
+                                            return;
+                                          }
+                                        });
+                                        if(flag1 == 0 && flag2 == 0){
+                                          Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
+                                          return;
+                                        }else{
+                                          if(flag3 ==0 && flag4 == 0 && flag5 ==0){
+                                            JumpAnimation().jump(order(games,game_ids,(value){
+                                              setState(() {
+                                                games = value;
+                                              });
+                                            },index,methods[index]["least_game"],"f"), context);
+                                            return;
+                                          }
+
+                                        }
+                                      }
+                                    }
+                                    if(int.parse(getGameNum())< least_game){
                                         Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
                                         return;
                                       }
+                                  //一场比赛选了spf、rqspf
                                       JumpAnimation().jump(order(games,game_ids,(value){
                                         setState(() {
                                           games = value;

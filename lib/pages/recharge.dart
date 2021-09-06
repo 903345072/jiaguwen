@@ -233,10 +233,12 @@ class Login_ extends State<recharge> {
                       ResultData res = await HttpManager.getInstance().post("recharge/wechat",params: {"price":yj,"type":pay_type,"from":"weixinh5"},withLoading: false);
 
                       Map data = jsonDecode(res.data["data"]);
+                      print(data);
                       int type_ = res.data["type"];
-                      print(type_);
+
                       if(data["code"] == 200){
                         if(type_ == 1){
+                          print(data);
                           Future s=   tobias.aliPay(data['url']) ;
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);

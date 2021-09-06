@@ -2,12 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_k_chart/flutter_k_chart.dart';
-import 'package:flutter_k_chart/utils/data_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
 import 'package:flutterapp2/net/ResultData.dart';
-import 'package:flutterapp2/pages/hangqing/StockRankList.dart';
 import 'package:flutterapp2/pages/myorder.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/Toast.dart';

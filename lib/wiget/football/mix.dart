@@ -55,7 +55,6 @@ class _ChildState extends State<mix> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 417, height: 867)..init(context);
-
     return Column(
       children: <Widget>[
         Container(

@@ -70,14 +70,11 @@ class order_ extends State<order> {
   int bot = 100;
 
   @override
-
-
-  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     int i = 0;
-    if (widget.least_game < 2) {
+    if (widget.least_game < 2 || is_dan() == true) {
       setState(() {
         visible_ = true;
       });
@@ -256,13 +253,12 @@ class order_ extends State<order> {
                               widget.f_or_b == "f"?GestureDetector(
                                 onTap: (){
                                   int check_length = chuan_.length;
-                                  if (widget.least_game > 1) {
-                                    if (check_length == 0) {
+
+                                  if (widget.least_game > 1 && is_dan() == false) {
+                                    if (check_length == 0 && is_dan() == true) {
                                       setState(() {
-                                        visible_ =
-                                        visible_ == true ? false : true;
-                                        is_pack =
-                                        is_pack == true ? false : true;
+                                        visible_ = visible_ == true ? false : true;
+                                        is_pack  = is_pack == true ? false : true;
                                       });
                                       return;
                                     }
@@ -490,8 +486,9 @@ class order_ extends State<order> {
                               GestureDetector(
                                 onTap: () async {
                                   int check_length = chuan_.length;
+
                                   if (widget.least_game > 1) {
-                                    if (check_length == 0) {
+                                    if (check_length == 0 && is_dan() == false) {
                                       setState(() {
                                         visible_ =
                                         visible_ == true ? false : true;
@@ -595,7 +592,7 @@ class order_ extends State<order> {
   }
 
   getText() {
-    if (widget.least_game == 1) {
+    if (widget.least_game == 1 || is_dan() == true) {
       return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -677,9 +674,7 @@ class order_ extends State<order> {
 
     double min = s.length > 0 ? s[0] : 0;
     double max = 0;
-
     lg.forEach((element2) {
-
       max += element2;
     });
     min = min * num * 2;
@@ -688,7 +683,7 @@ class order_ extends State<order> {
     if(getNum().length == 1){
       text = "预计奖金" + min.toStringAsFixed(2) +"元";
     }
-    if(widget.least_game == 1){
+    if(widget.least_game == 1 || is_dan() == true){
       List h = getNum();
       min = h[0]*num *2;
       max = h[h.length-1]*num *2;
@@ -715,6 +710,7 @@ class order_ extends State<order> {
     List zz1 = [];
     List zmax = [];
     List zsm = [];
+
     widget.games.forEach((key, value) {
       value.forEach((game) {
         if (widget.game_ids.contains(game["id"])) {
@@ -722,7 +718,6 @@ class order_ extends State<order> {
           Map ls2 = {} ;
           List ls3 = [];
           Map maps = jsonDecode(game["checks"]);
-
           maps.forEach((key1, value1) {
 
             List ls1 = value1;
@@ -1136,25 +1131,17 @@ class order_ extends State<order> {
                 }
               }
             }
-
-
-
-
-
             //总进球取最大一个
-
             //混合胜平负取最大一个
           }
-
-List sk = ls4.keys.map((e){return ls4[e];}).toList();
-zmax.add(sk);
+          List sk = ls4.keys.map((e){return ls4[e];}).toList();
+          zmax.add(sk);
         }
       });
     });
 
     List ar = [];
-
-    if (widget.least_game == 1) {
+    if (widget.least_game == 1 || is_dan() == true) {
       zz.forEach((z) {
         List z1 = z;
         z1.forEach((element_) {
@@ -1164,6 +1151,7 @@ zmax.add(sk);
       ar.sort((left, right) => left.compareTo(right));
       return ar;
     }
+
 
     chuan.forEach((element) {
       if (element["color"] == Colors.red) {
@@ -1195,7 +1183,101 @@ zmax.add(sk);
 
     return ars;
   }
+  is_dan(){
+    if(widget.type == "f"){
+      if(getGameNum() == "1"){
+        int flag1=0;
+        int flag2=0;
+        int flag3=0;
+        int flag4=0;
+        int flag5=0;
+        List s1 = widget.games.values.toList()[0][0]["check_info"][0]["bet_way"];
+        List s2 = widget.games.values.toList()[0][0]["check_info"][1]["bet_way"];
+        List s3 = widget.games.values.toList()[0][0]["check_info"][2]["bet_way"];
+        List s4 = widget.games.values.toList()[0][0]["check_info"][3]["bet_way"];
+        List s5 = widget.games.values.toList()[0][0]["check_info"][4]["bet_way"];
+        s1.forEach((element1) {
+          if(element1["color"] == "red"){
+            flag1 = 1;
+            return;
+          }
+        });
+        s2.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag2 = 1;
+            return;
+          }
+        });
+        s3.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag3 = 1;
+            return;
+          }
+        });
+        s4.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag4 = 1;
+            return;
+          }
+        });
+        s5.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag5 = 1;
+            return;
+          }
+        });
+        if((flag3 ==0 && flag4 ==0 && flag5 ==0) && (flag1 == 1 || flag2 == 1)){
 
+          return true;
+        }
+        return false;
+      }
+    }else{
+      if(getGameNum() == "1"){
+        int flag1=0;
+        int flag2=0;
+        int flag3=0;
+        int flag4=0;
+
+        List s1 = widget.games.values.toList()[0][0]["check_info"][0]["bet_way"];
+        List s2 = widget.games.values.toList()[0][0]["check_info"][1]["bet_way"];
+        List s3 = widget.games.values.toList()[0][0]["check_info"][2]["bet_way"];
+        List s4 = widget.games.values.toList()[0][0]["check_info"][4]["bet_way"];
+        s1.forEach((element1) {
+          if(element1["color"] == "red"){
+            flag1 = 1;
+            return;
+          }
+        });
+        s2.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag2 = 1;
+            return;
+          }
+        });
+        s3.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag3 = 1;
+            return;
+          }
+        });
+        s4.forEach((element2) {
+          if(element2["color"] == "red"){
+            flag4 = 1;
+            return;
+          }
+        });
+
+        if((flag1 ==0 && flag3 ==0 ) && (flag2 == 1 || flag4 == 1)){
+          return true;
+        }
+        return false;
+      }
+    }
+
+    return false;
+
+  }
   plzh(List arr, int size, {type = "a"}) {
 
     int len = arr.length;
@@ -1448,6 +1530,7 @@ zmax.add(sk);
                   kd_name, spf, rqspf, crs_win, ttg_odds, half_odds),
               IconButton(
                 onPressed: () {
+                  widget.games.removeWhere((key, value) => false);
                   widget.game_ids.remove(list_game_[e]["id"]);
                   setState(() {});
                 },
@@ -1589,12 +1672,49 @@ zmax.add(sk);
       }
     }).toList();
   }
-
+  getGameNum(){
+   List game_ids = [];
+    widget.games.forEach((key, value) {
+      List ls  = value;
+      ls.forEach((element) {
+        List e2 = element["check_info"];
+        e2.forEach((element1) {
+          List e3 = element1["bet_way"];
+          e3.forEach((element2) {
+            if(element2["color"] != "co"){
+              if(!game_ids.contains(element["id"])){
+                game_ids.add(element["id"]);
+              }
+            }
+          });
+        });
+      });
+    });
+    return game_ids.length.toString();
+  }
   getComponent(p_status, p_goal, games, e2, e, zd_name, kd_name, spf, rqspf,
       crs_win, ttg_odds, half_odds) {
     switch (widget.type) {
       case 0:
-        return mix(
+        int flag1=0;
+        int flag2=0;
+       if(getGameNum() == "1"){
+         List s1 = games[e2][e]["check_info"][0]["bet_way"];
+         List s2 = games[e2][e]["check_info"][1]["bet_way"];
+         s1.forEach((element) {
+           if(element["color"] == "red"){
+             flag1 = 1;
+             return;
+           }
+         });
+         s2.forEach((element) {
+           if(element["color"] == "red"){
+             flag2 = 1;
+             return;
+           }
+         });
+       }
+        return flag1==0 && flag2==0? mix(
           callBack: (value) {
             setState(() {
               games = value;
@@ -1612,6 +1732,37 @@ zmax.add(sk);
           crs_win: crs_win,
           ttg_odds: ttg_odds,
           half_odds: half_odds,
+        ):Column(
+          children: <Widget>[
+            flag1==1?feirangqiu(
+                callBack: (value) {
+                  setState(() {
+                    games = value;
+                  });
+                },
+                p_status: p_status,
+                p_goal: p_goal,
+                games: games,
+                e2: e2,
+                e: e,
+                zd_name: zd_name,
+                kd_name: kd_name,
+                spf: spf):Container(),
+            flag2==1?rangqiu(
+                callBack: (value) {
+                  setState(() {
+                    games = value;
+                  });
+                },
+                p_status: p_status,
+                p_goal: p_goal,
+                games: games,
+                e2: e2,
+                e: e,
+                zd_name: zd_name,
+                kd_name: kd_name,
+                rqspf: rqspf):Container()
+          ],
         );
       case 1:
         return rangqiu(
@@ -1769,8 +1920,28 @@ zmax.add(sk);
   getComponent_bas(p_status, p_goal, games, e2, e, zd_name, kd_name, mnl_odds,
       hdc_odds, dxf_odds, wnm_win, wnm_lose, dafen) {
     switch (widget.type) {
+
       case 0:
-        return basketballMix(
+        int flag1=0;
+        int flag2=0;
+        if(getGameNum() == "1"){
+          List s1 = games[e2][e]["check_info"][1]["bet_way"];
+          List s2 = games[e2][e]["check_info"][4]["bet_way"];
+
+          s1.forEach((element) {
+            if(element["color"] == "red"){
+              flag1 = 1;
+              return;
+            }
+          });
+          s2.forEach((element) {
+            if(element["color"] == "red"){
+              flag2 = 1;
+              return;
+            }
+          });
+        }
+        return flag1==0 && flag2==0? basketballMix(
           callBack: (value) {
             setState(() {
               games = value;
@@ -1789,6 +1960,39 @@ zmax.add(sk);
           zs_sfc: wnm_win,
           ks_sfc: wnm_lose,
           dxf: dxf_odds,
+        ):Column(
+          children: <Widget>[
+            flag1==1?basketballrfSf(
+              callBack: (value) {
+                setState(() {
+                  games = value;
+                });
+              },
+              p_status: p_status,
+              games: games,
+              e2: e2,
+              e: e,
+              zd_name: zd_name,
+              kd_name: kd_name,
+              rfsf: hdc_odds,
+              p_goal: p_goal,
+            ):Container(),
+            flag2==1?basketdxf(
+              callBack: (value) {
+                setState(() {
+                  games = value;
+                });
+              },
+              p_status: p_status,
+              games: games,
+              e2: e2,
+              e: e,
+              zd_name: zd_name,
+              kd_name: kd_name,
+              dxf: dxf_odds,
+              p_goal: p_goal,
+            ):Container()
+          ],
         );
       case 1:
         return basketballSf(

@@ -2,27 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutterapp2/SharedPreferences/TokenStore.dart';
-import 'package:flutterapp2/net/Address.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
 import 'package:flutterapp2/net/ResultData.dart';
-import 'package:flutterapp2/pages/IndexPage.dart';
-import 'package:flutterapp2/pages/Mine.dart';
-import 'package:flutterapp2/pages/flowInstruct.dart';
 import 'package:flutterapp2/pages/flowdetail.dart';
 import 'package:flutterapp2/pages/search.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
-import 'package:flutterapp2/utils/Rute.dart';
-import 'package:flutterapp2/utils/Toast.dart';
-import 'package:marquee_flutter/marquee_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Sender.dart';
-import '../main.dart';
 import 'flow.dart';
 import 'package:flutterapp2/utils/freshStyle.dart';
 class floworder extends StatefulWidget {
@@ -44,6 +33,7 @@ class Login_ extends State<floworder> {
   List zhongjiang = [];
   Map uids = {};
   int page = 1;
+  int index = 1;
   FocusNode _commentFocus;
 
   @override
@@ -51,13 +41,13 @@ class Login_ extends State<floworder> {
     // TODO: implement initState
     super.initState();
     _commentFocus = FocusNode();
-    _future = getList();
+    _future = getList(1);
 
   }
   GlobalKey<RefreshHeaderState> _headerKey = GlobalKey<RefreshHeaderState>();
   GlobalKey<RefreshFooterState> _footerKey = GlobalKey<RefreshFooterState>();
   getMore() async {
-    ResultData res = await HttpManager.getInstance().get("getMore",params:{"page":page},withLoading: false);
+    ResultData res = await HttpManager.getInstance().get("getMore",params:{"page":page,"index":index},withLoading: false);
     setState(() {
       if(res.data != null){
         if(res.data["data"] != null){
@@ -65,25 +55,22 @@ class Login_ extends State<floworder> {
           list.addAll(list2);
         }
       }
-
     });
   }
-  getList() async {
-   ResultData res = await HttpManager.getInstance().get("getFlowOrder",withLoading: false);
+  getList(index) async {
+   ResultData res = await HttpManager.getInstance().get("getFlowOrder",params: {"index":index},withLoading: false);
    ResultData res1 = await HttpManager.getInstance().get("zhongjiang",withLoading: false);
    setState(() {
-
-if(res.data["data"] != null){
-  list = res.data["data"];
-}
+     page = 1;
+      if(res.data["data"] != null){
+        list = res.data["data"];
+      }
      if(res.data["dashen"] != null){
        dashen = res.data["dashen"];
      }else{
        dashen = [];
      }
-
-    uids = res.data["uids"];
-
+     uids = res.data["uids"];
      zhongjiang = res1.data["data"];
    });
   }
@@ -324,17 +311,12 @@ if(res.data["data"] != null){
                                           ),
                                         ),
                                         Container(
-
                                           alignment: Alignment.center,
                                           width: double.infinity,
                                           child: GridView.count(
-
                                             padding: EdgeInsets.only(left: 5),
                                             mainAxisSpacing: 5,
                                             crossAxisSpacing: 5,
-
-
-
                                             shrinkWrap: true,
                                             crossAxisCount: 4,
                                             children: dashen.asMap().keys.map((e) {
@@ -456,9 +438,7 @@ if(res.data["data"] != null){
                                               );
                                             }).toList(),),
                                         ),
-
                                         Container(
-
                                           margin: EdgeInsets.only(top: 10),
                                           height: ScreenUtil().setHeight(35),
                                           width: double.infinity,
@@ -504,6 +484,82 @@ if(res.data["data"] != null){
                                       ],
                                     ),
                                   ),
+                                  Container(
+
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                margin: EdgeInsets.only(left: 5, right: 5),
+                                                height: ScreenUtil().setHeight(25),
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        left: BorderSide(width: 3, color: Colors.red))),
+                                               ),
+                                              Text("热门红单")
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                         decoration: index==1? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.red,width: 2))):null,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              setState(() {
+                                                index = 1;
+                                              });
+                                              getList(1);
+                                            },
+                                            child: Text("金额"),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          decoration: index==2? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.red,width: 2))):null,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              setState(() {
+                                                index = 2;
+                                              });
+                                              getList(2);
+                                            },
+                                            child: Text("人气"),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          decoration: index==3? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.red,width: 2))):null,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              setState(() {
+                                                index = 3;
+                                              });
+                                              getList(3);
+                                            },
+                                            child: Text("命中"),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          decoration: index==4? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.red,width: 2))):null,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              setState(() {
+                                                index = 4;
+                                              });
+                                              getList(4);
+                                            },
+                                            child: Text("关注"),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(height: 10,),
                                   Column(
                                     children: getOrder(),
                                   ),

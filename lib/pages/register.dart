@@ -371,7 +371,7 @@ class Login_ extends State<register> {
                   onTap: (){
                     JumpAnimation().jump(agreement(), context);
                   },
-                  child: Text("《甲骨文软件用户注册协议》",style: TextStyle(color: Colors.pinkAccent),),
+                  child: Text("《比分助手软件用户注册协议》",style: TextStyle(color: Colors.pinkAccent),),
                 )
               ],
             )
