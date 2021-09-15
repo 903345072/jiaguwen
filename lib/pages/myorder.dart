@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
 import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/orderdetail.dart';
+import 'package:flutterapp2/pages/pailie/plorderdetail.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/freshStyle.dart';
 import 'package:flutterapp2/utils/request.dart';
@@ -178,7 +179,12 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
                      children: <Widget>[
                        GestureDetector(
                          onTap: (){
-                           JumpAnimation().jump(orderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
+                           if(ls[e2]["flag"] == "pl"){
+                             JumpAnimation().jump(plorderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
+
+                           }else{
+                             JumpAnimation().jump(orderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
+                           }
                          },
                          child: Container(
                            margin: EdgeInsets.only(top: 5,left: 5,right: 20),
@@ -194,7 +200,7 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
                                      children: <Widget>[
                                        Container(
                                          margin:EdgeInsets.only(right: 20),
-                                         child:Text(ls[e2]["type"].toString()=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(fontWeight: FontWeight.bold),),
+                                         child:Text(ls[e2]["flag"]=="pl"?"排列三":ls[e2]["type"].toString()=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(fontWeight: FontWeight.bold),),
                                        ),
                                        ls[e2]["state"] == 2?Icon(Icons.monetization_on,color: Colors.orange,size: 18,):Container()
                                      ],
@@ -208,7 +214,7 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: <Widget>[
                                      Text(ls[e2]["mode"]=="1"?"普通订单":ls[e2]["mode"]=="2"?"发起订单":ls[e2]["mode"]=="4"?"优化订单":"跟买订单",style: TextStyle(color: ls[e2]["mode"]=="2"?Colors.orange:Colors.grey),),
-                                     Text(ls[e2]["state"] == 1?"未中奖":ls[e2]["state"] == 0?"未开奖":ls[e2]["state"] == 2?"中奖"+ls[e2]["award_money"].toStringAsFixed(2)+"元":"",style: TextStyle(color: ls[e2]["state"] == 2?Colors.red:Colors.grey),),
+                                     Text(ls[e2]["state"] == 1?"未中奖":ls[e2]["state"] == -1?"待开奖":ls[e2]["state"] == 0?ls[e2]["flag"]=="pl"?"出票中":"未开奖":ls[e2]["state"] == 2?"中奖"+ls[e2]["award_money"].toStringAsFixed(2)+"元":"",style: TextStyle(color: ls[e2]["state"] == 2?Colors.red:Colors.grey),),
                                    ],
                                  ),
                                )

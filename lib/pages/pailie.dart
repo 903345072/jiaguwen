@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterapp2/pages/mycash.dart';
 import 'package:flutterapp2/pages/myorder.dart';
+import 'package:flutterapp2/pages/pailie/direct.dart';
+import 'package:flutterapp2/pages/pailie/zu3.dart';
+import 'package:flutterapp2/pages/pailie/zu6.dart';
 import 'package:flutterapp2/utils/request.dart';
 
 import 'ChildItemView.dart';
-class cashlist extends StatefulWidget{
+class pailie extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -17,8 +20,8 @@ class cashlist extends StatefulWidget{
   }
 
 }
-class hangqing_ extends State<cashlist>{
-  List<String> containers = ["全部","购彩","充值","中奖","提款",];
+class hangqing_ extends State<pailie>{
+  List<String> containers = ["直选","组三","组六"];
   int page = 0;
   List<TextStyle> ts = [TextStyle()];
   @override
@@ -46,14 +49,13 @@ class hangqing_ extends State<cashlist>{
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("账单明细",style: TextStyle(fontSize: ScreenUtil().setSp(18)),),
+        title: Text("排列三",style: TextStyle(fontSize: ScreenUtil().setSp(18)),),
         backgroundColor: Color(0xfffa2020),
       ),
 
       body: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(bottom: 5),
             color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,16 +73,16 @@ class hangqing_ extends State<cashlist>{
                   onTap: (){
                     setState(() {
                       this.page = e;
-
                     });
                     controller.jumpToPage(this.page);
                   },
                   child: Container(
-
-                    padding: EdgeInsets.only(top: 7),
+                    padding: EdgeInsets.only(top: 7,right: 5),
                     child: Column(
                       children: <Widget>[
-                        Container(child: Text(containers[e],style: cur_ts,),),
+                        Container(
+                          padding:EdgeInsets.all(5),
+                          child: Text(containers[e],style: cur_ts,),),
                         Container(
                           margin: EdgeInsets.only(top: 7),
                           decoration: cur_bd,width: 60,
@@ -97,11 +99,9 @@ class hangqing_ extends State<cashlist>{
               controller: controller,
               onPageChanged: onPageChanged,
               children: <Widget>[
-                mycash(type: "0",),
-                mycash(type: "buy_lottery",),
-                mycash(type: "recharge",),
-                mycash(type: "win_prize",),
-                mycash(type: "extract",),
+                direct(),
+                zu3(),
+                zu6(),
               ],
             ),
           )

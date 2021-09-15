@@ -10,6 +10,7 @@ import 'package:flutterapp2/pages/IndexPage.dart';
 import 'package:flutterapp2/pages/basketball.dart';
 import 'package:flutterapp2/pages/football.dart';
 import 'package:flutterapp2/pages/orderdetail.dart';
+import 'package:flutterapp2/pages/pailie/plorderdetail.dart';
 
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 
@@ -116,7 +117,8 @@ class Login_ extends State<success> {
               child: MaterialButton(
                 color: Color(0xfffa2020),
                 onPressed: (){
-                  JumpAnimation().jump(orderdetail(int.parse(widget.data["id"]),widget.data["mode"],widget.type), context);
+
+                  JumpAnimation().jump(widget.type=="pl"?plorderdetail(int.parse(widget.data["id"]),widget.data["mode"],widget.type):orderdetail(int.parse(widget.data["id"]),widget.data["mode"],widget.type), context);
                 },
                 child: Text("查看投注详情",style: TextStyle(color: Colors.white),),
               ),

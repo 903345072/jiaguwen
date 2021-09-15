@@ -19,9 +19,9 @@ class HttpManager {
     if (null == _dio) {
       _dio = new Dio(
           new BaseOptions(baseUrl: Address.BASE_URL, connectTimeout: 35000));
-    _dio.interceptors.add(new DioLogInterceptor());
-   _dio.interceptors.add(new PrettyDioLogger());
-      _dio.interceptors.add(new ResponseInterceptors());
+//    _dio.interceptors.add(new DioLogInterceptor());
+//    _dio.interceptors.add(new PrettyDioLogger());
+    _dio.interceptors.add(new ResponseInterceptors());
     }
   }
 

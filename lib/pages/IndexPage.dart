@@ -13,6 +13,7 @@ import 'package:flutterapp2/pages/article.dart';
 import 'package:flutterapp2/pages/lanqiukaijiang.dart';
 import 'package:flutterapp2/pages/orderdetail.dart';
 import 'package:flutterapp2/pages/zuqiukaijiang.dart';
+import 'package:flutterapp2/pages/pailie.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/wiget/CommonWiget.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
@@ -76,14 +77,12 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(left: 15,right: 5,  top: 5, bottom: 5),
-
                 child: Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Wrap(
-
                           crossAxisAlignment: WrapCrossAlignment.center,
                           spacing:10,
                           children: <Widget>[
@@ -96,7 +95,6 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                                 )
                             ),
                             Container(
-
                               child: Text(dashen[e]["real_name"]),
                             ),
                             Container(
@@ -104,11 +102,9 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                               color: Colors.red,
                               child: Text(dashen[e]["lian_hong"].toString()+"连红",style: TextStyle(color: Colors.white,fontSize: 10),),
                             )
-
                           ],
                         ),
                        Container(
-
                          child:  Wrap(
                            crossAxisAlignment: WrapCrossAlignment.center,
                            direction: Axis.vertical,
@@ -119,10 +115,8 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                            ],
                          ),
                        )
-
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -192,8 +186,9 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   List img_url = [
-    "img/s1.jpg",
-    "img/swi1.jpg",
+    "img/d1.png",
+    "img/d2.png",
+    "img/d3.png",
 
   ];
   List texts = [
@@ -321,7 +316,6 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Ink(
-
                       child: InkWell(
 
                         splashColor: Colors.black26,
@@ -391,8 +385,45 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                           JumpAnimation().jump(basketball(), context);
                         },
                       ),
-                    )
+                    ),
                   ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 15,top: 10,bottom: 10),
+                child: Ink(
+                  child: InkWell(
+                    splashColor: Colors.black26,
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 5,
+                      children: <Widget>[
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadiusDirectional.circular(16)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.asset(
+                            "img/pl3.jpg",
+                            fit: BoxFit.fill,
+                            width: ScreenUtil().setWidth(55),
+                            height: ScreenUtil().setWidth(55),
+                          ),
+                        ),
+                        Container(
+                          height: ScreenUtil().setWidth(55),
+                          child: Wrap(
+                            direction: Axis.vertical,
+                            alignment: WrapAlignment.spaceAround,
+                            children: <Widget>[Text("排列三"), Text("排列三开售中",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                          ),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      JumpAnimation().jump(pailie(), context);
+                    },
+                  ),
                 ),
               ),
               CommonWiget().getTaiTou("比分"),

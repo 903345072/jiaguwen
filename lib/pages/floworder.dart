@@ -8,6 +8,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
 import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/flowdetail.dart';
+import 'package:flutterapp2/pages/pailie/plflowdetail.dart';
 import 'package:flutterapp2/pages/search.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -663,7 +664,7 @@ class Login_ extends State<floworder> {
                          Column(
                            children: <Widget>[
                              Text("类型"),
-                             Text(list[e]["type"]=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(color: Colors.red),),
+                             Text(list[e]["flag"]=="pl"?"排列三":list[e]["type"]=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(color: Colors.red),),
                            ],
                          ),
                          SizedBox(
@@ -702,7 +703,12 @@ class Login_ extends State<floworder> {
                      child: RaisedButton(
                        color: Colors.deepOrange,
                        onPressed: () {
-                         JumpAnimation().jump(flowdetail(list[e]), context);
+                         if(list[e]["flag"] == "pl"){
+                           JumpAnimation().jump( plflowdetail(list[e]), context);
+                         }else{
+                           JumpAnimation().jump( flowdetail(list[e]), context);
+                         }
+
                        },
                        child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
                        ///圆角

@@ -11,6 +11,7 @@ import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/IndexPage.dart';
 import 'package:flutterapp2/pages/Mine.dart';
 import 'package:flutterapp2/pages/lanqiukaijiang.dart';
+import 'package:flutterapp2/pages/plkaijiang.dart';
 import 'package:flutterapp2/pages/zuqiukaijiang.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/Rute.dart';
@@ -34,6 +35,7 @@ class Login_ extends State<kaijiang> {
   bool check = false;
   Map foot = {} ;
   Map basket= {} ;
+  Map pl= {} ;
   Map num_to_cn = {"1":"一","2":"二","3":"三","4":"四","5":"五","6":"六","7":"末"};
   FocusNode _commentFocus;
 
@@ -49,6 +51,7 @@ getGameInfo() async {
   setState(() {
     foot = res.data["foot"];
     basket = res.data["basket"];
+    pl = res.data["pl"];
   });
 }
   @override
@@ -198,6 +201,122 @@ getGameInfo() async {
                                         clipBehavior: Clip.antiAlias,
                                         child: Image.asset(
                                           "img/basketball.png",
+                                          fit: BoxFit.fill,
+                                          width: ScreenUtil().setWidth(42),
+                                          height: ScreenUtil().setWidth(42),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.arrow_forward_ios,color: Colors.grey,)
+                      ],
+                    )
+
+
+
+                  ],
+                ),
+              ),
+            ),
+            Divider(),
+            GestureDetector(
+              onTap: (){
+                JumpAnimation().jump(plkaijiang(), context);
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10,right: 10),
+                child: Wrap(
+
+
+                  alignment: WrapAlignment.start,
+                  spacing: 20,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+
+                          margin: EdgeInsets.only(left: 15,top: 15),
+                          child: Wrap(
+                            spacing: 10,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 15,
+                                children: <Widget>[
+                                  Text("排列三",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                                  pl.length>0? Text("开奖："+ pl["dtime"].toString().substring(0,10)+ "(周"+pl["week"].toString()+")"):Text("--")
+                                ],
+                              ),
+                              Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      width: ScreenUtil().setWidth(300),
+                                      height: ScreenUtil().setHeight(50),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(25)) ),
+                                      child:pl.length>0? Container(
+
+                                        child: Wrap(
+                                          spacing: 13,
+                                          children: <Widget>[
+                                            ClipOval(
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width:25,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                  ),
+                                                  child: Text(pl["value"][0].toString(),style: TextStyle(color: Colors.white),),
+                                                )
+                                            ),
+                                            ClipOval(
+                                                child: Container(
+
+                                                  alignment: Alignment.center,
+                                                  width:25,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                  ),
+                                                  child: Text(pl["value"][1].toString(),style: TextStyle(color: Colors.white),),
+                                                )
+                                            ),
+                                            ClipOval(
+                                                child: Container(
+
+                                                  alignment: Alignment.center,
+                                                  width:25,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                  ),
+                                                  child: Text(pl["value"][2].toString(),style: TextStyle(color: Colors.white),),
+                                                )
+                                            )
+                                          ],
+                                        ),
+                                      ):Container(),
+                                    ),
+                                    Positioned(
+                                      left: -4,
+                                      top: -4,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(21)),
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Image.asset(
+                                          "img/pl3.jpg",
                                           fit: BoxFit.fill,
                                           width: ScreenUtil().setWidth(42),
                                           height: ScreenUtil().setWidth(42),
