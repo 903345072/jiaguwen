@@ -632,7 +632,7 @@ class hangqing_ extends State<orderdetail>{
                           child: Image.network(order["order_pic"]),
                         ):Container(
                           margin: EdgeInsets.only(top: 10,bottom: 20),
-                          child: Text("等待店主上传实体票",style: TextStyle(color: Colors.grey),),
+
                         )
                       ],
                     ),

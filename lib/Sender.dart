@@ -297,10 +297,8 @@ class Login_ extends State<Sender> {
                       }
                       return GestureDetector(
                         onTap: (){
-
                           setState(() {
                             this.page = e;
-
                           });
                           controller.jumpToPage(this.page);
                         },

@@ -11,6 +11,7 @@ import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/IndexPage.dart';
 import 'package:flutterapp2/pages/Mine.dart';
 import 'package:flutterapp2/pages/applyDaShen.dart';
+import 'package:flutterapp2/pages/kaijiangdetail.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 import 'package:flutterapp2/utils/Rute.dart';
 import 'package:flutterapp2/utils/Toast.dart';
@@ -64,7 +65,7 @@ class Login_ extends State<plkaijiang> {
           actions: <Widget>[
             GestureDetector(
               onTap: () async {
-                await launch("https://www.lottery.gov.cn/zst/pls/");
+                JumpAnimation().jump(kaijiangdetail(), context);
               },
               child: Container(
                 padding: EdgeInsets.only(right: 15),

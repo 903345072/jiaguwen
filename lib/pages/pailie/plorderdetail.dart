@@ -551,7 +551,7 @@ class hangqing_ extends State<plorderdetail>{
                           child: Image.network(order["order_pic"]),
                         ):Container(
                           margin: EdgeInsets.only(top: 10,bottom: 20),
-                          child: Text("等待店主上传实体票",style: TextStyle(color: Colors.grey),),
+
                         )
                       ],
                     ),
@@ -808,24 +808,19 @@ class hangqing_ extends State<plorderdetail>{
             ),
             Container(
               width: ScreenUtil().setWidth(95),
-
               alignment: Alignment.center,
               child: Column(
-
                 children: ls.asMap().keys.map((e2){
-
                   return Container(
                     decoration: BoxDecoration(border:Border(right: BorderSide(width: 0.1),left: BorderSide(width: 0.1))),
                     height: ScreenUtil().setHeight(75),
                     alignment: Alignment.center,
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(ls[e2]["bet_value"].toString()),
                         Text(ls[e2]["pl"].toString()),
-
                       ],
                     ),
                   );
@@ -845,11 +840,9 @@ class hangqing_ extends State<plorderdetail>{
   }
   getOrderDetail() async {
     ResultData res = await HttpManager.getInstance().get("getPlOrderDetail",params: {"id":widget.id},withLoading: false);
-
     setState(() {
       order = res.data["order"];
     });
-
   }
 
   getTableRows(){

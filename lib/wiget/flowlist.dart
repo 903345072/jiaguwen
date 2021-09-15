@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterapp2/pages/flowdetail.dart';
 import 'package:flutterapp2/pages/orderdetail.dart';
+import 'package:flutterapp2/pages/pailie/plflowdetail.dart';
+import 'package:flutterapp2/pages/pailie/plorderdetail.dart';
 import 'package:flutterapp2/utils/JumpAnimation.dart';
 
 class flowlist{
@@ -48,7 +50,7 @@ class flowlist{
                children: <Widget>[
                  Column(
                    children: <Widget>[
-                     Text(data[e]["type"]=="f"?"竞彩足球":"竞彩篮球"),
+                     Text(data[e]["flag"]=="pl"?"排列三":data[e]["type"]=="f"?"竞彩足球":"竞彩篮球"),
                      Text("类型玩法")
                    ],
                  ),
@@ -83,53 +85,7 @@ class flowlist{
 
                    alignment: Alignment.center,
                    width: ScreenUtil().setWidth(80),
-                   child: data[e]["state"] == 0 ? data[e]["is_flow"] == 1 ?RaisedButton(
-                     color: Colors.red,
-                     onPressed: () {
-                       JumpAnimation().jump(flowdetail(data[e]), context);
-                     },
-                     child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
-                     ///圆角
-                     shape: RoundedRectangleBorder(
-                         side: BorderSide.none,
-                         borderRadius: BorderRadius.all(Radius.circular(5))
-                     ),
-                   ):GestureDetector(
-                     onTap: (){
-                       JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
-                     },
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: <Widget>[
-                         Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 60,),
-                       ],
-                     ),
-                   ):data[e]["state"] == 2?GestureDetector(
-                     onTap: (){
-                       JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
-                     },
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: <Widget>[
-                         Image.asset("img/zhongjiang.png",fit: BoxFit.fill,width: 60,),
-                         Text(data[e]["money"].toString()+"元",style: TextStyle(color: Colors.red,fontSize: 11),)
-                       ],
-                     ),
-                   ):GestureDetector(
-                     onTap: (){
-                       JumpAnimation().jump(orderdetail(data[e]["id"],int.parse(data[e]["mode"]),data[e]["type"]), context);
-                     },
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: <Widget>[
-                         Image.asset("img/weizhongjiang.png",fit: BoxFit.fill,width: 60,),
-                       ],
-                     ),
-                   )
-                   ,
+                   child: getConta(data[e],context)
                  )
                ],
              ),
@@ -146,5 +102,134 @@ class flowlist{
        ),
      );
    }).toList();
+ }
+ getConta(Map data,BuildContext context){
+   if(data["flag"] == "pl"){
+     if(data["state"] == 0){
+      return GestureDetector(
+         onTap: (){
+           JumpAnimation().jump(plorderdetail(data["id"],data["mode"],"pl"), context);
+         },
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+          Image.asset("img/chupiaozhong.png",fit: BoxFit.fill,width: 60,),
+           ],
+         ),
+       );
+     }
+
+     if(data["state"] == -1 && data["is_flow"] == 1){
+      return RaisedButton(
+         color: Colors.red,
+         onPressed: () {
+           JumpAnimation().jump(plflowdetail(data), context);
+         },
+         child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
+         ///圆角
+         shape: RoundedRectangleBorder(
+             side: BorderSide.none,
+             borderRadius: BorderRadius.all(Radius.circular(5))
+         ),
+       );
+     }
+     if(data["state"] == -1 && data["is_flow"] == 0){
+       return RaisedButton(
+         color: Colors.red,
+         onPressed: () {
+           JumpAnimation().jump(plflowdetail(data), context);
+         },
+         child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
+         ///圆角
+         shape: RoundedRectangleBorder(
+             side: BorderSide.none,
+             borderRadius: BorderRadius.all(Radius.circular(5))
+         ),
+       );
+     }
+
+
+     if(data["state"] == 1){
+       return GestureDetector(
+         onTap: (){
+           JumpAnimation().jump(plorderdetail(data["id"],data["mode"],"pl"), context);
+         },
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+             Image.asset("img/weizhongjiang.png",fit: BoxFit.fill,width: 60,),
+           ],
+         ),
+       );
+     }
+
+     if(data["state"] == 2){
+       return GestureDetector(
+         onTap: (){
+           JumpAnimation().jump(plorderdetail(data["id"],data["mode"],'pl'), context);
+         },
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+             Image.asset("img/zhongjiang.png",fit: BoxFit.fill,width: 60,),
+             Text(data["money"].toString()+"元",style: TextStyle(color: Colors.red,fontSize: 11),)
+           ],
+         ),
+       );
+     }
+
+   }else{
+     return data["state"] == 0 ? data["is_flow"] == 1 ?RaisedButton(
+       color: Colors.red,
+       onPressed: () {
+         JumpAnimation().jump(flowdetail(data), context);
+       },
+       child: Text('跟单',style: TextStyle(fontSize: 12.0,color: Colors.white),),
+       ///圆角
+       shape: RoundedRectangleBorder(
+           side: BorderSide.none,
+           borderRadius: BorderRadius.all(Radius.circular(5))
+       ),
+     ):GestureDetector(
+       onTap: (){
+       JumpAnimation().jump(orderdetail(data["id"],int.parse(data["mode"]),data["type"]), context);
+       },
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: <Widget>[
+           data["flag"] =="ball"?Image.asset("img/weikaijiang.png",fit: BoxFit.fill,width: 60,):Image.asset("img/chupiaozhong.png",fit: BoxFit.fill,width: 60,),
+         ],
+       ),
+     ):data["state"] == 2?GestureDetector(
+       onTap: (){
+         JumpAnimation().jump(orderdetail(data["id"],int.parse(data["mode"]),data["type"]), context);
+       },
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: <Widget>[
+           Image.asset("img/zhongjiang.png",fit: BoxFit.fill,width: 60,),
+           Text(data["money"].toString()+"元",style: TextStyle(color: Colors.red,fontSize: 11),)
+         ],
+       ),
+     ):GestureDetector(
+       onTap: (){
+         JumpAnimation().jump(orderdetail(data["id"],int.parse(data["mode"]),data["type"]), context);
+       },
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: <Widget>[
+           Image.asset("img/weizhongjiang.png",fit: BoxFit.fill,width: 60,),
+         ],
+       ),
+     );
+   }
+
+
  }
 }
