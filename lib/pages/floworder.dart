@@ -580,8 +580,6 @@ class Login_ extends State<floworder> {
                   return null;
                 }
             )
-
-
         ),
       ),
     );
@@ -626,6 +624,13 @@ class Login_ extends State<floworder> {
                           decoration: BoxDecoration(border: Border.all(color: Colors.red,width: 0.2)),
                           padding: EdgeInsets.only(left: 5,right: 5,top: 1,bottom: 1),
                           child: Text(list[e]["all_count"].toString()+"中"+list[e]["win_count"].toString(),style: TextStyle(color: Colors.red,fontSize: 11,fontWeight: FontWeight.bold),),
+                        ),
+                        list[e]["flag"]=="ball"?Container(
+                          decoration: BoxDecoration(border: Border.all(color: Colors.red,width: 0.2)),
+                          padding: EdgeInsets.only(left: 5,right: 5,top: 1,bottom: 1),
+                          child: Text("保"+list[e]["min_pl"].toString(),style: TextStyle(color: Colors.red,fontSize: 11,fontWeight: FontWeight.bold),),
+                        ):Container(
+
                         )
                       ],
                     )
