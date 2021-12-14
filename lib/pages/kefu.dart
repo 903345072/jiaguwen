@@ -81,7 +81,7 @@ getVersion() async {
                   children: <Widget>[
                     GestureDetector(
                       onTap: (){
-                       Future res = Clipboard.setData(ClipboardData(text: '1195268199'));
+                       Future res = Clipboard.setData(ClipboardData(text: '5392548'));
                        res.whenComplete(() =>Toast.toast(context,msg: "复制成功"));
                       },
                       child: Container(
@@ -121,7 +121,7 @@ getVersion() async {
                             crossAxisAlignment:WrapCrossAlignment.center,
                             children: <Widget>[
                               Text("版权所有:"),
-                              Text("比分助手"),
+                              Text("老九门"),
 
                             ],
                           )

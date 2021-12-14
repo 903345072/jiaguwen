@@ -40,7 +40,7 @@ class Login_ extends State<cash> {
   getUserInfo() async{
     ResultData res = await HttpManager.getInstance().get("userInfo",withLoading: false);
     setState(() {
-      now_money = double.parse(res.data["can_cash"])>0?double.parse(res.data["can_cash"]):0;
+      now_money = res.data["award_amount"]+0.00;
     });
   }
   @override
@@ -132,7 +132,7 @@ class Login_ extends State<cash> {
                     if (result.code == 200) {
                       Toast.toast(context, msg: "提现成功");
                       setState(() {
-                       now_money -= double.parse(cash_money);
+                        now_money -= double.parse(cash_money);
                       });
                     } else {
                       Toast.toast(context, msg: result.msg);
@@ -142,7 +142,7 @@ class Login_ extends State<cash> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     decoration:
-                        BoxDecoration(color: Color(0xfffa2020), boxShadow: []),
+                    BoxDecoration(color: Color(0xfffa2020), boxShadow: []),
                     child: Text(
                       "确认",
                       style: TextStyle(

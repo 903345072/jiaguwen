@@ -316,7 +316,6 @@ class Login_ extends State<flowdetail> {
                            ),
                            Divider(),
                            Container(
-
                              color: Colors.white,
                              child: Column(
                                children: <Widget>[

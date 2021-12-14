@@ -72,6 +72,7 @@ class Login_ extends State<floworder> {
        dashen = [];
      }
      uids = res.data["uids"];
+
      zhongjiang = res1.data["data"];
    });
   }

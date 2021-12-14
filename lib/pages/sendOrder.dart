@@ -47,7 +47,7 @@ class Login_ extends State<sendOrder> {
   int self_money;
   String plan_title;
   String plan_desc;
-  double min_pl = 1.5;//保赔率、
+  double min_pl = 2.0;//保赔率、
   @override
   void initState() {
     // TODO: implement initState
@@ -276,48 +276,15 @@ class Login_ extends State<sendOrder> {
                  ),
                  Divider(height: 20,),
                  Container(
-                   margin: EdgeInsets.only(top: 15,left: 25),
+                   margin: EdgeInsets.only(top: 25,left: 25),
                    child: Row(
                      children: <Widget>[
                        Text("保赔"),
                        Container(
                          width: ScreenUtil().setWidth(150),
-                         height: ScreenUtil().setHeight(48),
+
                          margin: EdgeInsets.only(left: 15, right: 15),
-                         child: Row(
-                           children: <Widget>[
-
-                             Expanded(
-                               child: TextField(
-                                 onChanged: (e) {
-                                   setState(() {
-                                     min_pl = double.parse(e);
-                                   });
-                                 },
-                                 controller: TextEditingController.fromValue(
-                                     TextEditingValue(
-                                         text:
-                                         '${this.min_pl == null ? "" : this.min_pl}',
-                                         selection: TextSelection.fromPosition(
-                                             TextPosition(
-                                                 affinity:
-                                                 TextAffinity.downstream,
-                                                 offset: '${this.min_pl}'.length)))),
-                                 keyboardType: TextInputType.number,
-                                 //键盘类型，数字键盘
-
-                                 decoration: InputDecoration(
-                                   contentPadding: EdgeInsets.only(left: 10),
-                                   hintText: "",
-                                   border: OutlineInputBorder(
-                                       borderRadius:
-                                       BorderRadius.all(Radius.circular(0))),
-                                 ),
-                               ),
-                             ),
-
-                           ],
-                         ),
+                         child: Text("2.0"),
                        ),
                      ],
                    ),
