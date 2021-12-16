@@ -84,7 +84,7 @@ class order_ extends State<order> {
       i++;
     });
 
-      chuan[widget.game_ids.length-1]["color"] = Colors.red;
+    chuan[widget.game_ids.length-1]["color"] = Colors.red;
 
 
   }
@@ -118,7 +118,7 @@ class order_ extends State<order> {
                     Expanded(
                       child: Container(
                         margin:
-                            EdgeInsets.only(bottom: ScreenUtil().setHeight(60)),
+                        EdgeInsets.only(bottom: ScreenUtil().setHeight(60)),
                         child: ListView(
                           children: getGameList(),
                         ),
@@ -144,7 +144,7 @@ class order_ extends State<order> {
                           offset: Offset(0.0, 15.0), //阴影xy轴偏移量
                           blurRadius: 15.0, //阴影模糊程度
                           spreadRadius: 1.0 //阴影扩散程度
-                          )
+                      )
                     ]),
                     alignment: Alignment.center,
                     child: Text("+ 继续选择比赛"),
@@ -204,7 +204,7 @@ class order_ extends State<order> {
                                     width: ScreenUtil().setWidth(70),
                                     height: ScreenUtil().setHeight(38),
                                     margin:
-                                        EdgeInsets.only(left: 15, right: 15),
+                                    EdgeInsets.only(left: 15, right: 15),
                                     child: Row(
                                       children: <Widget>[
                                         Expanded(
@@ -220,22 +220,22 @@ class order_ extends State<order> {
                                             },
                                             controller: TextEditingController
                                                 .fromValue(TextEditingValue(
-                                                    text:
-                                                        '${this.num == null ? "" : this.num}',
-                                                    selection: TextSelection
-                                                        .fromPosition(TextPosition(
-                                                            affinity:
-                                                                TextAffinity
-                                                                    .downstream,
-                                                            offset:
-                                                                '${this.num}'
-                                                                    .length)))),
+                                                text:
+                                                '${this.num == null ? "" : this.num}',
+                                                selection: TextSelection
+                                                    .fromPosition(TextPosition(
+                                                    affinity:
+                                                    TextAffinity
+                                                        .downstream,
+                                                    offset:
+                                                    '${this.num}'
+                                                        .length)))),
                                             keyboardType: TextInputType.number,
                                             //键盘类型，数字键盘
 
                                             decoration: InputDecoration(
                                               contentPadding:
-                                                  EdgeInsets.only(left: 10),
+                                              EdgeInsets.only(left: 10),
                                               hintText: "",
                                               border: OutlineInputBorder(),
                                             ),
@@ -265,6 +265,7 @@ class order_ extends State<order> {
                                   }
 
                                   if(getNum().length == 0){
+
                                     Toast.toast(context,msg: "请选择比赛");
                                     return;
                                   }
@@ -277,15 +278,15 @@ class order_ extends State<order> {
                                         List ls1 = game["check_info"];
                                         List attr = [];
                                         ls1.forEach((element) {
-                                        List ls2 = element["bet_way"];
+                                          List ls2 = element["bet_way"];
 
                                           ls2.forEach((element2) {
                                             if (element2["color"] == "red") {
 
                                               String atr = element["id"]
-                                                    .toString() +
-                                                    "-" +
-                                                    element2["id"].toString();
+                                                  .toString() +
+                                                  "-" +
+                                                  element2["id"].toString();
                                               Map pl_ =  jsonDecode(game["checks"]);
 
                                               String pl;
@@ -312,40 +313,40 @@ class order_ extends State<order> {
                                   });
                                   List s2 = [];
 
-                                 if(chuan_.length>0){
-                                   int index = 1;
-                                   List game_list = [];
-                                   chuan_.forEach((element5) {
-                                     game_list.add(plzh_(check_game, element5));
-                                   });
-                                   game_list.forEach((elements1) {
-                                     List ls2  = elements1;
-                                     ls2.forEach((elements2) {
-                                       List ls3 = cartesian_(elements2);
-                                       ls3.forEach((elements3) {
-                                         List ls1 = elements3.toString().split("&");
-                                         List ls4 = [];
-                                         ls1.forEach((elements4) {
-                                           ls4.add(jsonDecode(elements4));
-                                         });
-                                         s2.add({"data":ls4,"award":1.0,"base_award":1.0,"num":1,"is_show":true,"index":index});
+                                  if(chuan_.length>0){
+                                    int index = 1;
+                                    List game_list = [];
+                                    chuan_.forEach((element5) {
+                                      game_list.add(plzh_(check_game, element5));
+                                    });
+                                    game_list.forEach((elements1) {
+                                      List ls2  = elements1;
+                                      ls2.forEach((elements2) {
+                                        List ls3 = cartesian_(elements2);
+                                        ls3.forEach((elements3) {
+                                          List ls1 = elements3.toString().split("&");
+                                          List ls4 = [];
+                                          ls1.forEach((elements4) {
+                                            ls4.add(jsonDecode(elements4));
+                                          });
+                                          s2.add({"data":ls4,"award":1.0,"base_award":1.0,"num":1,"is_show":true,"index":index});
                                           index++;
-                                       });
-                                     });
-                                   });
-                                 }else{
-                                   int index = 1;
-                                   check_game.forEach((v1) {
-                                     List sl = v1;
+                                        });
+                                      });
+                                    });
+                                  }else{
+                                    int index = 1;
+                                    check_game.forEach((v1) {
+                                      List sl = v1;
 
-                                     sl.forEach((v2) {
-                                       s2.add({"data":[jsonDecode(v2)],"award":1.0,"base_award":1.0,"num":1,"is_show":true,"index":index});
-                                       index++;
+                                      sl.forEach((v2) {
+                                        s2.add({"data":[jsonDecode(v2)],"award":1.0,"base_award":1.0,"num":1,"is_show":true,"index":index});
+                                        index++;
 
-                                     });
+                                      });
 
-                                   });
-                                 }
+                                    });
+                                  }
 
                                   List check_games = [];
                                   widget.games.forEach((key, value) {
@@ -390,73 +391,74 @@ class order_ extends State<order> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                          GestureDetector(
-                            onTap: () async{
+                              GestureDetector(
+                                onTap: () async{
 
 
 
-                              int check_length = chuan_.length;
-                              if (widget.least_game > 1) {
-                                if (check_length == 0) {
-                                  setState(() {
-                                    visible_ =
-                                    visible_ == true ? false : true;
-                                    is_pack =
-                                    is_pack == true ? false : true;
-                                  });
-                                  return;
-                                }
-                              }
-
-                              if(getNum().length == 0){
-                                Toast.toast(context,msg: "请选择比赛");
-                                return;
-                              }
-
-
-
-
-                              if(double.parse(getMoney())<50){
-                                Toast.toast(context,msg: "投注金额不能低于50元");
-                                return;
-                              }
-                              List check_game = [];
-                              widget.games.forEach((key, value) {
-                                value.forEach((game) {
-                                  if (widget.game_ids
-                                      .contains(game["id"])) {
-                                    List ls1 = game["check_info"];
-                                    List attr = [];
-                                    ls1.forEach((element) {
-                                      List ls2 = element["bet_way"];
-                                      ls2.forEach((element2) {
-                                        if (element2["color"] == "red") {
-                                          attr.add({
-                                            "id": game["id"],
-                                            "attr": element["id"]
-                                                .toString() +
-                                                "-" +
-                                                element2["id"].toString()
-                                          });
-                                        }
+                                  int check_length = chuan_.length;
+                                  if (widget.least_game > 1) {
+                                    if (check_length == 0) {
+                                      setState(() {
+                                        visible_ =
+                                        visible_ == true ? false : true;
+                                        is_pack =
+                                        is_pack == true ? false : true;
                                       });
-                                    });
-                                    check_game.add(attr);
+                                      return;
+                                    }
                                   }
-                                });
-                              });
+
+                                  if(getNum().length == 0){
+
+                                    Toast.toast(context,msg: "请选择比赛");
+                                    return;
+                                  }
 
 
-                              JumpAnimation().jump(sendOrder(check_game,chuan_,getNum().length,num,widget.f_or_b), context);
 
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: ScreenUtil().setWidth(90),
-                              color: Color(0xffe6e6e6),
-                              child: Text("发单"),
-                            ),
-                          ),
+
+                                  if(double.parse(getMoney())<50){
+                                    Toast.toast(context,msg: "投注金额不能低于50元");
+                                    return;
+                                  }
+                                  List check_game = [];
+                                  widget.games.forEach((key, value) {
+                                    value.forEach((game) {
+                                      if (widget.game_ids
+                                          .contains(game["id"])) {
+                                        List ls1 = game["check_info"];
+                                        List attr = [];
+                                        ls1.forEach((element) {
+                                          List ls2 = element["bet_way"];
+                                          ls2.forEach((element2) {
+                                            if (element2["color"] == "red") {
+                                              attr.add({
+                                                "id": game["id"],
+                                                "attr": element["id"]
+                                                    .toString() +
+                                                    "-" +
+                                                    element2["id"].toString()
+                                              });
+                                            }
+                                          });
+                                        });
+                                        check_game.add(attr);
+                                      }
+                                    });
+                                  });
+
+
+                                  JumpAnimation().jump(sendOrder(check_game,chuan_,getNum().length,num,widget.f_or_b), context);
+
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: ScreenUtil().setWidth(90),
+                                  color: Color(0xffe6e6e6),
+                                  child: Text("发单"),
+                                ),
+                              ),
                               Container(
 
                                 alignment: Alignment.center,
@@ -500,6 +502,7 @@ class order_ extends State<order> {
                                   }
 
                                   if(getNum().length == 0){
+
                                     Toast.toast(context,msg: "请选择比赛");
                                     return;
                                   }
@@ -523,7 +526,7 @@ class order_ extends State<order> {
                                                 attr.add({
                                                   "id": game["id"],
                                                   "attr": element["id"]
-                                                          .toString() +
+                                                      .toString() +
                                                       "-" +
                                                       element2["id"].toString()
                                                 });
@@ -536,8 +539,8 @@ class order_ extends State<order> {
                                     });
 
                                     ResultData res =
-                                        await HttpManager.getInstance()
-                                            .post("doorder", params: {
+                                    await HttpManager.getInstance()
+                                        .post("doorder", params: {
                                       "games": check_game,
                                       "chuan": chuan_,
                                       "num": getNum().length,
@@ -617,7 +620,7 @@ class order_ extends State<order> {
           width: ScreenUtil().setWidth(70),
           decoration: BoxDecoration(
               border:
-                  Border(right: BorderSide(width: 0.6, color: Colors.grey))),
+              Border(right: BorderSide(width: 0.6, color: Colors.grey))),
           margin: EdgeInsets.only(right: ScreenUtil().setHeight(70)),
           child: Text("收起"),
         ),
@@ -636,7 +639,7 @@ class order_ extends State<order> {
             width: ScreenUtil().setWidth(70),
             decoration: BoxDecoration(
                 border:
-                    Border(right: BorderSide(width: 0.6, color: Colors.grey))),
+                Border(right: BorderSide(width: 0.6, color: Colors.grey))),
             margin: EdgeInsets.only(right: ScreenUtil().setHeight(70)),
             child: Text("展开"),
           ));
@@ -738,7 +741,7 @@ class order_ extends State<order> {
                 ls2[key1.toString()+"-"+zs[0].toString()] = double.parse(zs[1]);
               }
               //ls2.add([1:{key1.toString()+"-"+zs[0].toString():double.parse(zs[1])}]);
-            //  ls2[key1.toString()+"-"+zs[0].toString()] =double.parse(zs[1]);
+              //  ls2[key1.toString()+"-"+zs[0].toString()] =double.parse(zs[1]);
 //              ls2[key1.toString()+"-"+zs[0].toString()] = double.parse(zs[1]);
               //1s2.add(zs[0].toString());
             }
@@ -754,15 +757,15 @@ class order_ extends State<order> {
           });
 
 
-        zz.add(ls);
+          zz.add(ls);
 
-        Map ls4 = new Map.from(ls2);
-        List p_g = game["p_goal"].toString().split(",");
-        String pg = p_g[1];
-        List key_list = ls2.keys.toList();
+          Map ls4 = new Map.from(ls2);
+          List p_g = game["p_goal"].toString().split(",");
+          String pg = p_g[1];
+          List key_list = ls2.keys.toList();
 
 
-        //所有的胜，和平、负比较
+          //所有的胜，和平、负比较
           if(2>1){
             double win1 = ls2["1-1"] == null?0:ls2["1-1"];
             double win2 = ls2["2-1"] == null?0:ls2["2-1"];
@@ -922,20 +925,20 @@ class order_ extends State<order> {
 
 
 
-           double win_total = win1+win2+win3+win4+win5;
-           double lose_total = lose1+lose2+lose3+lose4+lose5;
+            double win_total = win1+win2+win3+win4+win5;
+            double lose_total = lose1+lose2+lose3+lose4+lose5;
 
-           double ping_total = ping1+ping3+ping4+ping5;
+            double ping_total = ping1+ping3+ping4+ping5;
 
 
 
             if(double.parse(pg) <= -1){
-             if( win1>0 && win2==0){
-               win_total = win_total+ping2;
-             }
-             if(ping1>0 && ping2==0){
-               ping_total = ping_total+lose2;
-             }
+              if( win1>0 && win2==0){
+                win_total = win_total+ping2;
+              }
+              if(ping1>0 && ping2==0){
+                ping_total = ping_total+lose2;
+              }
             }
             if(double.parse(pg) >= 1){
 
@@ -1017,20 +1020,20 @@ class order_ extends State<order> {
 
             if(ping_total>win_total && ping_total>lose_total){
 
-             if(ping2> ping1+ping3+ping4+ping5){
-               ls4.remove("1-2");
-               if(ping3>0){
-                 ls4.remove(dd3[0]);
-               }
-               if(ping4>0){
-                 ls4.remove(dd10[0]);
-               }
-               if(ping5>0){
-                 ls4.remove(dd4[0]);
-               }
-             }else{
-               ls4.remove("2-2");
-             }
+              if(ping2> ping1+ping3+ping4+ping5){
+                ls4.remove("1-2");
+                if(ping3>0){
+                  ls4.remove(dd3[0]);
+                }
+                if(ping4>0){
+                  ls4.remove(dd10[0]);
+                }
+                if(ping5>0){
+                  ls4.remove(dd4[0]);
+                }
+              }else{
+                ls4.remove("2-2");
+              }
 
               if(double.parse(pg) > -1){
                 ls4.remove("2-3");
@@ -1038,13 +1041,13 @@ class order_ extends State<order> {
                 ls4.remove("2-1");
               }
 
-             if(ls4["2-1"] != null && ls4["2-2"] !=null ){
-               if(ls4["2-1"] >= ls4["2-2"]){
-                 ls4.remove("2-2");
-               }else{
-                 ls4.remove("2-1");
-               }
-             }
+              if(ls4["2-1"] != null && ls4["2-2"] !=null ){
+                if(ls4["2-1"] >= ls4["2-2"]){
+                  ls4.remove("2-2");
+                }else{
+                  ls4.remove("2-1");
+                }
+              }
 
             }
 
@@ -1141,6 +1144,7 @@ class order_ extends State<order> {
     });
 
     List ar = [];
+
     if (widget.least_game == 1 || is_dan() == true) {
       zz.forEach((z) {
         List z1 = z;
@@ -1184,7 +1188,9 @@ class order_ extends State<order> {
     return ars;
   }
   is_dan(){
-    if(widget.type == "f"){
+
+    if(widget.f_or_b == "f"){
+
       if(getGameNum() == "1"){
         int flag1=0;
         int flag2=0;
@@ -1226,7 +1232,7 @@ class order_ extends State<order> {
             return;
           }
         });
-        if((flag3 ==0 && flag4 ==0 && flag5 ==0) && (flag1 == 1 || flag2 == 1)){
+        if(flag1 == 1 || flag2 == 1 || flag3 == 1 || flag4 == 1 || flag5 == 1){
 
           return true;
         }
@@ -1359,7 +1365,7 @@ class order_ extends State<order> {
         ls.forEach((element2) {
           String str1 = jsonEncode(element).replaceAll("\\", "").indexOf('"')==0?jsonEncode(element).replaceAll("\\", "").replaceFirst('"', ""):jsonEncode(element).replaceAll("\\", "");
           String str2 = jsonEncode(element2).replaceAll("\\", "").indexOf('"')==0?jsonEncode(element2).replaceAll("\\", "").replaceFirst('"', ""):jsonEncode(element2).replaceAll("\\", "");
-         tmp.add(element+"&"+element2);
+          tmp.add(element+"&"+element2);
         });
       });
       arr = tmp;
@@ -1387,8 +1393,8 @@ class order_ extends State<order> {
 
         ls.forEach((element2) {
 
-         tmp.add(element * element2);
-        // tmp.add({element.keys.elementAt(0).toString()+"-"+element2.keys.elementAt(0).toString():element.values.elementAt(0) * element2.values.elementAt(0)});
+          tmp.add(element * element2);
+          // tmp.add({element.keys.elementAt(0).toString()+"-"+element2.keys.elementAt(0).toString():element.values.elementAt(0) * element2.values.elementAt(0)});
         });
       });
       arr = tmp;
@@ -1397,8 +1403,8 @@ class order_ extends State<order> {
 
 
 
-   // return [arr,arr1];
-   return arr;
+    // return [arr,arr1];
+    return arr;
   }
 
   getChuan() {
@@ -1409,7 +1415,7 @@ class order_ extends State<order> {
         onTap: () {
           setState(() {
             chuan[e]["color"] =
-                chuan[e]["color"] == Colors.red ? Colors.grey : Colors.red;
+            chuan[e]["color"] == Colors.red ? Colors.grey : Colors.red;
           });
         },
         child: Container(
@@ -1673,7 +1679,7 @@ class order_ extends State<order> {
     }).toList();
   }
   getGameNum(){
-   List game_ids = [];
+    List game_ids = [];
     widget.games.forEach((key, value) {
       List ls  = value;
       ls.forEach((element) {
@@ -1698,23 +1704,23 @@ class order_ extends State<order> {
       case 0:
         int flag1=0;
         int flag2=0;
-       if(getGameNum() == "1"){
-         List s1 = games[e2][e]["check_info"][0]["bet_way"];
-         List s2 = games[e2][e]["check_info"][1]["bet_way"];
-         s1.forEach((element) {
-           if(element["color"] == "red"){
-             flag1 = 1;
-             return;
-           }
-         });
-         s2.forEach((element) {
-           if(element["color"] == "red"){
-             flag2 = 1;
-             return;
-           }
-         });
-       }
-        return flag1==0 && flag2==0? mix(
+        if(getGameNum() == "1"){
+          List s1 = games[e2][e]["check_info"][0]["bet_way"];
+          List s2 = games[e2][e]["check_info"][1]["bet_way"];
+          s1.forEach((element) {
+            if(element["color"] == "red"){
+              flag1 = 1;
+              return;
+            }
+          });
+          s2.forEach((element) {
+            if(element["color"] == "red"){
+              flag2 = 1;
+              return;
+            }
+          });
+        }
+        return  mix(
           callBack: (value) {
             setState(() {
               games = value;
@@ -1732,37 +1738,6 @@ class order_ extends State<order> {
           crs_win: crs_win,
           ttg_odds: ttg_odds,
           half_odds: half_odds,
-        ):Column(
-          children: <Widget>[
-            flag1==1?feirangqiu(
-                callBack: (value) {
-                  setState(() {
-                    games = value;
-                  });
-                },
-                p_status: p_status,
-                p_goal: p_goal,
-                games: games,
-                e2: e2,
-                e: e,
-                zd_name: zd_name,
-                kd_name: kd_name,
-                spf: spf):Container(),
-            flag2==1?rangqiu(
-                callBack: (value) {
-                  setState(() {
-                    games = value;
-                  });
-                },
-                p_status: p_status,
-                p_goal: p_goal,
-                games: games,
-                e2: e2,
-                e: e,
-                zd_name: zd_name,
-                kd_name: kd_name,
-                rqspf: rqspf):Container()
-          ],
         );
       case 1:
         return rangqiu(
