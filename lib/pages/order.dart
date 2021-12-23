@@ -1197,40 +1197,52 @@ class order_ extends State<order> {
         int flag3=0;
         int flag4=0;
         int flag5=0;
-        List s1 = widget.games.values.toList()[0][0]["check_info"][0]["bet_way"];
-        List s2 = widget.games.values.toList()[0][0]["check_info"][1]["bet_way"];
-        List s3 = widget.games.values.toList()[0][0]["check_info"][2]["bet_way"];
-        List s4 = widget.games.values.toList()[0][0]["check_info"][3]["bet_way"];
-        List s5 = widget.games.values.toList()[0][0]["check_info"][4]["bet_way"];
-        s1.forEach((element1) {
-          if(element1["color"] == "red"){
-            flag1 = 1;
-            return;
-          }
-        });
-        s2.forEach((element2) {
-          if(element2["color"] == "red"){
-            flag2 = 1;
-            return;
-          }
-        });
-        s3.forEach((element2) {
-          if(element2["color"] == "red"){
-            flag3 = 1;
-            return;
-          }
-        });
-        s4.forEach((element2) {
-          if(element2["color"] == "red"){
-            flag4 = 1;
-            return;
-          }
-        });
-        s5.forEach((element2) {
-          if(element2["color"] == "red"){
-            flag5 = 1;
-            return;
-          }
+        List s1 ;
+        List s2 ;
+        List s3 ;
+        List s4 ;
+        List s5 ;
+        widget.games.forEach((key, value) {
+          List ggs = value;
+          ggs.forEach((element) {
+            s1 = element["check_info"][0]["bet_way"];
+            s2 = element["check_info"][1]["bet_way"];
+            s3 = element["check_info"][2]["bet_way"];
+            s4 = element["check_info"][3]["bet_way"];
+            s5 = element["check_info"][4]["bet_way"];
+            s1.forEach((element1) {
+              if(element1["color"] == "red"){
+                flag1 = 1;
+                return;
+              }
+            });
+            s2.forEach((element2) {
+              if(element2["color"] == "red"){
+                flag2 = 1;
+                return;
+              }
+            });
+            s3.forEach((element3) {
+
+              if(element3["color"] == "red" ){
+
+                flag3 = 1;
+                return;
+              }
+            });
+            s4.forEach((element4) {
+              if(element4["color"] == "red" ){
+                flag4 = 1;
+                return;
+              }
+            });
+            s5.forEach((element5) {
+              if(element5["color"] == "red" ){
+                flag5 = 1;
+                return;
+              }
+            });
+          });
         });
         if(flag1 == 1 || flag2 == 1 || flag3 == 1 || flag4 == 1 || flag5 == 1){
 
