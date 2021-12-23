@@ -34,7 +34,7 @@ class Login_ extends State<Sender> {
   List<String> containers = ["近期关注","历史红单"];
   int page = 0;
 
- String img = "http://kaifa.crmeb.net/uploads/attach/2019/08/20190807/723adbdd4e49a0f9394dfc700ab5dba3.png";
+ String img = "http//www.baidu.com/img/flexible/logo/pc/result.png";
  String nickname = "--";
  String target = "1";
  String sl = "0";

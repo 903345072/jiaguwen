@@ -19,15 +19,15 @@ class basketballrfSf extends StatefulWidget {
 
   basketballrfSf(
       {Key key,
-      this.callBack,
-      this.games,
-      this.e2,
-      this.e,
-      this.zd_name,
-      this.kd_name,
-      this.rfsf,
-      this.p_status,
-      this.p_goal
+        this.callBack,
+        this.games,
+        this.e2,
+        this.e,
+        this.zd_name,
+        this.kd_name,
+        this.rfsf,
+        this.p_status,
+        this.p_goal
       })
       : super(key: key);
 
@@ -96,162 +96,162 @@ class _ChildState extends State<basketballrfSf> {
   }
 
 
-getsfList(){
-  String status = widget.p_status[1];
-  if(status == "0"){
-    return [Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 0.3, color: Colors.grey)),
-      alignment: Alignment.center,
-      width: ScreenUtil().setWidth(320),
-      height: ScreenUtil().setHeight(40),
-      child: Text("暂停销售",),
-    )];
-  }
+  getsfList(){
+    String status = widget.p_status[1];
+    if(status == "0"){
+      return [Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(width: 0.3, color: Colors.grey)),
+        alignment: Alignment.center,
+        width: ScreenUtil().setWidth(320),
+        height: ScreenUtil().setHeight(40),
+        child: Text("暂停销售",),
+      )];
+    }
 
-  return [GestureDetector(
-    onTap: () {
-      Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
-      String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
-      String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["id"].toString();
-      if(checks[mid] != null){
-        List attr = checks[mid];
-        if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["color"] == "co"){
+    return [GestureDetector(
+      onTap: () {
+        Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
+        String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
+        String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["id"].toString();
+        if(checks[mid] != null){
+          List attr = checks[mid];
+          if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]["color"] == "co"){
 
             attr.add(id+"-"+widget.rfsf[0]);
 
 
+          }else{
+            attr.remove(id+"-"+widget.rfsf[0]);
+          }
+          checks[mid] = attr;
         }else{
-          attr.remove(id+"-"+widget.rfsf[0]);
+          List attr = [];
+          attr.add(id+"-"+widget.rfsf[0]);
+          checks[mid] = attr;
         }
-        checks[mid] = attr;
-      }else{
-        List attr = [];
-        attr.add(id+"-"+widget.rfsf[0]);
-        checks[mid] = attr;
-      }
-      widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
-      setState(() {
-        widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]
-        ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
-        ["bet_way"][0]["color"] ==
-            "co"
-            ? "red"
-            : "co";
-      });
-      widget.callBack(widget.games);
-
-    },
-    child: Container(
-      alignment: Alignment.center,
-      width: ScreenUtil().setWidth(160),
-      height: ScreenUtil().setHeight(40),
-      decoration: BoxDecoration(
-          color: widget.games[widget.e2][widget.e]["check_info"][1]
+        widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
+        setState(() {
+          widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][0]
+          ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
           ["bet_way"][0]["color"] ==
               "co"
-              ? Colors.white
-              : Colors.red,
-          border: Border(
-              right: BorderSide(width: 1, color: Color(0xfff2f2f2)),
-              bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
-      child: Wrap(
-        spacing: 5,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: <Widget>[
-          Text(
-            "主负",
-            style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][1]
-                ["bet_way"][0]["color"] ==
-                    "co"
-                    ? Colors.grey
-                    : Colors.white),
-          ),
-          Text(
-            widget.rfsf[0],
-            style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][1]
-                ["bet_way"][0]["color"] ==
-                    "co"
-                    ? Colors.grey
-                    : Colors.white),
-          )
-        ],
+              ? "red"
+              : "co";
+        });
+        widget.callBack(widget.games);
+
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: ScreenUtil().setWidth(160),
+        height: ScreenUtil().setHeight(40),
+        decoration: BoxDecoration(
+            color: widget.games[widget.e2][widget.e]["check_info"][1]
+            ["bet_way"][0]["color"] ==
+                "co"
+                ? Colors.white
+                : Colors.red,
+            border: Border(
+                right: BorderSide(width: 1, color: Color(0xfff2f2f2)),
+                bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
+        child: Wrap(
+          spacing: 5,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: <Widget>[
+            Text(
+              "主负",
+              style: TextStyle(
+                  color: widget.games[widget.e2][widget.e]["check_info"][1]
+                  ["bet_way"][0]["color"] ==
+                      "co"
+                      ? Colors.grey
+                      : Colors.white),
+            ),
+            Text(
+              widget.rfsf[0],
+              style: TextStyle(
+                  color: widget.games[widget.e2][widget.e]["check_info"][1]
+                  ["bet_way"][0]["color"] ==
+                      "co"
+                      ? Colors.grey
+                      : Colors.white),
+            )
+          ],
+        ),
       ),
-    ),
-  ),GestureDetector(
-    onTap: () {
-      Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
-      String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
-      String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["id"].toString();
-      if(checks[mid] != null){
-        List attr = checks[mid];
-        if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["color"] == "co"){
+    ),GestureDetector(
+      onTap: () {
+        Map checks = jsonDecode(widget.games[widget.e2][widget.e]["checks"]);
+        String mid = widget.games[widget.e2][widget.e]["check_info"][1]["id"].toString();
+        String id = widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["id"].toString();
+        if(checks[mid] != null){
+          List attr = checks[mid];
+          if(widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]["color"] == "co"){
 
             attr.add(id+"-"+widget.rfsf[1]);
 
 
+          }else{
+            attr.remove(id+"-"+widget.rfsf[1]);
+          }
+          checks[mid] = attr;
         }else{
-          attr.remove(id+"-"+widget.rfsf[1]);
+          List attr = [];
+          attr.add(id+"-"+widget.rfsf[1]);
+          checks[mid] = attr;
         }
-        checks[mid] = attr;
-      }else{
-        List attr = [];
-        attr.add(id+"-"+widget.rfsf[1]);
-        checks[mid] = attr;
-      }
-      widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
-      setState(() {
-        widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]
-        ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
-        ["bet_way"][1]["color"] ==
-            "co"
-            ? "red"
-            : "co";
-      });
-      widget.callBack(widget.games);
-
-    },
-    child: Container(
-      alignment: Alignment.center,
-      width: ScreenUtil().setWidth(160),
-      height: ScreenUtil().setHeight(40),
-      decoration: BoxDecoration(
-          color: widget.games[widget.e2][widget.e]["check_info"][1]
+        widget.games[widget.e2][widget.e]["checks"] =  jsonEncode(checks);
+        setState(() {
+          widget.games[widget.e2][widget.e]["check_info"][1]["bet_way"][1]
+          ["color"] = widget.games[widget.e2][widget.e]["check_info"][1]
           ["bet_way"][1]["color"] ==
               "co"
-              ? Colors.white
-              : Colors.red,
-          border: Border(
-              right: BorderSide(width: 1, color: Color(0xfff2f2f2)),
-              bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
-      child: Wrap(
-        spacing: 5,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: <Widget>[
-          Text(
-            "主胜",
-            style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][1]
-                ["bet_way"][1]["color"] ==
-                    "co"
-                    ? Colors.grey
-                    : Colors.white),
-          ),
-          Text(
-            widget.rfsf[1],
-            style: TextStyle(
-                color: widget.games[widget.e2][widget.e]["check_info"][1]
-                ["bet_way"][1]["color"] ==
-                    "co"
-                    ? Colors.grey
-                    : Colors.white),
-          )
-        ],
+              ? "red"
+              : "co";
+        });
+        widget.callBack(widget.games);
+
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: ScreenUtil().setWidth(160),
+        height: ScreenUtil().setHeight(40),
+        decoration: BoxDecoration(
+            color: widget.games[widget.e2][widget.e]["check_info"][1]
+            ["bet_way"][1]["color"] ==
+                "co"
+                ? Colors.white
+                : Colors.red,
+            border: Border(
+                right: BorderSide(width: 1, color: Color(0xfff2f2f2)),
+                bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
+        child: Wrap(
+          spacing: 5,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: <Widget>[
+            Text(
+              "主胜",
+              style: TextStyle(
+                  color: widget.games[widget.e2][widget.e]["check_info"][1]
+                  ["bet_way"][1]["color"] ==
+                      "co"
+                      ? Colors.grey
+                      : Colors.white),
+            ),
+            Text(
+              widget.rfsf[1],
+              style: TextStyle(
+                  color: widget.games[widget.e2][widget.e]["check_info"][1]
+                  ["bet_way"][1]["color"] ==
+                      "co"
+                      ? Colors.grey
+                      : Colors.white),
+            )
+          ],
+        ),
       ),
-    ),
-  )];
-}
+    )];
+  }
 }

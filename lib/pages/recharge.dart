@@ -92,12 +92,12 @@ class Login_ extends State<recharge> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Image.asset("img/alipay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+                                      Image.asset("img/yl.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text("支付宝快捷支付"),
-                                          Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+                                          Text("银联支付"),
+                                          Text("银联推荐,安全快捷",style: TextStyle(color: Colors.grey),),
                                         ],
                                       )
                                     ],
@@ -233,13 +233,15 @@ class Login_ extends State<recharge> {
                       ResultData res = await HttpManager.getInstance().post("recharge/wechat",params: {"price":yj,"type":pay_type,"from":"weixinh5"},withLoading: false);
 
                       Map data = jsonDecode(res.data["data"]);
-                      print(data);
                       int type_ = res.data["type"];
 
                       if(data["code"] == 200){
                         if(type_ == 1){
-                          print(data);
-                          Future s=   tobias.aliPay(data['url']) ;
+                          if (await canLaunch(data["url"])) {
+                            await launch(data["url"]);
+                          } else {
+                            throw 'Could not launch $data["url"]';
+                          }
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);
                         }

@@ -514,52 +514,64 @@ class _GZXDropDownMenuTestPageState extends State<football> {
                                             int flag3=0;
                                             int flag4=0;
                                             int flag5=0;
-                                            List s1 = games.values.toList()[0][0]["check_info"][0]["bet_way"];
-                                            List s2 = games.values.toList()[0][0]["check_info"][1]["bet_way"];
-                                            List s3 = games.values.toList()[0][0]["check_info"][2]["bet_way"];
-                                            List s4 = games.values.toList()[0][0]["check_info"][3]["bet_way"];
-                                            List s5 = games.values.toList()[0][0]["check_info"][4]["bet_way"];
+                                            List s1 ;
+                                            List s2 ;
+                                            List s3 ;
+                                            List s4 ;
+                                            List s5 ;
+                                       games.forEach((key, value) {
+                                         List ggs = value;
+                                         ggs.forEach((element) {
+                                           s1 = element["check_info"][0]["bet_way"];
+                                           s2 = element["check_info"][1]["bet_way"];
+                                           s3 = element["check_info"][2]["bet_way"];
+                                           s4 = element["check_info"][3]["bet_way"];
+                                           s5 = element["check_info"][4]["bet_way"];
+                                           s1.forEach((element1) {
+                                             if(element1["color"] == "red"){
+                                               flag1 = 1;
+                                               return;
+                                             }
+                                           });
+                                           s2.forEach((element2) {
+                                             if(element2["color"] == "red"){
+                                               flag2 = 1;
+                                               return;
+                                             }
+                                           });
+                                           s3.forEach((element3) {
 
-                                            s1.forEach((element1) {
-                                              if(element1["color"] == "red"){
-                                                flag1 = 1;
-                                                return;
-                                              }
-                                            });
-                                            s2.forEach((element2) {
-                                              if(element2["color"] == "red"){
-                                                flag2 = 1;
-                                                return;
-                                              }
-                                            });
-                                            s3.forEach((element2) {
-                                              if(element2["color"] == "red" ){
-                                                flag3 = 1;
-                                                return;
-                                              }
-                                            });
-                                            s4.forEach((element2) {
-                                              if(element2["color"] == "red" ){
-                                                flag4 = 1;
-                                                return;
-                                              }
-                                            });
-                                            s5.forEach((element2) {
-                                              if(element2["color"] == "red" ){
-                                                flag5 = 1;
-                                                return;
-                                              }
-                                            });
+                                             if(element3["color"] == "red" ){
+
+                                               flag3 = 1;
+                                               return;
+                                             }
+                                           });
+                                           s4.forEach((element4) {
+                                             if(element4["color"] == "red" ){
+                                               flag4 = 1;
+                                               return;
+                                             }
+                                           });
+                                           s5.forEach((element5) {
+                                             if(element5["color"] == "red" ){
+                                               flag5 = 1;
+                                               return;
+                                             }
+                                           });
+                                         });
+                                       });
+
 
                                             if((flag1 == 1 && p_single[0] == "0") || (flag2 == 1 && p_single[1] == "0")){
                                               if(int.parse(getGameNum())< least_game){
-                                                Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
+                                                Toast.toast(context,msg: "1请至少选择"+least_game.toString()+"比赛");
                                                 return;
                                               }
                                             }
 
                                             if((flag1 == 0 && flag2 == 0) && flag3 == 0 && flag4 == 0 && flag5 ==0){
-                                              Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
+                                              Toast.toast(context,msg: "2请至少选择"+least_game.toString()+"比赛");
                                               return;
                                             }else{
 
@@ -576,7 +588,7 @@ class _GZXDropDownMenuTestPageState extends State<football> {
 
                                       }
                                       if(int.parse(getGameNum())< least_game){
-                                        Toast.toast(context,msg: "请至少选择"+least_game.toString()+"比赛");
+                                        Toast.toast(context,msg: "3请至少选择"+least_game.toString()+"比赛");
                                         return;
                                       }
                                       //一场比赛选了spf、rqspf
