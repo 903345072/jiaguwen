@@ -10,6 +10,7 @@ import 'package:flutterapp2/net/HttpManager.dart';
 import 'package:flutterapp2/net/ResultData.dart';
 import 'package:flutterapp2/pages/applyDaShen.dart';
 import 'package:flutterapp2/pages/article.dart';
+import 'package:flutterapp2/pages/beijing.dart';
 import 'package:flutterapp2/pages/lanqiukaijiang.dart';
 import 'package:flutterapp2/pages/orderdetail.dart';
 import 'package:flutterapp2/pages/zuqiukaijiang.dart';
@@ -19,6 +20,7 @@ import 'package:flutterapp2/wiget/CommonWiget.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
 
 import 'basketball.dart';
+import 'beijingchuan.dart';
 import 'football.dart';
 
 class IndexPage extends StatefulWidget {
@@ -56,14 +58,14 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
     loadNews();
   }
   loadNews() async {
-   ResultData res = await HttpManager.getInstance().get("news",withLoading: false);
-   ResultData res1 = await HttpManager.getInstance().get("zhongjiang",withLoading: false);
+    ResultData res = await HttpManager.getInstance().get("news",withLoading: false);
+    ResultData res1 = await HttpManager.getInstance().get("zhongjiang",withLoading: false);
 
-   setState(() {
-     news = res.data["news"];
-     dashen = res.data["dashen"];
-    zhongjiang = res1.data["data"];
-   });
+    setState(() {
+      news = res.data["news"];
+      dashen = res.data["dashen"];
+      zhongjiang = res1.data["data"];
+    });
   }
 
   List getDashen(){
@@ -104,17 +106,17 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                             )
                           ],
                         ),
-                       Container(
-                         child:  Wrap(
-                           crossAxisAlignment: WrapCrossAlignment.center,
-                           direction: Axis.vertical,
-                           spacing: 5,
-                           children: <Widget>[
-                             Text(dashen[e]["award_money"].toString(),style: TextStyle(color: Colors.red,fontSize: 17,fontWeight: FontWeight.bold),),
-                             Text("中奖金额",style: TextStyle(color: Colors.grey),)
-                           ],
-                         ),
-                       )
+                        Container(
+                          child:  Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            direction: Axis.vertical,
+                            spacing: 5,
+                            children: <Widget>[
+                              Text(dashen[e]["award_money"].toString(),style: TextStyle(color: Colors.red,fontSize: 17,fontWeight: FontWeight.bold),),
+                              Text("中奖金额",style: TextStyle(color: Colors.grey),)
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ],
@@ -181,7 +183,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
 
 
   final SystemUiOverlayStyle _style =
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle(statusBarColor: Colors.transparent);
 
   @override
   bool get wantKeepAlive => true;
@@ -213,7 +215,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
               child: Center(
                 child: SafeArea(
                   child: Text(
-                    "老九门助手",
+                    "长虹助手",
                     style: TextStyle(
                         color: Colors.white, fontSize: ScreenUtil().setSp(20)),
                   ),
@@ -278,7 +280,7 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                                 Text("恭喜 ",style: TextStyle(color: Color(0xff575757)),),
                                 Text(zhongjiang[index]["nickname"]+" ",style: TextStyle(color: Color(0xff575757))),
                                 Text("喜中",style: TextStyle(color: Color(0xff575757))),
-                                zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
+                                zhongjiang[index]["type"] =="f"? Text("竞彩足球",style: TextStyle(color: Color(0xff575757))):zhongjiang[index]["type"] =="bd"?Text("北京单场",style: TextStyle(color: Color(0xff575757))):Text("竞彩篮球",style: TextStyle(color: Color(0xff575757))),
                                 Text(formatNum(zhongjiang[index]["award_money"], 1),style: TextStyle(color: Colors.red),),
                                 Text("元",style: TextStyle(color: Color(0xff575757)))
                               ],
@@ -352,80 +354,176 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                         },
                       ),
                     ),
-                    Ink(
-                      child: InkWell(
-                        splashColor: Colors.black26,
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: 5,
-                          children: <Widget>[
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadiusDirectional.circular(16)),
-                              clipBehavior: Clip.antiAlias,
-                              child: Image.asset(
-                                "img/basketball.png",
-                                fit: BoxFit.fill,
-                                width: ScreenUtil().setWidth(55),
+                    Container(
+                      margin: EdgeInsets.only(right: 30),
+                      child: Ink(
+                        child: InkWell(
+                          splashColor: Colors.black26,
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 5,
+                            children: <Widget>[
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadiusDirectional.circular(16)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.asset(
+                                  "img/basketball.png",
+                                  fit: BoxFit.fill,
+                                  width: ScreenUtil().setWidth(55),
+                                  height: ScreenUtil().setWidth(55),
+                                ),
+                              ),
+                              Container(
                                 height: ScreenUtil().setWidth(55),
-                              ),
-                            ),
-                            Container(
-                              height: ScreenUtil().setWidth(55),
-                              child: Wrap(
-                                direction: Axis.vertical,
-                                alignment: WrapAlignment.spaceAround,
-                                children: <Widget>[Text("竞彩篮球"), Text("美职女篮开赛",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
-                              ),
-                            )
-                          ],
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  alignment: WrapAlignment.spaceAround,
+                                  children: <Widget>[Text("竞彩篮球"), Text("美职女篮开赛",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                                ),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            JumpAnimation().jump(basketball(), context);
+                          },
                         ),
-                        onTap: () {
-                          JumpAnimation().jump(basketball(), context);
-                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 15, top: 5, bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 15,top: 10,bottom: 10),
+                      child: Ink(
+                        child: InkWell(
+                          splashColor: Colors.black26,
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 5,
+                            children: <Widget>[
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadiusDirectional.circular(16)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.asset(
+                                  "img/pl3.jpg",
+                                  fit: BoxFit.fill,
+                                  width: ScreenUtil().setWidth(55),
+                                  height: ScreenUtil().setWidth(55),
+                                ),
+                              ),
+                              Container(
+                                height: ScreenUtil().setWidth(55),
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  alignment: WrapAlignment.spaceAround,
+                                  children: <Widget>[Text("排列三"), Text("排列三开售中",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                                ),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            JumpAnimation().jump(pailie(), context);
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                      child: Ink(
+                        child: InkWell(
+                          splashColor: Colors.black26,
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 5,
+                            children: <Widget>[
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadiusDirectional.circular(12)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.asset(
+                                  "img/beijing.jpg",
+                                  fit: BoxFit.fill,
+                                  width: ScreenUtil().setWidth(55),
+                                  height: ScreenUtil().setWidth(55),
+                                ),
+                              ),
+                              Container(
+                                height: ScreenUtil().setWidth(55),
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  alignment: WrapAlignment.spaceAround,
+                                  children: <Widget>[Text("北京单场(单关)"), Text("北单开售中",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                                ),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            JumpAnimation().jump(beijing(), context);
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 15,top: 10,bottom: 10),
-                child: Ink(
-                  child: InkWell(
-                    splashColor: Colors.black26,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 5,
-                      children: <Widget>[
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadiusDirectional.circular(16)),
-                          clipBehavior: Clip.antiAlias,
-                          child: Image.asset(
-                            "img/pl3.jpg",
-                            fit: BoxFit.fill,
-                            width: ScreenUtil().setWidth(55),
-                            height: ScreenUtil().setWidth(55),
-                          ),
-                        ),
-                        Container(
-                          height: ScreenUtil().setWidth(55),
+                margin: EdgeInsets.only(right: 15, top: 5, bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+
+                    Container(
+                      margin: EdgeInsets.only(left:15,top: 10,bottom: 10,right: 8),
+                      child: Ink(
+                        child: InkWell(
+                          splashColor: Colors.black26,
                           child: Wrap(
-                            direction: Axis.vertical,
-                            alignment: WrapAlignment.spaceAround,
-                            children: <Widget>[Text("排列三"), Text("排列三开售中",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 5,
+                            children: <Widget>[
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadiusDirectional.circular(12)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.asset(
+                                  "img/beijing.jpg",
+                                  fit: BoxFit.fill,
+                                  width: ScreenUtil().setWidth(55),
+                                  height: ScreenUtil().setWidth(55),
+                                ),
+                              ),
+                              Container(
+                                height: ScreenUtil().setWidth(55),
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  alignment: WrapAlignment.spaceAround,
+                                  children: <Widget>[Text("北京单场(串关)"), Text("北单开售中",style: TextStyle(color: Colors.grey,fontSize: ScreenUtil().setSp(12)),)],
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
+                          onTap: () {
+                            JumpAnimation().jump(beijingchuan(), context);
+                          },
+                        ),
+                      ),
                     ),
-                    onTap: () {
-                      JumpAnimation().jump(pailie(), context);
-                    },
-                  ),
+                  ],
                 ),
               ),
+
+
               CommonWiget().getTaiTou("比分"),
               Container(
                 margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
@@ -510,26 +608,26 @@ class _IndexPage extends State<IndexPage> with AutomaticKeepAliveClientMixin {
                         );
                       }).toList(),
                     ),
-                   Visibility(
+                    Visibility(
 
-                     visible: this.page==1,
-                     child: Container(
-                       margin: EdgeInsets.only(top: 15),
-                       child: Column(
-                         children:  getNews(),
-                       ),
-                     ),
-                   ),
-                Visibility(
-
-                  visible: this.page==0,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: Column(
-                      children:  getDashen(),
+                      visible: this.page==1,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Column(
+                          children:  getNews(),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                    Visibility(
+
+                      visible: this.page==0,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Column(
+                          children:  getDashen(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

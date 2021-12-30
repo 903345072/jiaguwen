@@ -237,7 +237,11 @@ class Login_ extends State<recharge> {
 
                       if(data["code"] == 200){
                         if(type_ == 1){
-                          await launch(data["url"]);
+                          if (await canLaunch(data["url"])) {
+                            await launch(data["url"]);
+                          } else {
+                            throw 'Could not launch $data["url"]';
+                          }
                         }else{
                           JumpAnimation().jump(pay(data["data"]), context);
                         }

@@ -58,7 +58,7 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
 
     return Container(
       child: FutureBuilder(
-        future: _future,
+          future: _future,
           builder: (context, snapshot){
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -79,29 +79,29 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
                     child: ListView(
                       children: <Widget>[
 
-                  Container(
-                   width: double.infinity,
-                    child: Wrap(
-                      runSpacing: 10,
-                      children: getTableRowList(),
-                    ),
-                  )
+                        Container(
+                          width: double.infinity,
+                          child: Wrap(
+                            runSpacing: 10,
+                            children: getTableRowList(),
+                          ),
+                        )
                       ],
                     ),
                     onRefresh: () async {
                       await new Future.delayed(const Duration(seconds: 1), () {
                         setState(() {
-                         getRankList();
+                          getRankList();
 
                         });
                       });
                     },
-                   loadMore: ()async{
-                     setState(() {
-                       page++;
-                     });
-                     getRankList();
-                   },
+                    loadMore: ()async{
+                      setState(() {
+                        page++;
+                      });
+                      getRankList();
+                    },
                   ),
                 );
             }
@@ -158,77 +158,77 @@ class _StockRankList extends State<myorder> with AutomaticKeepAliveClientMixin{
     return rank_list.keys.map((e){
       List ls = rank_list[e];
       List date_ = e.toString().split("-");
-       return Container(
+      return Container(
 
-         padding: EdgeInsets.only(bottom: 6),
-         decoration: BoxDecoration(color: Colors.white,),
-         child: Wrap(
-           children: <Widget>[
+        padding: EdgeInsets.only(bottom: 6),
+        decoration: BoxDecoration(color: Colors.white,),
+        child: Wrap(
+          children: <Widget>[
 
-             Container(
-               padding: EdgeInsets.only(left: 5,top: 5,bottom: 5),
-               width: double.infinity,
-               decoration: BoxDecoration(color: Color(0xffffdbdb)),
-               child: Text(date_[0]+"月"+date_[1]+"日"),
-             ),
-         Wrap(
-                 children: ls.asMap().keys.map((e2){
-                   return Column(
-                     children: <Widget>[
-                       GestureDetector(
-                         onTap: (){
-                           if(ls[e2]["flag"] == "pl"){
-                             JumpAnimation().jump(plorderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
+            Container(
+              padding: EdgeInsets.only(left: 5,top: 5,bottom: 5),
+              width: double.infinity,
+              decoration: BoxDecoration(color: Color(0xffffdbdb)),
+              child: Text(date_[0]+"月"+date_[1]+"日"),
+            ),
+            Wrap(
+              children: ls.asMap().keys.map((e2){
+                return Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: (){
+                        if(ls[e2]["flag"] == "pl"){
+                          JumpAnimation().jump(plorderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
 
-                           }else{
-                             JumpAnimation().jump(orderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
-                           }
-                         },
-                         child: Container(
-                           margin: EdgeInsets.only(top: 5,left: 5,right: 20),
-                           child: Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: <Widget>[
-                               Wrap(
+                        }else{
+                          JumpAnimation().jump(orderdetail(ls[e2]["id"],int.parse(ls[e2]["mode"]),ls[e2]["type"].toString()), context);
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 5,left: 5,right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Wrap(
 
-                                 spacing: 5,
-                                 direction: Axis.vertical,
-                                 children: <Widget>[
-                                   Row(
-                                     children: <Widget>[
-                                       Container(
-                                         margin:EdgeInsets.only(right: 20),
-                                         child:Text(ls[e2]["flag"]=="pl"?"排列三":ls[e2]["type"].toString()=="f"?"竞彩足球":"竞彩篮球",style: TextStyle(fontWeight: FontWeight.bold),),
-                                       ),
-                                       ls[e2]["state"] == 2?Icon(Icons.monetization_on,color: Colors.orange,size: 18,):Container()
-                                     ],
-                                   ),
-                                   Text("金额消费"+ls[e2]["amount"].toString()),
-                                 ],
-                               ),
-                               Container(
-                                 width: ScreenUtil().setWidth(190),
-                                 child: Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: <Widget>[
-                                     Text(ls[e2]["mode"]=="1"?"普通订单":ls[e2]["mode"]=="2"?"发起订单":ls[e2]["mode"]=="4"?"优化订单":"跟买订单",style: TextStyle(color: ls[e2]["mode"]=="2"?Colors.orange:Colors.grey),),
-                                     Text(ls[e2]["state"] == 1?"未中奖":ls[e2]["state"] == -1?ls[e2]["flag"]=="pl"?"待开奖":"出票中":ls[e2]["state"] == 0?ls[e2]["flag"]=="pl"?"出票中":"未开奖":ls[e2]["state"] == 2?"中奖"+ls[e2]["award_money"].toStringAsFixed(2)+"元":"",style: TextStyle(color: ls[e2]["state"] == 2?Colors.red:Colors.grey),),
-                                   ],
-                                 ),
-                               )
-                             ],
-                           ),
-                         ),
-                       ),
-                       e2!=ls.length-1?Divider():Container()
-                     ],
-                   );
-                 }).toList(),
-               ),
+                              spacing: 5,
+                              direction: Axis.vertical,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin:EdgeInsets.only(right: 20),
+                                      child:Text(ls[e2]["flag"]=="pl"?"排列三":ls[e2]["type"].toString()=="f"?"竞彩足球":ls[e2]["type"].toString()=="bd"?"北京单场":"竞彩篮球",style: TextStyle(fontWeight: FontWeight.bold),),
+                                    ),
+                                    ls[e2]["state"] == 2?Icon(Icons.monetization_on,color: Colors.orange,size: 18,):Container()
+                                  ],
+                                ),
+                                Text("金额消费"+ls[e2]["amount"].toString()),
+                              ],
+                            ),
+                            Container(
+                              width: ScreenUtil().setWidth(190),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(ls[e2]["mode"]=="1"?"普通订单":ls[e2]["mode"]=="2"?"发起订单":ls[e2]["mode"]=="4"?"优化订单":"跟买订单",style: TextStyle(color: ls[e2]["mode"]=="2"?Colors.orange:Colors.grey),),
+                                  Text(ls[e2]["state"] == 1?"未中奖":ls[e2]["state"] == -1?ls[e2]["flag"]=="pl"?"待开奖":"出票中":ls[e2]["state"] == 0?ls[e2]["flag"]=="pl"?"出票中":"未开奖":ls[e2]["state"] == 2?"中奖"+ls[e2]["award_money"].toStringAsFixed(2)+"元":"",style: TextStyle(color: ls[e2]["state"] == 2?Colors.red:Colors.grey),),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    e2!=ls.length-1?Divider():Container()
+                  ],
+                );
+              }).toList(),
+            ),
 
-           ],
-         ),
-       );
+          ],
+        ),
+      );
     }).toList();
 
 

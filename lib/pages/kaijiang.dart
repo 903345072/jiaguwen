@@ -19,6 +19,7 @@ import 'package:flutterapp2/utils/Toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../main.dart';
+import 'beijingkaijiang.dart';
 
 class kaijiang extends StatefulWidget {
   @override
@@ -34,7 +35,8 @@ class Login_ extends State<kaijiang> {
   String re_pwd;
   bool check = false;
   Map foot = {} ;
-  Map basket= {} ;
+  Map basket= {};
+  Map beijing= {};
   Map pl= {} ;
   Map num_to_cn = {"1":"一","2":"二","3":"三","4":"四","5":"五","6":"六","7":"末"};
   FocusNode _commentFocus;
@@ -52,6 +54,8 @@ getGameInfo() async {
     foot = res.data["foot"];
     basket = res.data["basket"];
     pl = res.data["pl"];
+    beijing = res.data["beijing"];
+
   });
 }
   @override
@@ -75,7 +79,7 @@ getGameInfo() async {
         backgroundColor: Colors.white,
         body: ListView(
           children: <Widget>[
-            GestureDetector(
+            foot["h_name"]!=null?GestureDetector(
               onTap: (){
                 JumpAnimation().jump(zuqiukaijiang(), context);
               },
@@ -147,9 +151,9 @@ getGameInfo() async {
                   ],
                 ),
               ),
-            ),
-            Divider(),
-            GestureDetector(
+            ):Container(),
+            foot["h_name"]!=null?Divider():Container(),
+            basket["h_name"]!=null?GestureDetector(
               onTap: (){
                 JumpAnimation().jump(lanqiukaijiang(), context);
               },
@@ -222,9 +226,9 @@ getGameInfo() async {
                   ],
                 ),
               ),
-            ),
-            Divider(),
-            GestureDetector(
+            ):Container(),
+            basket["h_name"]!=null?Divider():Container(),
+            pl!=null?GestureDetector(
               onTap: (){
                 JumpAnimation().jump(plkaijiang(), context);
               },
@@ -338,7 +342,82 @@ getGameInfo() async {
                   ],
                 ),
               ),
-            ),
+            ):Container(),
+            pl!=null?Divider():Container(),
+            beijing["h_name"]!=null?GestureDetector(
+              onTap: (){
+                JumpAnimation().jump(beijingkaijiang(), context);
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10,right: 10),
+                child: Wrap(
+
+
+                  alignment: WrapAlignment.start,
+                  spacing: 20,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+
+                          margin: EdgeInsets.only(left: 15,top: 15),
+                          child: Wrap(
+                            spacing: 10,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            direction: Axis.vertical,
+                            children: <Widget>[
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 15,
+                                children: <Widget>[
+                                  Text("北京单场",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                                  beijing.length>0?Text("比赛日："+ beijing["dtime"].toString().substring(0,10)+ "(周"+beijing["week"].toString()+")"):Text("--")
+                                ],
+                              ),
+                              Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      width: ScreenUtil().setWidth(300),
+                                      height: ScreenUtil().setHeight(50),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.all(Radius.circular(25)) ),
+                                      child: beijing.length>0?Text(beijing["h_name"]  +"  "+  beijing["bf"]+ "  "+  beijing["a_name"]):Text("--"),
+                                    ),
+                                    Positioned(
+                                      left: -3,
+                                      top: -4,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadiusDirectional.circular(21)),
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Image.asset(
+                                          "img/football.png",
+                                          fit: BoxFit.fill,
+                                          width: ScreenUtil().setWidth(42),
+                                          height: ScreenUtil().setWidth(42),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.arrow_forward_ios,color: Colors.grey,)
+                      ],
+                    )
+
+
+
+                  ],
+                ),
+              ),
+            ):Container(),
+
           ],
         ),
       ),
