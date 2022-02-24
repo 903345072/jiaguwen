@@ -297,7 +297,7 @@ class hangqing_ extends State<orderdetail>{
                                       ),
                                       Container(
                                         width: ScreenUtil().setWidth(95),
-                                        child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                        child: (order["type"] =="f" || order["type"] == "bd")?Text("主队VS客队"):Text("客队VS主队"),
                                       ),
                                       Container(
                                         width: ScreenUtil().setWidth(75),
@@ -393,7 +393,7 @@ class hangqing_ extends State<orderdetail>{
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(95),
-                                              child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                              child: (order["type"] =="f" || order["type"] == "bd")?Text("主队VS客队"):Text("客队VS主队"),
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(75),
@@ -464,7 +464,7 @@ class hangqing_ extends State<orderdetail>{
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(95),
-                                              child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                              child: (order["type"] =="f" || order["type"] == "bd")?Text("主队VS客队"):Text("客队VS主队"),
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(75),
@@ -577,7 +577,7 @@ class hangqing_ extends State<orderdetail>{
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(95),
-                                              child: order["type"] =="f"?Text("主队VS客队"):Text("客队VS主队"),
+                                              child: (order["type"] =="f" || order["type"] == "bd")?Text("主队VS客队"):Text("客队VS主队"),
                                             ),
                                             Container(
                                               width: ScreenUtil().setWidth(75),
@@ -825,9 +825,9 @@ class hangqing_ extends State<orderdetail>{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(order["type"]=="f"?h_name:a_name,style: TextStyle(fontSize: ScreenUtil().setSp(13),height: 1.2),),
+                  Text((order["type"] =="f" || order["type"] == "bd")?h_name:a_name,style: TextStyle(fontSize: ScreenUtil().setSp(13),height: 1.2),),
                   Text(bifen,style: TextStyle(fontSize: ScreenUtil().setSp(13),height: 1.2)),
-                  Text(order["type"]=="f"?a_name:h_name,style: TextStyle(fontSize: ScreenUtil().setSp(13),height: 1.2)),
+                  Text((order["type"] =="f" || order["type"] == "bd")?a_name:h_name,style: TextStyle(fontSize: ScreenUtil().setSp(13),height: 1.2)),
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutterapp2/SharedPreferences/TokenStore.dart';
 import 'package:flutterapp2/net/Address.dart';
 import 'package:flutterapp2/net/HttpManager.dart';
@@ -254,6 +255,7 @@ class Login_ extends State<recharge> {
                     child: Text("立即充值",style: TextStyle(color: Colors.white),),
                   ),
                 ),
+
                 Container(
                   margin: EdgeInsets.only(left: 10),
                   child: Text("提示:充值无手续费，最低充值1元"),
