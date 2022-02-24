@@ -171,10 +171,10 @@ class Login_ extends State<recharge> {
                             double rate;
                             setState(() {
                               is_show = true;
-                             yj = int.parse(e);
-                             int w = DateTime.now().weekday;
+                              yj = int.parse(e);
+                              int w = DateTime.now().weekday;
                               rate = 0.02;
-                             give_money = yj*rate;
+                              give_money = yj*rate;
                             });
 
                           },
@@ -238,7 +238,8 @@ class Login_ extends State<recharge> {
 
                       if(data["code"] == 200){
                         if(type_ == 1){
-                          if (await canLaunch(data["url"])) {
+                          if (2>1) {
+                            print(data["url"]);
                             await launch(data["url"]);
                           } else {
                             throw 'Could not launch $data["url"]';
