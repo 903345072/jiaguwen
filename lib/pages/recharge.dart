@@ -93,12 +93,12 @@ class Login_ extends State<recharge> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Image.asset("img/yl.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+                                      Image.asset("img/alipay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text("银联支付"),
-                                          Text("银联推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+                                          Text("支付宝快捷支付"),
+                                          Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
                                         ],
                                       )
                                     ],
