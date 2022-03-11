@@ -313,7 +313,7 @@ class Login_ extends State<sendOrder> {
                              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
                              border: OutlineInputBorder(),
                              contentPadding: EdgeInsets.only(left: 10),
-                             hintText:"请输入标题(20字以内)",
+                             hintText:"",
                            ),
                          ),
                        )
@@ -344,7 +344,7 @@ class Login_ extends State<sendOrder> {
                              hintStyle: TextStyle(fontSize: ScreenUtil().setSp(13)),
                              border: OutlineInputBorder(),
                              contentPadding: EdgeInsets.only(left: 10),
-                             hintText:"最多可输入50字",
+                             hintText:"",
                            ),
                          ),
                        )
