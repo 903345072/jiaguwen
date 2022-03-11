@@ -97,7 +97,7 @@ class Login_ extends State<recharge> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text("支付宝快捷支付"),
+                                          Text("支付宝通道1"),
                                           Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
                                         ],
                                       )
@@ -116,37 +116,67 @@ class Login_ extends State<recharge> {
                                 ],
                               ),
                             ),
-//                            Container(
-//                              margin: EdgeInsets.only(top: 10),
-//                              width: ScreenUtil().setWidth(399),
-//                              child: Row(
-//                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                                children: <Widget>[
-//                                  Row(
-//                                    children: <Widget>[
-//                                      Image.asset("img/wxpay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
-//                                      Column(
-//                                        crossAxisAlignment: CrossAxisAlignment.start,
-//                                        children: <Widget>[
-//                                          Text("微信快捷支付"),
-//                                          Text("微信推荐,安全快捷",style: TextStyle(color: Colors.grey),),
-//                                        ],
-//                                      )
-//                                    ],
-//                                  ),
-//                                  Radio(
-//                                    value:1,
-//                                    groupValue:this.pay_type,
-//                                    onChanged:(v){
-//                                      setState(() {
-//                                        this.pay_type = v;
-//                                      });
-//                                    },
-//                                  ),
-//
-//                                ],
-//                              ),
-//                            )
+                            Container(
+                              width: ScreenUtil().setWidth(399),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Image.asset("img/alipay.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text("支付宝通道2"),
+                                          Text("支付宝推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Radio(
+                                    value:4,
+                                    groupValue:this.pay_type,
+                                    onChanged:(v){
+                                      setState(() {
+                                        this.pay_type = v;
+                                      });
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              width: ScreenUtil().setWidth(399),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Image.asset("img/yl.jpg",fit: BoxFit.fill,width: ScreenUtil().setWidth(100),),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text("银联快捷支付"),
+                                          Text("银联推荐,安全快捷",style: TextStyle(color: Colors.grey),),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Radio(
+                                    value:3,
+                                    groupValue:this.pay_type,
+                                    onChanged:(v){
+                                      setState(() {
+                                        this.pay_type = v;
+                                      });
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -239,7 +269,6 @@ class Login_ extends State<recharge> {
                       if(data["code"] == 200){
                         if(type_ == 1){
                           if (2>1) {
-                            print(data["url"]);
                             await launch(data["url"]);
                           } else {
                             throw 'Could not launch $data["url"]';
