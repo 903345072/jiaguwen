@@ -545,7 +545,8 @@ class order_ extends State<order> {
                                       "chuan": chuan_,
                                       "num": getNum().length,
                                       "bei": num,
-                                      "type": widget.f_or_b
+                                      "type": widget.f_or_b,
+                                      "yuji_jj":getExpectMoney()
                                     });
                                     if (res.data["code"] == 200) {
                                       JumpAnimation().jump(
@@ -644,6 +645,58 @@ class order_ extends State<order> {
             child: Text("展开"),
           ));
     }
+  }
+
+  getExpectMoney() {
+
+    String text = "0";
+    List s = getNum();
+
+    List min_ = [];
+    List max_ = [];
+
+    List sm = [];
+    List lg = [];
+
+    setState(() {
+      min_max.removeWhere((key, value) => !chuan_.contains(key));
+    });
+
+    min_max.forEach((key, value) {
+      List l1 = value;
+      l1.forEach((element) {
+        List l2 = element;
+        if (l2.length > 0) {
+          l2.forEach((elementz) {
+            lg.add(elementz);
+          });
+
+        }
+      });
+    });
+
+
+    double min = s.length > 0 ? s[0] : 0;
+    double max = 0;
+    lg.forEach((element2) {
+      max += element2;
+    });
+    min = min * num * 2;
+    max = max * num * 2;
+    text =  min.toStringAsFixed(2) + "~" + max.toStringAsFixed(2)+"元";
+    if(getNum().length == 1){
+      text = min.toStringAsFixed(2) +"元";
+    }
+    if(widget.least_game == 1 || is_dan() == true){
+      List h = getNum();
+      min = h[0]*num *2;
+      max = h[h.length-1]*num *2;
+      text = min.toStringAsFixed(2) + "~" + max.toStringAsFixed(2)+"元";
+    }
+    if(getNum().length == 1){
+      text = min.toStringAsFixed(2)+"元";
+    }
+    return text;
   }
 
   getExpectAward() {
